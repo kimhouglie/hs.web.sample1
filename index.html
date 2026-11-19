@@ -3,39 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BLUE TANK AQUA | 위에서 내려다보는 장바구니 수조 쇼핑몰</title>
+  <title>APEX RC CIRCUIT — 하이엔드 RC카 라이브 시승 쇼핑몰</title>
   <style>
     :root {
-      --bg-studio: #031120;
-      --tank-top: #38bdf8;
-      --tank-mid: #0284c7;
-      --tank-deep: #0369a1;
-      --tank-abyss: #075985;
-      --glass-card: rgba(7, 46, 84, 0.48);
-      --glass-card-hover: rgba(12, 74, 130, 0.65);
-      --glass-border: rgba(186, 230, 253, 0.36);
-      --text-main: #f0f9ff;
-      --text-sub: #bae6fd;
-      --text-muted: #7dd3fc;
-      --accent-cyan: #22d3ee;
-      --accent-blue: #2563eb;
-      --accent-emerald: #34d399;
-      --accent-amber: #fbbf24;
-      --shadow-tank: 0 30px 90px rgba(0, 8, 20, 0.85), inset 0 0 90px rgba(3, 89, 138, 0.85);
-    }
-
-    body.led-deep {
-      --tank-top: #0284c7;
-      --tank-mid: #1d4ed8;
-      --tank-deep: #1e3a8a;
-      --tank-abyss: #172554;
-    }
-
-    body.led-moon {
-      --tank-top: #0ea5e9;
-      --tank-mid: #0f172a;
-      --tank-deep: #09152b;
-      --tank-abyss: #020617;
+      --yellow: #FFD600;
+      --yellow-bright: #FFE84D;
+      --orange: #FF6B00;
+      --orange-deep: #E04F00;
+      --asphalt-950: #0B0D11;
+      --asphalt-900: #11141B;
+      --asphalt-850: #161A23;
+      --asphalt-800: #1E2430;
+      --asphalt-700: #2A3242;
+      --border: rgba(255, 214, 0, 0.22);
+      --border-strong: rgba(255, 107, 0, 0.55);
+      --text-main: #F8FAFC;
+      --text-sub: #A3B1C6;
+      --text-muted: #6B788E;
+      --danger: #FF3B5C;
+      --success: #22C55E;
+      --grad-brand: linear-gradient(135deg, #FFD600 0%, #FF6B00 100%);
+      --grad-card: linear-gradient(180deg, rgba(30, 36, 48, 0.92) 0%, rgba(17, 20, 27, 0.98) 100%);
+      --shadow-glow: 0 12px 36px rgba(255, 107, 0, 0.22);
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
     }
 
     * {
@@ -43,281 +35,182 @@
       margin: 0;
       padding: 0;
       user-select: none;
+      -webkit-user-select: none;
     }
 
-    input, select, textarea {
+    input, textarea, select {
       user-select: text;
+      -webkit-user-select: text;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      min-height: 100vh;
-      background: radial-gradient(circle at 50% 0%, #0c2d4d 0%, var(--bg-studio) 65%);
-      color: var(--text-main);
-      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
-      padding: 20px;
-      overflow-x: hidden;
-    }
-
-    /* ============================================================
-       TOP-DOWN RECTANGULAR GLASS AQUARIUM FRAME
-       ============================================================ */
-    .aquarium-outer-bezel {
-      max-width: 1380px;
-      margin: 0 auto;
-      padding: 12px;
-      border-radius: 26px;
-      background: linear-gradient(145deg, rgba(186, 230, 253, 0.45), rgba(14, 165, 233, 0.18) 50%, rgba(186, 230, 253, 0.42));
-      box-shadow:
-        0 32px 80px rgba(0, 0, 0, 0.78),
-        0 0 0 1px rgba(255, 255, 255, 0.25);
-      position: relative;
-    }
-
-    .aquarium-outer-bezel::before {
-      content: "";
-      position: absolute;
-      inset: 6px;
-      border-radius: 22px;
-      border: 2px solid rgba(224, 242, 254, 0.35);
-      pointer-events: none;
-      z-index: 20;
-    }
-
-    .aquarium-tank {
-      position: relative;
-      border-radius: 18px;
-      overflow: hidden;
-      background:
-        radial-gradient(ellipse at 50% 26%, var(--tank-top) 0%, var(--tank-mid) 46%, var(--tank-deep) 80%, var(--tank-abyss) 100%);
-      box-shadow: var(--shadow-tank);
-      transition: background 0.7s ease;
-      min-height: calc(100vh - 64px);
-    }
-
-    .tank-glass-wall-rim {
-      position: absolute;
-      inset: 0;
-      border-radius: 18px;
-      box-shadow:
-        inset 0 0 0 3px rgba(224, 242, 254, 0.42),
-        inset 0 18px 38px rgba(255, 255, 255, 0.18),
-        inset 0 -24px 48px rgba(2, 24, 52, 0.55),
-        inset 24px 0 42px rgba(2, 32, 68, 0.35),
-        inset -24px 0 42px rgba(2, 32, 68, 0.35);
-      pointer-events: none;
-      z-index: 15;
-    }
-
-    /* ============================================================
-       5 LAYERED NATURAL RIPPLING WATER WAVE IMAGES (img/wave1~5.png)
-       ============================================================ */
-    .water-waves-stage {
-      position: absolute;
-      inset: -8%;
-      pointer-events: none;
-      z-index: 1;
-      overflow: hidden;
-    }
-
-    .wave-layer {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      pointer-events: none;
-      will-change: transform, opacity;
-    }
-
-    .wave-1 { mix-blend-mode: screen; opacity: 0.44; animation: waveFlow1 16s ease-in-out infinite alternate; }
-    .wave-2 { mix-blend-mode: overlay; opacity: 0.52; animation: waveFlow2 21s ease-in-out infinite alternate; }
-    .wave-3 { mix-blend-mode: screen; opacity: 0.36; animation: waveFlow3 14s ease-in-out infinite alternate; }
-    .wave-4 { mix-blend-mode: plus-lighter; opacity: 0.34; animation: waveFlow4 19s ease-in-out infinite alternate; }
-    .wave-5 { mix-blend-mode: soft-light; opacity: 0.58; animation: waveFlow5 25s ease-in-out infinite alternate; }
-
-    @keyframes waveFlow1 {
-      0%   { transform: translate3d(-2.5%, -2%, 0) scale(1.04) rotate(0deg); }
-      50%  { transform: translate3d(1.8%, 1.5%, 0) scale(1.09) rotate(1.2deg); }
-      100% { transform: translate3d(3%, -1.5%, 0) scale(1.05) rotate(-1deg); }
-    }
-    @keyframes waveFlow2 {
-      0%   { transform: translate3d(2.5%, 2%, 0) scale(1.08) rotate(0deg); }
-      50%  { transform: translate3d(-1.5%, -2%, 0) scale(1.03) rotate(-1.5deg); }
-      100% { transform: translate3d(-3%, 1.8%, 0) scale(1.07) rotate(1.1deg); }
-    }
-    @keyframes waveFlow3 {
-      0%   { transform: translate3d(-1.5%, 2.5%, 0) scale(1.02); opacity: 0.25; }
-      50%  { transform: translate3d(2%, -1%, 0) scale(1.12); opacity: 0.44; }
-      100% { transform: translate3d(-2%, -2%, 0) scale(1.05); opacity: 0.28; }
-    }
-    @keyframes waveFlow4 {
-      0%   { transform: translate3d(2%, -2.5%, 0) scale(1.06) rotate(-0.8deg); }
-      100% { transform: translate3d(-2.5%, 2.2%, 0) scale(1.10) rotate(0.9deg); }
-    }
-    @keyframes waveFlow5 {
-      0%   { transform: translate3d(0%, -1.5%, 0) scale(1.05); }
-      50%  { transform: translate3d(-2%, 2%, 0) scale(1.09); }
-      100% { transform: translate3d(2.2%, 0.5%, 0) scale(1.04); }
-    }
-
-    .click-ripple {
-      position: absolute;
-      width: 24px;
-      height: 24px;
-      margin-left: -12px;
-      margin-top: -12px;
-      border-radius: 50%;
-      border: 2px solid rgba(224, 242, 254, 0.85);
-      box-shadow: 0 0 14px rgba(56, 189, 248, 0.7), inset 0 0 8px rgba(255, 255, 255, 0.4);
-      pointer-events: none;
-      z-index: 4;
-      animation: rippleExpand 1.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-
-    @keyframes rippleExpand {
-      0%   { transform: scale(0.4); opacity: 0.95; }
-      100% { transform: scale(9.5); opacity: 0; }
-    }
-
-    .tank-pebbles {
-      position: absolute;
-      bottom: 14px;
-      left: 18px;
-      right: 18px;
-      height: 26px;
-      pointer-events: none;
-      z-index: 2;
-      opacity: 0.35;
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Malgun Gothic', 'Segoe UI', sans-serif;
+      background-color: var(--asphalt-950);
       background-image:
-        radial-gradient(ellipse 18px 11px at 4% 65%, #e0f2fe 0%, #38bdf8 75%, transparent 78%),
-        radial-gradient(ellipse 24px 13px at 8% 78%, #bae6fd 0%, #0284c7 75%, transparent 78%),
-        radial-gradient(ellipse 15px 9px at 13% 68%, #f0f9ff 0%, #7dd3fc 75%, transparent 78%),
-        radial-gradient(ellipse 22px 12px at 88% 72%, #e0f2fe 0%, #0284c7 75%, transparent 78%),
-        radial-gradient(ellipse 17px 10px at 93% 62%, #bae6fd 0%, #38bdf8 75%, transparent 78%),
-        radial-gradient(ellipse 20px 11px at 96% 80%, #f0f9ff 0%, #0369a1 75%, transparent 78%);
+        radial-gradient(circle at 15% 10%, rgba(255, 214, 0, 0.08), transparent 36%),
+        radial-gradient(circle at 85% 20%, rgba(255, 107, 0, 0.10), transparent 40%),
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 2px, transparent 2px, transparent 10px);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
     }
 
-    .tank-content {
-      position: relative;
-      z-index: 10;
-      padding: 22px 26px 40px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+    /* Ambient moving background drift & dust layer */
+    .ambient-track-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      opacity: 0.42;
     }
 
-    /* ============================================================
-       HEADER BAR
-       ============================================================ */
-    .tank-header {
+    .ambient-drift {
+      position: absolute;
+      width: 440px;
+      height: 440px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      filter: brightness(0.65);
+      animation: ambientDriftFloat 26s linear infinite;
+    }
+
+    .ambient-drift.d1 {
+      top: 12%;
+      left: -120px;
+      background-image: url('./img/drift_mark1.png');
+    }
+
+    .ambient-drift.d2 {
+      bottom: 8%;
+      right: -100px;
+      background-image: url('./img/drift_mark2.png');
+      animation-duration: 32s;
+      animation-direction: reverse;
+    }
+
+    .ambient-dust {
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      opacity: 0.24;
+      animation: dustSweep 18s ease-in-out infinite alternate;
+    }
+
+    .ambient-dust.u1 {
+      top: 22%;
+      right: 12%;
+      background-image: url('./img/dust1.png');
+    }
+
+    .ambient-dust.u2 {
+      bottom: 18%;
+      left: 10%;
+      background-image: url('./img/dust2.png');
+      animation-delay: -6s;
+    }
+
+    @keyframes ambientDriftFloat {
+      0% { transform: translateX(-40px) rotate(-6deg); }
+      50% { transform: translateX(60px) rotate(4deg); }
+      100% { transform: translateX(-40px) rotate(-6deg); }
+    }
+
+    @keyframes dustSweep {
+      0% { transform: translate(0, 0) scale(0.95); opacity: 0.16; }
+      100% { transform: translate(45px, -30px) scale(1.18); opacity: 0.32; }
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(11, 13, 17, 0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 2px solid var(--border);
+    }
+
+    .header-inner {
+      max-width: 1420px;
+      margin: 0 auto;
+      padding: 14px 24px;
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
-      padding: 13px 20px;
-      border-radius: 16px;
-      background: rgba(5, 36, 70, 0.58);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid var(--glass-border);
-      box-shadow: 0 10px 30px rgba(2, 20, 44, 0.35);
+      gap: 16px;
+      flex-wrap: wrap;
     }
 
-    .brand-area {
+    .brand {
       display: flex;
       align-items: center;
-      gap: 13px;
-    }
-
-    .brand-emblem {
-      width: 42px;
-      height: 42px;
-      border-radius: 13px;
-      background: linear-gradient(135deg, #38bdf8, #1d4ed8);
-      display: grid;
-      place-items: center;
-      font-size: 21px;
-      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.5), inset 0 1px 1px rgba(255,255,255,0.6);
-    }
-
-    .brand-title h1 {
-      font-size: 1.22rem;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-main);
     }
 
     .brand-badge {
-      font-size: 0.68rem;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: rgba(56, 189, 248, 0.25);
-      border: 1px solid rgba(125, 211, 252, 0.5);
-      color: #e0f2fe;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--grad-brand);
+      display: grid;
+      place-items: center;
+      color: #0B0D11;
+      font-weight: 900;
+      font-size: 19px;
+      letter-spacing: -0.04em;
+      box-shadow: 0 0 24px rgba(255, 107, 0, 0.45);
     }
 
-    .brand-sub {
-      font-size: 0.77rem;
+    .brand-title {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title strong {
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: 0.03em;
+      background: var(--grad-brand);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-title span {
+      font-size: 11px;
       color: var(--text-sub);
-      margin-top: 2px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
-    .tank-telemetry {
+    .nav-links {
       display: flex;
       align-items: center;
       gap: 8px;
-      flex-wrap: wrap;
     }
 
-    .telemetry-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: rgba(3, 27, 54, 0.62);
-      border: 1px solid rgba(125, 211, 252, 0.28);
-      font-size: 0.77rem;
-      color: #e0f2fe;
-    }
-
-    .status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--accent-emerald);
-      box-shadow: 0 0 8px var(--accent-emerald);
-    }
-
-    .led-switcher {
-      display: inline-flex;
-      background: rgba(3, 25, 50, 0.7);
-      padding: 3px;
-      border-radius: 999px;
-      border: 1px solid rgba(125, 211, 252, 0.28);
-    }
-
-    .led-btn {
-      border: none;
-      background: transparent;
+    .nav-links a {
       color: var(--text-sub);
-      font-size: 0.73rem;
-      font-weight: 600;
-      padding: 5px 10px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 8px 14px;
       border-radius: 999px;
-      cursor: pointer;
       transition: all 0.2s;
     }
 
-    .led-btn.active {
-      background: #0284c7;
-      color: #fff;
-      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.5);
+    .nav-links a:hover {
+      color: #0B0D11;
+      background: var(--yellow);
     }
 
     .header-actions {
@@ -326,2282 +219,2584 @@
       gap: 10px;
     }
 
-    .btn-glass {
-      border: 1px solid rgba(186, 230, 253, 0.42);
-      background: rgba(14, 116, 144, 0.35);
-      color: #fff;
-      padding: 8px 14px;
-      border-radius: 12px;
-      font-size: 0.83rem;
-      font-weight: 600;
+    .btn {
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 10px 16px;
+      font-size: 13.5px;
+      font-weight: 800;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 7px;
-      transition: all 0.2s ease;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
     }
 
-    .btn-glass:hover {
-      background: rgba(2, 132, 199, 0.65);
-      transform: translateY(-1px);
+    .btn:active {
+      transform: scale(0.97);
     }
 
-    .btn-primary-aqua {
-      border: none;
-      background: linear-gradient(135deg, #38bdf8, #2563eb);
-      color: #fff;
-      font-weight: 700;
-      font-size: 0.85rem;
-      padding: 9px 16px;
-      border-radius: 12px;
+    .btn-primary {
+      background: var(--grad-brand);
+      color: #0B0D11;
+      box-shadow: 0 6px 20px rgba(255, 107, 0, 0.35);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 8px 26px rgba(255, 214, 0, 0.45);
+      filter: brightness(1.06);
+    }
+
+    .btn-outline {
+      background: rgba(255, 214, 0, 0.08);
+      color: var(--yellow);
+      border: 1.5px solid rgba(255, 214, 0, 0.38);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 214, 0, 0.18);
+      border-color: var(--yellow);
+    }
+
+    .btn-ghost {
+      background: var(--asphalt-800);
+      color: var(--text-main);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--orange);
+      color: var(--yellow);
+    }
+
+    .cart-pill {
+      position: relative;
+      background: var(--asphalt-800);
+      color: var(--text-main);
+      border: 1.5px solid var(--orange);
+      padding: 9px 15px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 13.5px;
       cursor: pointer;
-      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.45);
+      display: flex;
+      align-items: center;
+      gap: 8px;
       transition: all 0.2s;
     }
 
-    .btn-primary-aqua:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.08);
+    .cart-pill:hover {
+      background: rgba(255, 107, 0, 0.18);
     }
 
-    .cart-count-pill {
-      background: #ffffff;
-      color: #0369a1;
-      font-weight: 800;
-      font-size: 0.75rem;
+    .cart-count {
+      background: var(--yellow);
+      color: #0B0D11;
+      font-weight: 900;
+      font-size: 12px;
       min-width: 22px;
       height: 22px;
-      padding: 0 6px;
       border-radius: 999px;
       display: inline-grid;
       place-items: center;
+      padding: 0 6px;
     }
 
-    /* ============================================================
-       CART TANK SHOWCASE: THE AQUARIUM ITSELF IS THE SHOPPING CART!
-       ============================================================ */
-    .cart-tank-showcase {
-      display: grid;
-      grid-template-columns: 1.5fr 1fr;
-      gap: 18px;
-      padding: 18px;
-      border-radius: 20px;
-      background: rgba(4, 31, 61, 0.54);
-      backdrop-filter: blur(12px);
-      border: 1.5px solid var(--glass-border);
-      box-shadow: 0 14px 36px rgba(2, 22, 48, 0.42);
-      transition: border-color 0.25s, box-shadow 0.25s;
+    .member-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 214, 0, 0.1);
+      border: 1px solid rgba(255, 214, 0, 0.35);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      color: var(--yellow-bright);
+      font-weight: 700;
     }
 
-    /* Rectangular Cart Aquarium Drop-Zone */
-    .cart-tank-viewport {
+    /* Main Layout */
+    main {
       position: relative;
-      border-radius: 16px;
+      z-index: 1;
+      max-width: 1420px;
+      margin: 0 auto;
+      padding: 22px 24px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 34px;
+    }
+
+    /* Live Top-Down Track Arena */
+    .arena-section {
+      background: var(--grad-card);
+      border: 2px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-glow);
       overflow: hidden;
-      min-height: 390px;
-      background:
-        radial-gradient(circle at 50% 45%, rgba(56, 189, 248, 0.46), rgba(3, 105, 161, 0.78) 72%, rgba(7, 89, 133, 0.94));
-      border: 2.5px solid rgba(186, 230, 253, 0.55);
-      box-shadow: inset 0 0 45px rgba(2, 32, 68, 0.65);
-      cursor: crosshair;
-      transition: all 0.25s ease;
     }
 
-    /* Highlight Cart Tank when dragging a fish! */
-    .cart-tank-viewport.drag-target-ready {
-      border: 2.5px dashed #7dd3fc;
-      box-shadow: inset 0 0 40px rgba(56, 189, 248, 0.55), 0 0 25px rgba(56, 189, 248, 0.45);
+    .arena-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 14px 20px;
+      background: linear-gradient(90deg, rgba(255, 214, 0, 0.14), rgba(255, 107, 0, 0.14));
+      border-bottom: 1px solid var(--border);
     }
 
-    .cart-tank-viewport.drag-over {
-      border: 3px solid #fde047;
-      box-shadow: inset 0 0 60px rgba(253, 224, 71, 0.35), 0 0 36px rgba(56, 189, 248, 0.95);
-      transform: scale(1.006);
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 59, 92, 0.16);
+      border: 1px solid rgba(255, 59, 92, 0.5);
+      color: #FF7A90;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.06em;
     }
 
-    #swimCanvas {
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #FF3B5C;
+      box-shadow: 0 0 10px #FF3B5C;
+      animation: pulseDot 1.2s infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.35; transform: scale(0.75); }
+    }
+
+    .active-car-banner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .active-car-thumb {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+      background: radial-gradient(circle, rgba(255,214,0,0.22), rgba(11,13,17,0.8));
+      border-radius: 10px;
+      border: 1px solid var(--yellow);
+      padding: 3px;
+    }
+
+    .active-car-meta h2 {
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--yellow);
+    }
+
+    .active-car-meta p {
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+
+    .arena-quick-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .canvas-wrapper {
+      position: relative;
+      width: 100%;
+      height: 490px;
+      background: #101319;
+      overflow: hidden;
+    }
+
+    #trackCanvas {
       width: 100%;
       height: 100%;
       display: block;
     }
 
-    .tank-drop-overlay-banner {
+    .track-overlay-tip {
       position: absolute;
-      inset: 14px;
-      border-radius: 12px;
-      border: 2px dashed rgba(253, 224, 71, 0.85);
-      background: rgba(3, 32, 68, 0.36);
-      display: none;
+      top: 14px;
+      left: 16px;
+      background: rgba(11, 13, 17, 0.84);
+      border: 1px solid rgba(255, 214, 0, 0.35);
+      border-radius: 10px;
+      padding: 8px 13px;
+      font-size: 12.5px;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      pointer-events: none;
+      backdrop-filter: blur(8px);
+    }
+
+    .keycap {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      pointer-events: none;
-      z-index: 6;
-    }
-
-    .cart-tank-viewport.drag-target-ready .tank-drop-overlay-banner {
-      display: flex;
-    }
-
-    .tank-drop-overlay-banner span {
-      background: rgba(3, 24, 48, 0.88);
-      border: 1.5px solid #fde047;
-      color: #fef08a;
-      font-size: 0.95rem;
-      font-weight: 800;
-      padding: 10px 20px;
-      border-radius: 999px;
-      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.55);
-    }
-
-    .swim-hud-top {
-      position: absolute;
-      top: 12px;
-      left: 14px;
-      right: 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      pointer-events: none;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .cart-tank-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(3, 24, 48, 0.76);
-      border: 1px solid rgba(125, 211, 252, 0.5);
-      padding: 6px 13px;
-      border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: 800;
-      color: #f0f9ff;
-    }
-
-    .rec-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #38bdf8;
-      animation: pulseDot 1.4s infinite;
-    }
-
-    @keyframes pulseDot {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.45); opacity: 0.55; }
-    }
-
-    .swim-hint-tag {
-      background: rgba(3, 24, 48, 0.68);
-      padding: 5px 11px;
-      border-radius: 999px;
-      font-size: 0.74rem;
-      color: #bae6fd;
-    }
-
-    /* Empty Cart Tank Watermark Hint */
-    .empty-tank-guide {
-      position: absolute;
-      left: 50%;
-      bottom: 54px;
-      transform: translateX(-50%);
-      background: rgba(3, 24, 48, 0.72);
-      border: 1px dashed rgba(125, 211, 252, 0.55);
-      color: #e0f2fe;
-      font-size: 0.78rem;
-      padding: 6px 14px;
-      border-radius: 999px;
-      pointer-events: none;
-      white-space: nowrap;
-      text-align: center;
-    }
-
-    .swim-controls-bar {
-      position: absolute;
-      bottom: 12px;
-      left: 14px;
-      right: 14px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .swim-action-group {
-      display: flex;
-      gap: 7px;
-      flex-wrap: wrap;
-    }
-
-    .btn-tank-ctrl {
-      border: 1px solid rgba(186, 230, 253, 0.45);
-      background: rgba(4, 34, 68, 0.78);
-      backdrop-filter: blur(8px);
-      color: #f0f9ff;
-      padding: 6px 12px;
-      border-radius: 10px;
-      font-size: 0.77rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.18s;
-    }
-
-    .btn-tank-ctrl:hover {
-      background: #0284c7;
-      border-color: #7dd3fc;
-    }
-
-    /* ============================================================
-       RIGHT SIDE OF TANK: SELECTED FISH PREVIEW + LIVE CART TANK ROSTER
-       ============================================================ */
-    .tank-side-panel {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .preview-card-box {
-      background: rgba(3, 27, 54, 0.62);
-      border: 1px solid rgba(125, 211, 252, 0.3);
-      border-radius: 15px;
-      padding: 13px 15px;
-    }
-
-    .preview-top-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 8px;
-    }
-
-    .inspector-eyebrow {
-      font-size: 0.7rem;
-      font-weight: 800;
-      letter-spacing: 0.05em;
-      color: var(--accent-cyan);
-    }
-
-    .preview-top-row h2 {
-      font-size: 1.18rem;
-      font-weight: 800;
-      color: #ffffff;
-      margin-top: 2px;
-    }
-
-    .preview-price-tag {
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: #7dd3fc;
-      white-space: nowrap;
-    }
-
-    .preview-desc {
-      font-size: 0.8rem;
-      line-height: 1.45;
-      color: #e0f2fe;
-      margin-top: 6px;
-    }
-
-    .preview-specs-inline {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 8px;
-    }
-
-    .mini-spec-chip {
-      font-size: 0.71rem;
-      background: rgba(2, 132, 199, 0.26);
-      border: 1px solid rgba(125, 211, 252, 0.28);
-      color: #bae6fd;
-      padding: 3px 8px;
-      border-radius: 7px;
-    }
-
-    /* Live Cart Tank Roster Box */
-    .cart-roster-box {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      background: rgba(3, 24, 48, 0.72);
-      border: 1.5px solid rgba(56, 189, 248, 0.42);
-      border-radius: 15px;
-      padding: 13px 15px;
-      gap: 10px;
-    }
-
-    .roster-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .roster-header h3 {
-      font-size: 0.94rem;
-      font-weight: 800;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .roster-list {
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-      max-height: 145px;
-      overflow-y: auto;
-      padding-right: 3px;
-    }
-
-    .roster-empty {
-      text-align: center;
-      font-size: 0.79rem;
-      color: #93c5fd;
-      padding: 16px 8px;
-      border: 1px dashed rgba(125, 211, 252, 0.3);
-      border-radius: 10px;
-    }
-
-    .roster-item {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      background: rgba(7, 46, 84, 0.65);
-      border: 1px solid rgba(125, 211, 252, 0.25);
-      border-radius: 10px;
-      padding: 6px 9px;
-      font-size: 0.8rem;
-    }
-
-    .roster-item img {
-      width: 34px;
-      height: 34px;
-      object-fit: contain;
-      background: rgba(2, 132, 199, 0.35);
-      border-radius: 7px;
-      padding: 2px;
-    }
-
-    .roster-item-name {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .roster-item-name strong {
-      display: block;
-      font-size: 0.81rem;
-      color: #fff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .roster-item-name span {
-      font-size: 0.72rem;
-      color: #7dd3fc;
-    }
-
-    .qty-stepper {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(3, 24, 48, 0.9);
-      border: 1px solid rgba(125, 211, 252, 0.35);
-      border-radius: 8px;
       padding: 2px 7px;
+      border-radius: 5px;
+      background: var(--asphalt-800);
+      border: 1px solid var(--yellow);
+      color: var(--yellow);
+      font-weight: 900;
+      font-size: 11.5px;
     }
 
-    .qty-stepper button {
-      border: none;
-      background: transparent;
-      color: #fff;
-      font-weight: 800;
-      cursor: pointer;
-      width: 17px;
-      font-size: 0.9rem;
-    }
-
-    .roster-checkout-footer {
-      border-top: 1px solid rgba(186, 230, 253, 0.22);
-      padding-top: 10px;
-      display: flex;
+    /* Cockpit Control Deck (Click & Hold Drag Steering Wheel + Telemetry + Arrow Pedals) */
+    .cockpit-deck {
+      display: grid;
+      grid-template-columns: 1.1fr 1.3fr 1fr;
+      gap: 16px;
+      padding: 16px 20px;
+      background: linear-gradient(180deg, #131720 0%, #0C0E13 100%);
+      border-top: 1.5px solid var(--border);
       align-items: center;
-      justify-content: space-between;
+    }
+
+    .telemetry-panel {
+      background: var(--asphalt-850);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
       gap: 10px;
     }
 
-    .roster-total-info small {
-      display: block;
-      font-size: 0.71rem;
-      color: #bae6fd;
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
     }
 
-    .roster-total-info strong {
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: #ffffff;
+    .tele-box {
+      background: rgba(11, 13, 17, 0.7);
+      border: 1px solid rgba(255, 214, 0, 0.16);
+      border-radius: 10px;
+      padding: 8px 10px;
     }
 
-    /* ============================================================
-       FILTER & DRAG INSTRUCTION TOOLBAR
-       ============================================================ */
-    .catalog-toolbar {
+    .tele-label {
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .tele-val {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--yellow);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .tele-val.orange {
+      color: var(--orange);
+    }
+
+    .drift-bar-wrap {
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .drift-bar-head {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11.5px;
+      color: var(--text-sub);
+      font-weight: 700;
+    }
+
+    .drift-bar-bg {
+      height: 8px;
+      border-radius: 999px;
+      background: #0B0D11;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .drift-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--grad-brand);
+      transition: width 0.2s ease;
+    }
+
+    /* Interactive Click-and-Hold Drag Steering Wheel */
+    .wheel-console {
+      background: radial-gradient(circle at center, rgba(255, 107, 0, 0.14), rgba(15, 18, 25, 0.96));
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      padding: 11px 16px;
-      border-radius: 14px;
-      background: rgba(4, 32, 62, 0.5);
-      border: 1px solid rgba(186, 230, 253, 0.28);
+      gap: 16px;
+      position: relative;
     }
 
-    .filter-pills {
+    .wheel-stage {
+      position: relative;
+      width: 146px;
+      height: 146px;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      cursor: grab;
+      touch-action: none;
+    }
+
+    .wheel-stage.dragging {
+      cursor: grabbing;
+    }
+
+    .wheel-ring-glow {
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 2px dashed rgba(255, 214, 0, 0.45);
+      pointer-events: none;
+      transition: all 0.2s ease;
+    }
+
+    .wheel-stage.dragging .wheel-ring-glow {
+      border-style: solid;
+      border-color: var(--orange);
+      box-shadow: 0 0 28px rgba(255, 107, 0, 0.65), inset 0 0 18px rgba(255, 214, 0, 0.35);
+      transform: scale(1.04);
+    }
+
+    #steeringWheelSvg {
+      width: 136px;
+      height: 136px;
+      filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.75));
+      pointer-events: none;
+      transform-origin: 50% 50%;
+    }
+
+    .wheel-info {
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
     }
 
-    .filter-pill {
-      border: 1px solid rgba(125, 211, 252, 0.35);
-      background: rgba(3, 28, 56, 0.55);
-      color: #bae6fd;
-      padding: 6px 13px;
+    .wheel-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      width: fit-content;
+      padding: 4px 10px;
       border-radius: 999px;
-      font-size: 0.81rem;
-      font-weight: 600;
+      font-size: 11px;
+      font-weight: 900;
+      background: rgba(255, 214, 0, 0.14);
+      color: var(--yellow);
+      border: 1px solid rgba(255, 214, 0, 0.35);
+    }
+
+    .wheel-status-pill.active {
+      background: var(--orange);
+      color: #0B0D11;
+      border-color: var(--yellow);
+      box-shadow: 0 0 14px rgba(255, 107, 0, 0.6);
+    }
+
+    .wheel-angle-readout {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--text-main);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .wheel-angle-readout span {
+      font-size: 13px;
+      color: var(--orange);
+      margin-left: 6px;
+      font-weight: 800;
+    }
+
+    .wheel-help {
+      font-size: 12px;
+      color: var(--text-sub);
+      line-height: 1.4;
+    }
+
+    /* Arrow Pedals Console */
+    .pedal-console {
+      background: var(--asphalt-850);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .pedal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-sub);
+    }
+
+    .pedal-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .pedal-btn {
+      border: 1.5px solid rgba(255, 214, 0, 0.3);
+      background: linear-gradient(180deg, #232A38 0%, #151922 100%);
+      color: var(--text-main);
+      border-radius: 12px;
+      padding: 12px 10px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-weight: 900;
+      font-size: 13px;
+      transition: all 0.12s;
+      touch-action: none;
+    }
+
+    .pedal-btn .arrow-icon {
+      font-size: 18px;
+      color: var(--yellow);
+    }
+
+    .pedal-btn small {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .pedal-btn.gas.pressed {
+      background: linear-gradient(180deg, #FFD600 0%, #FF6B00 100%);
+      color: #0B0D11;
+      border-color: #FFF;
+      transform: translateY(2px);
+      box-shadow: 0 0 20px rgba(255, 214, 0, 0.5);
+    }
+
+    .pedal-btn.gas.pressed .arrow-icon,
+    .pedal-btn.gas.pressed small {
+      color: #0B0D11;
+    }
+
+    .pedal-btn.brake.pressed {
+      background: linear-gradient(180deg, #FF3B5C 0%, #B91C1C 100%);
+      color: #FFF;
+      border-color: #FCA5A5;
+      transform: translateY(2px);
+      box-shadow: 0 0 20px rgba(255, 59, 92, 0.55);
+    }
+
+    .pedal-btn.brake.pressed .arrow-icon,
+    .pedal-btn.brake.pressed small {
+      color: #FFF;
+    }
+
+    .drift-space-btn {
+      width: 100%;
+      padding: 7px 10px;
+      border-radius: 8px;
+      background: rgba(255, 107, 0, 0.14);
+      border: 1px solid rgba(255, 107, 0, 0.45);
+      color: var(--orange);
+      font-size: 11.5px;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+    }
+
+    .drift-space-btn.pressed,
+    .drift-space-btn:active {
+      background: var(--orange);
+      color: #0B0D11;
+    }
+
+    /* Showroom Section */
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .section-title-group h2 {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title-group h2 span {
+      background: var(--grad-brand);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-title-group p {
+      color: var(--text-sub);
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .filter-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-chip {
+      padding: 8px 15px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: var(--asphalt-850);
+      color: var(--text-sub);
+      font-size: 13px;
+      font-weight: 800;
       cursor: pointer;
       transition: all 0.2s;
     }
 
-    .filter-pill.active,
-    .filter-pill:hover {
-      background: #0284c7;
-      color: #ffffff;
-      border-color: #7dd3fc;
+    .filter-chip:hover {
+      border-color: var(--yellow);
+      color: var(--yellow);
     }
 
-    .drag-guide-banner {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.81rem;
-      color: #e0f2fe;
-      background: rgba(2, 132, 199, 0.34);
-      border: 1px dashed rgba(125, 211, 252, 0.65);
-      padding: 6px 14px;
+    .filter-chip.active {
+      background: var(--grad-brand);
+      color: #0B0D11;
+      border-color: transparent;
+      box-shadow: 0 4px 16px rgba(255, 107, 0, 0.35);
+    }
+
+    .sort-select {
+      padding: 8px 12px;
       border-radius: 999px;
+      background: var(--asphalt-850);
+      color: var(--text-main);
+      border: 1px solid rgba(255, 214, 0, 0.35);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
     }
 
-    /* ============================================================
-       FISH PRODUCT GRID
-       ============================================================ */
-    .fish-grid {
+    /* Product Grid */
+    .product-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 22px;
     }
 
-    .fish-card {
-      position: relative;
-      border-radius: 18px;
-      background: var(--glass-card);
-      backdrop-filter: blur(10px);
-      border: 1.5px solid var(--glass-border);
-      padding: 15px;
+    .product-card {
+      background: var(--grad-card);
+      border: 1.5px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      gap: 11px;
+      transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+      position: relative;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--yellow);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55), 0 0 24px rgba(255, 214, 0, 0.16);
+    }
+
+    .product-card.selected-drive {
+      border: 2px solid var(--orange);
+      box-shadow: 0 0 32px rgba(255, 107, 0, 0.35);
+    }
+
+    /* Photorealistic Studio Showroom Display Stage */
+    .studio-photo-stage {
+      position: relative;
+      height: 255px;
+      background:
+        radial-gradient(circle at 50% 48%, #F8FAFC 0%, #E2E8F0 52%, #CBD5E1 85%, #94A3B8 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
       cursor: pointer;
-      transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      border-bottom: 2px solid rgba(255, 107, 0, 0.4);
     }
 
-    .fish-card:hover {
-      transform: translateY(-4px);
-      background: var(--glass-card-hover);
-      border-color: #7dd3fc;
-      box-shadow: 0 16px 34px rgba(2, 24, 52, 0.48);
+    .studio-photo-stage::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 15%, rgba(255, 255, 255, 0.85), transparent 60%),
+        repeating-linear-gradient(90deg, rgba(15, 23, 42, 0.03) 0px, rgba(15, 23, 42, 0.03) 1px, transparent 1px, transparent 36px);
+      pointer-events: none;
     }
 
-    .fish-card.selected-tank {
-      border-color: #38bdf8;
-      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.55), 0 16px 34px rgba(2, 24, 52, 0.5);
+    .studio-turntable-ring {
+      position: absolute;
+      width: 210px;
+      height: 210px;
+      border-radius: 50%;
+      border: 1.5px dashed rgba(15, 23, 42, 0.16);
+      pointer-events: none;
     }
 
-    .fish-card.dragging-source {
-      opacity: 0.45;
-      transform: scale(0.97);
+    .studio-car-img {
+      position: relative;
+      z-index: 2;
+      width: 224px;
+      height: 224px;
+      object-fit: contain;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      filter: drop-shadow(0 14px 18px rgba(15, 23, 42, 0.32));
     }
 
-    .card-top-meta {
+    .product-card:hover .studio-car-img {
+      transform: scale(1.07) rotate(-4deg);
+    }
+
+    .card-badges {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      z-index: 3;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 6px;
-    }
-
-    .tag-chip {
-      font-size: 0.71rem;
-      font-weight: 700;
-      padding: 3px 9px;
-      border-radius: 999px;
-      background: rgba(56, 189, 248, 0.22);
-      color: #e0f2fe;
-      border: 1px solid rgba(125, 211, 252, 0.35);
-    }
-
-    .in-tank-count-badge {
-      font-size: 0.71rem;
-      font-weight: 800;
-      padding: 3px 9px;
-      border-radius: 999px;
-      background: rgba(52, 211, 153, 0.22);
-      border: 1px solid rgba(52, 211, 153, 0.55);
-      color: #a7f3d0;
-    }
-
-    .drag-handle-pill {
-      font-size: 0.71rem;
-      color: #bae6fd;
-      background: rgba(3, 25, 50, 0.65);
-      padding: 3px 9px;
-      border-radius: 999px;
-      cursor: grab;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .fish-tank-window {
-      position: relative;
-      height: 185px;
-      border-radius: 14px;
-      background: radial-gradient(circle at 50% 45%, rgba(56, 189, 248, 0.35), rgba(3, 105, 161, 0.68));
-      border: 1px solid rgba(186, 230, 253, 0.32);
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-    }
-
-    .fish-tank-window img.fish-thumb {
-      width: 152px;
-      height: 152px;
-      object-fit: contain;
       pointer-events: none;
-      transition: transform 0.35s ease;
-      animation: idleFloat 3.6s ease-in-out infinite;
     }
 
-    .fish-card:nth-child(2n) .fish-tank-window img.fish-thumb { animation-delay: -1.4s; }
-    .fish-card:nth-child(3n) .fish-tank-window img.fish-thumb { animation-delay: -2.3s; }
-
-    @keyframes idleFloat {
-      0%, 100% { transform: translateY(0px) rotate(-2deg); }
-      50%      { transform: translateY(-6px) rotate(2.5deg); }
+    .badge-scale {
+      background: #0B0D11;
+      color: var(--yellow);
+      font-size: 11px;
+      font-weight: 900;
+      padding: 4px 10px;
+      border-radius: 6px;
+      letter-spacing: 0.04em;
     }
 
-    .fish-card:hover .fish-tank-window img.fish-thumb {
-      transform: scale(1.08) rotate(4deg);
-    }
-
-    .swim-trigger-overlay {
-      position: absolute;
-      bottom: 8px;
-      right: 8px;
-      background: rgba(3, 24, 48, 0.78);
-      border: 1px solid rgba(125, 211, 252, 0.45);
-      color: #f0f9ff;
-      font-size: 0.71rem;
-      font-weight: 700;
-      padding: 4px 9px;
+    .badge-drive-now {
+      background: var(--orange);
+      color: #0B0D11;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 4px 10px;
       border-radius: 999px;
+      box-shadow: 0 4px 12px rgba(255, 107, 0, 0.45);
     }
 
-    .card-info h3 {
-      font-size: 1.03rem;
+    .hover-drive-overlay {
+      position: absolute;
+      bottom: 10px;
+      right: 12px;
+      z-index: 3;
+      background: rgba(11, 13, 17, 0.88);
+      color: var(--yellow);
+      border: 1px solid var(--yellow);
+      padding: 5px 11px;
+      border-radius: 999px;
+      font-size: 11.5px;
       font-weight: 800;
-      color: #ffffff;
+      backdrop-filter: blur(6px);
     }
 
-    .card-info p {
-      font-size: 0.79rem;
+    .card-body {
+      padding: 18px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .card-category {
+      font-size: 11.5px;
+      font-weight: 800;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .card-title {
+      font-size: 19px;
+      font-weight: 900;
+      color: var(--text-main);
+      margin-top: 2px;
+    }
+
+    .card-desc {
+      font-size: 13px;
       color: var(--text-sub);
-      margin-top: 3px;
-      line-height: 1.4;
+      line-height: 1.45;
+    }
+
+    .spec-pills {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      background: rgba(11, 13, 17, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 9px 10px;
+    }
+
+    .spec-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .spec-item span {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .spec-item strong {
+      font-size: 12.5px;
+      color: var(--yellow-bright);
+      font-weight: 800;
     }
 
     .card-footer {
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
-      margin-top: auto;
-      padding-top: 10px;
-      border-top: 1px solid rgba(186, 230, 253, 0.18);
-    }
-
-    .card-price {
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: #ffffff;
-    }
-
-    .card-actions {
-      display: flex;
-      gap: 6px;
-    }
-
-    .btn-card-sub {
-      border: 1px solid rgba(125, 211, 252, 0.45);
-      background: rgba(3, 32, 64, 0.65);
-      color: #e0f2fe;
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 6px 9px;
-      border-radius: 9px;
-      cursor: pointer;
-      transition: all 0.18s;
-    }
-
-    .btn-card-sub:hover {
-      background: rgba(2, 132, 199, 0.8);
-      color: #fff;
-    }
-
-    .btn-card-add {
-      border: none;
-      background: linear-gradient(135deg, #0ea5e9, #2563eb);
-      color: #fff;
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 6px 11px;
-      border-radius: 9px;
-      cursor: pointer;
-      transition: all 0.18s;
-    }
-
-    .btn-card-add:hover {
-      filter: brightness(1.1);
-    }
-
-    /* ============================================================
-       FLOATING BOTTOM-RIGHT DROP TARGET (WHEN SCROLLED DOWN)
-       ============================================================ */
-    .floating-tank-dock {
-      position: fixed;
-      right: 24px;
-      bottom: 24px;
-      z-index: 90;
-      display: flex;
-      align-items: center;
       gap: 10px;
-      padding: 12px 18px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, rgba(14, 165, 233, 0.94), rgba(29, 78, 216, 0.96));
-      border: 2px dashed rgba(224, 242, 254, 0.88);
-      color: #fff;
-      font-weight: 800;
-      font-size: 0.85rem;
-      cursor: pointer;
-      box-shadow: 0 14px 34px rgba(2, 18, 42, 0.65);
-      transition: all 0.22s ease;
     }
 
-    .floating-tank-dock:hover,
-    .floating-tank-dock.drag-over {
-      transform: scale(1.08);
-      border-style: solid;
-      border-color: #fde047;
-      box-shadow: 0 0 32px rgba(56, 189, 248, 0.95);
-    }
-
-    /* Custom Pointer Drag Ghost */
-    #dragGhost {
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-      width: 114px;
-      height: 114px;
-      margin-left: -57px;
-      margin-top: -57px;
-      display: none;
+    .price-block {
+      display: flex;
       flex-direction: column;
+    }
+
+    .price-orig {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-decoration: line-through;
+    }
+
+    .price-now {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--yellow);
+    }
+
+    .card-btn-group {
+      display: flex;
+      gap: 7px;
+    }
+
+    /* Promo & Coupon Strip */
+    .promo-strip {
+      background: linear-gradient(90deg, rgba(255, 214, 0, 0.14), rgba(255, 107, 0, 0.18));
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      padding: 18px 24px;
+      display: flex;
       align-items: center;
-      justify-content: center;
-      filter: drop-shadow(0 14px 22px rgba(2, 20, 48, 0.72));
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
     }
 
-    #dragGhost img {
-      width: 96px;
-      height: 96px;
-      object-fit: contain;
-      animation: ghostSwim 0.45s ease-in-out infinite alternate;
+    .promo-strip h3 {
+      font-size: 17px;
+      font-weight: 900;
+      color: var(--yellow);
     }
 
-    #dragGhost span {
-      background: rgba(3, 28, 56, 0.9);
-      color: #e0f2fe;
-      font-size: 0.7rem;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 999px;
-      border: 1px solid #38bdf8;
-      white-space: nowrap;
+    .promo-strip p {
+      font-size: 13.5px;
+      color: var(--text-sub);
     }
 
-    @keyframes ghostSwim {
-      from { transform: rotate(-8deg) scale(1.02); }
-      to   { transform: rotate(8deg) scale(1.08); }
+    .coupon-badges {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
-    /* ============================================================
-       MODALS (AUTH & CHECKOUT)
-       ============================================================ */
-    .modal-backdrop {
+    .coupon-tag {
+      background: #0B0D11;
+      border: 1.5px dashed var(--yellow);
+      color: var(--yellow);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    /* Modals & Drawers */
+    .backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(2, 12, 27, 0.76);
+      background: rgba(5, 7, 11, 0.78);
       backdrop-filter: blur(8px);
-      z-index: 200;
+      z-index: 300;
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 18px;
+      padding: 20px;
     }
 
-    .modal-backdrop.open {
+    .backdrop.open {
       display: flex;
     }
 
-    .modal-card {
+    .modal-box {
+      background: var(--asphalt-900);
+      border: 2px solid var(--border-strong);
+      border-radius: var(--radius-lg);
       width: 100%;
       max-width: 520px;
       max-height: 90vh;
       overflow-y: auto;
-      border-radius: 22px;
-      background: linear-gradient(165deg, #072c54 0%, #041d3a 100%);
-      border: 1.5px solid rgba(125, 211, 252, 0.45);
-      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.82);
       padding: 24px;
-      color: #f0f9ff;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75);
       position: relative;
     }
 
-    .modal-card.wide {
-      max-width: 680px;
-    }
-
-    .modal-header {
+    .modal-head {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding-bottom: 14px;
-      border-bottom: 1px solid rgba(186, 230, 253, 0.22);
+      justify-content: space-between;
       margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
 
-    .modal-header h3 {
-      font-size: 1.2rem;
-      font-weight: 800;
+    .modal-head h3 {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--yellow);
     }
 
-    .btn-close-modal {
+    .close-btn {
       width: 34px;
       height: 34px;
-      border-radius: 10px;
-      border: 1px solid rgba(186, 230, 253, 0.35);
-      background: rgba(3, 27, 54, 0.7);
-      color: #e0f2fe;
-      font-size: 1.1rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: var(--asphalt-800);
+      color: var(--text-main);
+      font-size: 18px;
       cursor: pointer;
-    }
-
-    .auth-tabs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      background: rgba(3, 20, 42, 0.7);
-      padding: 5px;
-      border-radius: 12px;
-      margin-bottom: 16px;
-    }
-
-    .auth-tab {
-      border: none;
-      background: transparent;
-      color: var(--text-sub);
-      font-weight: 700;
-      padding: 9px;
-      border-radius: 9px;
-      cursor: pointer;
-    }
-
-    .auth-tab.active {
-      background: #0284c7;
-      color: #fff;
     }
 
     .form-group {
       display: flex;
       flex-direction: column;
       gap: 6px;
-      margin-bottom: 13px;
+      margin-bottom: 14px;
     }
 
     .form-group label {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: #bae6fd;
+      font-size: 12.5px;
+      font-weight: 800;
+      color: var(--text-sub);
     }
 
     .form-control {
-      background: rgba(3, 22, 46, 0.85);
-      border: 1px solid rgba(125, 211, 252, 0.38);
-      border-radius: 11px;
-      padding: 10px 13px;
-      color: #ffffff;
-      font-size: 0.88rem;
+      background: var(--asphalt-950);
+      border: 1.5px solid rgba(255, 255, 255, 0.14);
+      border-radius: 10px;
+      padding: 11px 13px;
+      color: var(--text-main);
+      font-size: 14px;
       outline: none;
     }
 
     .form-control:focus {
-      border-color: #38bdf8;
-      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
+      border-color: var(--yellow);
     }
 
-    .checkbox-row {
+    .tab-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .tab-btn {
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: var(--asphalt-850);
+      color: var(--text-sub);
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      background: var(--grad-brand);
+      color: #0B0D11;
+      border-color: transparent;
+    }
+
+    /* Slide-over Cart Drawer */
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 7, 11, 0.72);
+      backdrop-filter: blur(6px);
+      z-index: 280;
+      display: none;
+      justify-content: flex-end;
+    }
+
+    .drawer-backdrop.open {
+      display: flex;
+    }
+
+    .cart-drawer {
+      width: 100%;
+      max-width: 450px;
+      height: 100%;
+      background: var(--asphalt-900);
+      border-left: 2px solid var(--orange);
+      display: flex;
+      flex-direction: column;
+      padding: 22px;
+      overflow-y: auto;
+    }
+
+    .cart-items {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 14px 0;
+      overflow-y: auto;
+    }
+
+    .cart-item {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 0.8rem;
-      color: #bae6fd;
-      margin: 8px 0 16px;
+      gap: 12px;
+      background: var(--asphalt-850);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 10px 12px;
+    }
+
+    .cart-item img {
+      width: 58px;
+      height: 58px;
+      object-fit: contain;
+      background: #E2E8F0;
+      border-radius: 8px;
+      padding: 4px;
+    }
+
+    .cart-item-info {
+      flex: 1;
+    }
+
+    .cart-item-info h4 {
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .cart-item-info p {
+      font-size: 13px;
+      color: var(--yellow);
+      font-weight: 800;
+    }
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .qty-btn {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: var(--asphalt-800);
+      color: var(--text-main);
+      font-weight: 900;
+      cursor: pointer;
     }
 
     .summary-box {
-      margin-top: 14px;
+      background: var(--asphalt-950);
+      border: 1px solid var(--border);
+      border-radius: 12px;
       padding: 14px;
-      border-radius: 14px;
-      background: rgba(3, 24, 48, 0.72);
-      border: 1px solid rgba(125, 211, 252, 0.28);
       display: flex;
       flex-direction: column;
       gap: 8px;
-      font-size: 0.86rem;
+      font-size: 13.5px;
     }
 
     .summary-row {
       display: flex;
       justify-content: space-between;
-      color: #bae6fd;
-      gap: 12px;
+      color: var(--text-sub);
     }
 
     .summary-row.total {
-      border-top: 1px solid rgba(186, 230, 253, 0.25);
-      padding-top: 8px;
-      font-size: 1.08rem;
-      font-weight: 800;
-      color: #ffffff;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 10px;
+      margin-top: 4px;
+      font-size: 17px;
+      font-weight: 900;
+      color: var(--yellow);
     }
 
     .pay-methods {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 9px;
-      margin-top: 6px;
+      gap: 8px;
+      margin: 10px 0;
     }
 
-    .pay-method-card {
-      border: 1.5px solid rgba(125, 211, 252, 0.32);
-      background: rgba(3, 24, 48, 0.7);
-      border-radius: 12px;
-      padding: 11px;
-      text-align: center;
-      font-size: 0.84rem;
-      font-weight: 700;
+    .pay-method-btn {
+      padding: 10px;
+      border-radius: 10px;
+      border: 1.5px solid rgba(255,255,255,0.14);
+      background: var(--asphalt-850);
+      color: var(--text-main);
+      font-size: 12.5px;
+      font-weight: 800;
       cursor: pointer;
-      transition: all 0.18s;
+      text-align: center;
     }
 
-    .pay-method-card.selected {
-      border-color: #38bdf8;
-      background: rgba(2, 132, 199, 0.45);
-      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.35);
+    .pay-method-btn.active {
+      border-color: var(--yellow);
+      background: rgba(255, 214, 0, 0.14);
+      color: var(--yellow);
     }
 
     /* Toast Notification */
-    #toastBox {
+    .toast {
       position: fixed;
-      top: 22px;
+      bottom: 24px;
       left: 50%;
-      transform: translateX(-50%) translateY(-20px);
-      background: rgba(4, 34, 68, 0.95);
-      border: 1.5px solid #38bdf8;
-      color: #f0f9ff;
-      padding: 11px 20px;
+      transform: translateX(-50%) translateY(90px);
+      background: #0B0D11;
+      border: 2px solid var(--yellow);
+      color: var(--text-main);
+      padding: 12px 22px;
       border-radius: 999px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.6);
-      z-index: 9999;
+      font-size: 13.5px;
+      font-weight: 800;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65);
+      z-index: 500;
       opacity: 0;
+      transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
       pointer-events: none;
-      transition: all 0.28s ease;
     }
 
-    #toastBox.show {
+    .toast.show {
       opacity: 1;
       transform: translateX(-50%) translateY(0);
     }
 
-    @media (max-width: 1020px) {
-      .cart-tank-showcase {
+    @media (max-width: 1024px) {
+      .cockpit-deck {
         grid-template-columns: 1fr;
       }
-      .fish-grid {
-        grid-template-columns: repeat(2, 1fr);
+      .canvas-wrapper {
+        height: 400px;
       }
-    }
-
-    @media (max-width: 620px) {
-      body { padding: 10px; }
-      .fish-grid { grid-template-columns: 1fr; }
-      .tank-content { padding: 15px; }
     }
   </style>
 </head>
 <body>
-  <div id="toastBox"></div>
 
-  <!-- Custom Pointer Drag Ghost -->
-  <div id="dragGhost">
-    <img id="dragGhostImg" src="" alt="" />
-    <span id="dragGhostLabel">수조 장바구니로 입수...</span>
+  <!-- Ambient Moving Drift Marks & Dust Background -->
+  <div class="ambient-track-bg" aria-hidden="true">
+    <div class="ambient-drift d1"></div>
+    <div class="ambient-drift d2"></div>
+    <div class="ambient-dust u1"></div>
+    <div class="ambient-dust u2"></div>
   </div>
 
-  <!-- Floating Bottom-Right Quick Drop / Scroll-to-Tank Dock -->
-  <button class="floating-tank-dock" id="floatingTankDock" type="button" onclick="scrollToCartTank()">
-    <span>🐠 장바구니 수조</span>
-    <span class="cart-count-pill" id="floatingCartCount">0</span>
-  </button>
+  <!-- Sticky Header -->
+  <header>
+    <div class="header-inner">
+      <a href="#arenaSection" class="brand">
+        <div class="brand-badge">RC</div>
+        <div class="brand-title">
+          <strong>APEX RC CIRCUIT</strong>
+          <span>Real-Photo Top-Down Test &amp; Pro Shop</span>
+        </div>
+      </a>
 
-  <!-- TOP-DOWN RECTANGULAR BLUE AQUARIUM -->
-  <div class="aquarium-outer-bezel">
-    <main class="aquarium-tank" id="mainAquariumTank">
-      <!-- 5 Moving Rippling Water Wave PNG Layers -->
-      <div class="water-waves-stage" aria-hidden="true">
-        <img src="img/wave1.png" alt="" class="wave-layer wave-1" />
-        <img src="img/wave2.png" alt="" class="wave-layer wave-2" />
-        <img src="img/wave3.png" alt="" class="wave-layer wave-3" />
-        <img src="img/wave4.png" alt="" class="wave-layer wave-4" />
-        <img src="img/wave5.png" alt="" class="wave-layer wave-5" />
+      <nav class="nav-links">
+        <a href="#arenaSection">라이브 트랙 시승</a>
+        <a href="#showroomSection">실사 RC카 쇼룸</a>
+        <a href="#promoSection">드리프트 쿠폰</a>
+      </nav>
+
+      <div class="header-actions" id="headerAuthArea">
+        <!-- Populated dynamically by JS -->
       </div>
+    </div>
+  </header>
 
-      <div class="tank-pebbles" aria-hidden="true"></div>
-      <div class="tank-glass-wall-rim" aria-hidden="true"></div>
-
-      <div class="tank-content">
-        <!-- HEADER -->
-        <header class="tank-header">
-          <div class="brand-area">
-            <div class="brand-emblem">🐠</div>
-            <div class="brand-title">
-              <h1>BLUE TANK <span class="brand-badge">CART AQUARIUM</span></h1>
-              <div class="brand-sub">담을 때마다 수조 속 물고기가 늘어나는 위에서 내려다보는 관상어 부티크</div>
-            </div>
-          </div>
-
-          <div class="tank-telemetry">
-            <span class="telemetry-pill"><span class="status-dot"></span> 수온 25.4°C · pH 7.0</span>
-            <div class="led-switcher" title="수조 상단 LED 조명 변경">
-              <button class="led-btn active" data-led="day" onclick="setTankLed('day', this)">주간 아쿠아</button>
-              <button class="led-btn" data-led="deep" onclick="setTankLed('deep', this)">딥 블루</button>
-              <button class="led-btn" data-led="moon" onclick="setTankLed('moon', this)">문라이트</button>
-            </div>
-          </div>
-
-          <div class="header-actions">
-            <button class="btn-glass" id="authHeaderBtn" type="button" onclick="openAuthModal()">
-              <span>👤 회원가입 · 로그인</span>
-            </button>
-            <button class="btn-primary-aqua" type="button" onclick="openCheckoutModal()">
-              <span>💳 수조 입양 결제</span>
-              <span class="cart-count-pill" id="headerCartCount">0</span>
-            </button>
-          </div>
-        </header>
-
-        <!-- ============================================================
-             CART AQUARIUM STAGE: EVERY ADDED FISH SWIMS HERE!
-             ============================================================ -->
-        <section class="cart-tank-showcase" id="cartTankSection">
-          <!-- Left: Top-Down Rectangular Cart Tank Canvas (Also Drag Drop-Zone!) -->
-          <div class="cart-tank-viewport" id="cartTankViewport" title="물고기 카드를 이곳으로 드래그해 입수시키거나, 물 위를 클릭해 먹이를 주세요!">
-            <canvas id="swimCanvas"></canvas>
-
-            <div class="tank-drop-overlay-banner">
-              <span>💦 수조 위에 놓으면 장바구니 물고기가 입수됩니다!</span>
-            </div>
-
-            <div class="swim-hud-top">
-              <div class="cart-tank-badge">
-                <span class="rec-dot"></span>
-                <span id="cartTankStatusText">장바구니 수조 · 유영 중 0마리</span>
-              </div>
-              <div class="swim-hint-tag">💧 수조 클릭: 먹이 투하 · 상품 드래그: 수조에 입수</div>
-            </div>
-
-            <div class="empty-tank-guide" id="emptyTankGuide">
-              현재 수조 장바구니가 비어 있습니다 (선택한 상품의 실시간 유영 미리보기 중 · [+ 수조에 담기]로 입수시키세요!)
-            </div>
-
-            <div class="swim-controls-bar">
-              <div class="swim-action-group">
-                <button class="btn-tank-ctrl" type="button" onclick="dropPelletCenter()">🍤 먹이 주기</button>
-                <button class="btn-tank-ctrl" type="button" onclick="triggerTankWave()">🌊 물결 일으키기</button>
-              </div>
-              <button class="btn-tank-ctrl" type="button" onclick="addToCart(selectedFishId)">➕ 선택 물고기 수조에 입수</button>
-            </div>
-          </div>
-
-          <!-- Right: Selected Fish Live Inspector + Live Cart Tank Roster -->
-          <div class="tank-side-panel">
-            <!-- Top: Selected Fish Quick Spec & Instant Add -->
-            <div class="preview-card-box">
-              <div class="preview-top-row">
-                <div>
-                  <div class="inspector-eyebrow">SELECTED FISH PREVIEW · 상품 유영 확인</div>
-                  <h2 id="inspName">로열 블루 하프문 베타</h2>
-                </div>
-                <div class="preview-price-tag" id="inspPrice">28,000원</div>
-              </div>
-              <p class="preview-desc" id="inspDesc">
-                위에서 내려다볼 때 180도 부채꼴로 펼쳐지는 로열 블루 지느러미가 푸른 실크처럼 물결치는 최고급 쇼 베타입니다.
-              </p>
-              <div class="preview-specs-inline">
-                <span class="mini-spec-chip" id="inspTemp">🌡️ 25~28°C · pH 6.8</span>
-                <span class="mini-spec-chip" id="inspSize">📏 6~7cm</span>
-                <span class="mini-spec-chip" id="inspDiff">✨ 초보자 추천</span>
-              </div>
-              <div style="display:flex; gap:8px; margin-top:11px;">
-                <button class="btn-primary-aqua" style="flex:1; padding:8px 12px; font-size:0.82rem;" type="button" onclick="addToCart(selectedFishId)">
-                  💦 이 물고기 수조에 담기
-                </button>
-                <button class="btn-glass" style="padding:8px 12px; font-size:0.82rem;" type="button" onclick="buyNowSingle(selectedFishId)">
-                  바로 결제
-                </button>
-              </div>
-            </div>
-
-            <!-- Bottom: Live Cart Tank Roster (Synchronized with Swimming Fish!) -->
-            <div class="cart-roster-box">
-              <div class="roster-header">
-                <h3>🐠 수조 속 장바구니 개체 목록</h3>
-                <button class="btn-card-sub" style="font-size:0.71rem; padding:3px 8px;" type="button" onclick="clearCartTank()">수조 비우기</button>
-              </div>
-
-              <div class="roster-list" id="rosterListContainer"></div>
-
-              <div class="roster-checkout-footer">
-                <div class="roster-total-info">
-                  <small id="rosterShippingHint">4만원 이상 산소포장 무료배송</small>
-                  <strong id="rosterTotalPrice">0원</strong>
-                </div>
-                <button class="btn-primary-aqua" type="button" onclick="openCheckoutModal()">
-                  입양 결제하기 →
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- FILTER & DRAG TOOLBAR -->
-        <div class="catalog-toolbar">
-          <div class="filter-pills">
-            <button class="filter-pill active" data-cat="all" onclick="filterCatalog('all', this)">전체 관상어 (6)</button>
-            <button class="filter-pill" data-cat="grace" onclick="filterCatalog('grace', this)">베타 · 구피</button>
-            <button class="filter-pill" data-cat="pond" onclick="filterCatalog('pond', this)">코이 · 금붕어</button>
-            <button class="filter-pill" data-cat="school" onclick="filterCatalog('school', this)">테트라 · 디스커스</button>
-          </div>
-          <div class="drag-guide-banner">
-            🖱️ <strong>상품 클릭:</strong> 유영 미리보기 · <strong>수조로 드래그 / [+ 수조에 담기]:</strong> 장바구니 수조에 유영 물고기 추가!
+  <main>
+    <!-- Live Top-Down RC Track & Click-Drag Steering Cockpit -->
+    <section class="arena-section" id="arenaSection">
+      <div class="arena-topbar">
+        <div class="active-car-banner">
+          <div class="live-badge"><span class="live-dot"></span> LIVE TRACK</div>
+          <img id="hudCarThumb" class="active-car-thumb" src="./img/rc_car1.png" alt="선택된 RC카" />
+          <div class="active-car-meta">
+            <h2 id="hudCarName">APEX GT-R Pro Drift 1/10</h2>
+            <p id="hudCarSpec">4WD 브러시리스 · 최고 82 km/h · 아래 쇼룸에서 차량을 클릭하면 즉시 교체됩니다</p>
           </div>
         </div>
 
-        <!-- FISH PRODUCT CARDS -->
-        <section class="fish-grid" id="fishGrid"></section>
-      </div>
-    </main>
-  </div>
-
-  <!-- ============================================================
-       MODAL 1: 회원가입 / 로그인 (AUTH MODAL)
-       ============================================================ -->
-  <div class="modal-backdrop" id="authModal">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3>💧 BLUE TANK 아쿠아 멤버십</h3>
-        <button class="btn-close-modal" type="button" onclick="closeModal('authModal')">✕</button>
+        <div class="arena-quick-actions">
+          <button class="btn btn-ghost" onclick="resetCarToStart()">트랙 출발선 복귀</button>
+          <button class="btn btn-ghost" onclick="clearSkidMarks()">타이어 자국 지우기</button>
+          <button class="btn btn-primary" onclick="addActiveCarToCart()">현재 시승 차량 장바구니 담기</button>
+        </div>
       </div>
 
-      <div class="auth-tabs">
-        <button class="auth-tab active" id="tabSignup" type="button" onclick="switchAuthTab('signup')">회원가입 (3,000P 증정)</button>
-        <button class="auth-tab" id="tabLogin" type="button" onclick="switchAuthTab('login')">로그인</button>
+      <div class="canvas-wrapper">
+        <canvas id="trackCanvas"></canvas>
+        <div class="track-overlay-tip">
+          <span>조향: <strong>하단 핸들을 마우스로 꾹 누른 채 드래그</strong></span>
+          <span>|</span>
+          <span>가속/제동: <span class="keycap">⬆️ 전진</span> <span class="keycap">⬇️ 브레이크·후진</span> <span class="keycap">Space 드리프트</span></span>
+        </div>
+      </div>
+
+      <!-- Cockpit Controls -->
+      <div class="cockpit-deck">
+        <!-- Telemetry -->
+        <div class="telemetry-panel">
+          <div class="telemetry-grid">
+            <div class="tele-box">
+              <div class="tele-label">SPEED</div>
+              <div class="tele-val"><span id="teleSpeed">0</span> <small style="font-size:12px">km/h</small></div>
+            </div>
+            <div class="tele-box">
+              <div class="tele-label">GEAR</div>
+              <div class="tele-val orange" id="teleGear">N</div>
+            </div>
+            <div class="tele-box">
+              <div class="tele-label">DRIFT PTS</div>
+              <div class="tele-val" id="teleDrift">0</div>
+            </div>
+          </div>
+
+          <div class="drift-bar-wrap">
+            <div class="drift-bar-head">
+              <span>드리프트 쿠폰 게이지 (1,000P 달성 시 15% 할인코드 해금)</span>
+              <span id="driftCouponStatus" style="color: var(--yellow);">0 / 1,000 P</span>
+            </div>
+            <div class="drift-bar-bg">
+              <div class="drift-bar-fill" id="driftBarFill"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Click & Hold Drag Steering Wheel -->
+        <div class="wheel-console">
+          <div class="wheel-stage" id="wheelStage" title="마우스 왼쪽 버튼을 꾹 누른 채 좌우로 드래그하세요">
+            <div class="wheel-ring-glow"></div>
+            <svg id="steeringWheelSvg" viewBox="0 0 200 200">
+              <defs>
+                <linearGradient id="rimGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#384152" />
+                  <stop offset="50%" stop-color="#151922" />
+                  <stop offset="100%" stop-color="#2B3240" />
+                </linearGradient>
+                <linearGradient id="spokeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#FFD600" />
+                  <stop offset="100%" stop-color="#FF6B00" />
+                </linearGradient>
+              </defs>
+              <!-- Outer tire-grip rim -->
+              <circle cx="100" cy="100" r="82" fill="none" stroke="url(#rimGrad)" stroke-width="22" />
+              <circle cx="100" cy="100" r="82" fill="none" stroke="rgba(255,214,0,0.35)" stroke-width="1.5" stroke-dasharray="6 4" />
+              <!-- Top Center Yellow Alignment Stripe -->
+              <rect x="93" y="7" width="14" height="22" rx="4" fill="#FFD600" />
+              <!-- Spokes -->
+              <path d="M 28 100 L 72 100 L 78 114 L 34 118 Z" fill="url(#spokeGrad)" />
+              <path d="M 172 100 L 128 100 L 122 114 L 166 118 Z" fill="url(#spokeGrad)" />
+              <path d="M 90 124 L 110 124 L 114 172 L 86 172 Z" fill="#272E3D" />
+              <!-- Center Hub -->
+              <circle cx="100" cy="100" r="30" fill="#0F131A" stroke="#FF6B00" stroke-width="3.5" />
+              <circle cx="100" cy="100" r="21" fill="#181E29" />
+              <text x="100" y="104" text-anchor="middle" fill="#FFD600" font-size="12" font-weight="900" font-family="sans-serif">APEX</text>
+            </svg>
+          </div>
+
+          <div class="wheel-info">
+            <div class="wheel-status-pill" id="wheelStatusPill">HOLD &amp; DRAG 대기 중</div>
+            <div class="wheel-angle-readout"><span id="steerAngleDeg" style="color:inherit;margin:0;font-size:24px;">0°</span><span id="steerDirText">직진 (CENTER)</span></div>
+            <p class="wheel-help">
+              마우스를 올리기만 해서는 움직이지 않습니다.<br />
+              <strong style="color: var(--yellow);">핸들을 꾹 누른 채 좌/우로 드래그</strong>하면 앞바퀴가 조향됩니다.
+            </p>
+          </div>
+        </div>
+
+        <!-- Arrow Pedals -->
+        <div class="pedal-console">
+          <div class="pedal-header">
+            <span>페달 &amp; 브레이크 (키보드 / 클릭 지원)</span>
+            <span style="color: var(--yellow);">⬆️ / ⬇️</span>
+          </div>
+          <div class="pedal-buttons">
+            <button type="button" class="pedal-btn gas" id="btnGas">
+              <span class="arrow-icon">⬆️</span>
+              <span>전진 가속</span>
+              <small>ArrowUp</small>
+            </button>
+            <button type="button" class="pedal-btn brake" id="btnBrake">
+              <span class="arrow-icon">⬇️</span>
+              <span>브레이크 / 후진</span>
+              <small>ArrowDown</small>
+            </button>
+          </div>
+          <button type="button" class="drift-space-btn" id="btnDrift">SPACE — 사이드 브레이크 드리프트</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Product Showroom -->
+    <section id="showroomSection">
+      <div class="section-header">
+        <div class="section-title-group">
+          <h2>실사 촬영 <span>PRO RC카 쇼룸</span></h2>
+          <p>원하는 RC카 사진을 클릭하면 위 탑다운 서킷에 즉시 투입되어 핸들 드래그로 직접 주행할 수 있습니다.</p>
+        </div>
+
+        <div class="filter-toolbar">
+          <button class="filter-chip active" data-cat="all" onclick="setCategory('all', this)">전체 모델 (6)</button>
+          <button class="filter-chip" data-cat="drift" onclick="setCategory('drift', this)">온로드 드리프트</button>
+          <button class="filter-chip" data-cat="offroad" onclick="setCategory('offroad', this)">오프로드 버기·몬스터</button>
+          <button class="filter-chip" data-cat="formula" onclick="setCategory('formula', this)">포뮬러·WRC 랠리</button>
+          <select class="sort-select" id="sortSelect" onchange="renderProducts()">
+            <option value="featured">추천순</option>
+            <option value="speed">최고속도순</option>
+            <option value="priceAsc">낮은 가격순</option>
+            <option value="priceDesc">높은 가격순</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="product-grid" id="productGrid"></div>
+    </section>
+
+    <!-- Promo Coupon Banner -->
+    <section class="promo-strip" id="promoSection">
+      <div>
+        <h3>신규 드라이버 가입 10,000P 즉시 지급 + 트랙 드리프트 할인 이벤트</h3>
+        <p>장바구니 결제 시 쿠폰 코드를 입력하면 즉시 할인이 적용됩니다. 트랙에서 1,000 드리프트 포인트를 달성해 보세요!</p>
+      </div>
+      <div class="coupon-badges">
+        <div class="coupon-tag" onclick="copyCoupon('APEX10')">코드: APEX10 (10% 할인 복사)</div>
+        <div class="coupon-tag" onclick="copyCoupon('DRIFT15')">코드: DRIFT15 (1,000P 달성 시 15% 할인)</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Auth / Member Modal -->
+  <div class="backdrop" id="authModal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3 id="authModalTitle">드라이버 회원가입 / 로그인</h3>
+        <button class="close-btn" onclick="closeModal('authModal')">&times;</button>
+      </div>
+
+      <div class="tab-row" id="authTabs">
+        <button class="tab-btn active" id="tabSignup" onclick="switchAuthTab('signup')">회원가입 (+10,000P)</button>
+        <button class="tab-btn" id="tabLogin" onclick="switchAuthTab('login')">로그인</button>
       </div>
 
       <form id="signupForm" onsubmit="handleSignup(event)">
         <div class="form-group">
-          <label>닉네임 (수령인 성함)</label>
-          <input class="form-control" type="text" id="regName" placeholder="예: 김아쿠아" required />
+          <label>드라이버 닉네임</label>
+          <input type="text" class="form-control" id="regName" placeholder="예: 오산드리프터" required />
         </div>
         <div class="form-group">
           <label>이메일 아이디</label>
-          <input class="form-control" type="email" id="regEmail" placeholder="aqua@bluetank.kr" required />
+          <input type="email" class="form-control" id="regEmail" placeholder="driver@apexrc.kr" required />
         </div>
         <div class="form-group">
           <label>비밀번호</label>
-          <input class="form-control" type="password" id="regPw" placeholder="4자 이상 입력" minlength="4" required />
+          <input type="password" class="form-control" id="regPass" placeholder="4자 이상 입력" minlength="4" required />
         </div>
         <div class="form-group">
-          <label>보유 수조 규격 선택</label>
-          <select class="form-control" id="regTankSize">
-            <option value="30큐브 나노수조 (27L)">30큐브 나노수조 (27L)</option>
-            <option value="45cm 슬림수조 (40L)" selected>45cm 슬림수조 (40L)</option>
-            <option value="60cm 표준 광폭수조 (65L)">60cm 표준 광폭수조 (65L)</option>
-            <option value="90cm 이상 대형수조 (160L+)">90cm 이상 대형수조 (160L+)</option>
-          </select>
+          <label>기본 배송지 주소</label>
+          <input type="text" class="form-control" id="regAddr" placeholder="경기도 오산시 한신대길 137" required />
         </div>
-        <label class="checkbox-row">
-          <input type="checkbox" required checked />
-          <span>관상어 생물 입양 안내 및 회원 이용약관에 동의합니다.</span>
-        </label>
-        <button class="btn-primary-aqua" style="width:100%; padding:12px;" type="submit">
-          회원가입 완료하고 3,000P 받기
-        </button>
+        <button type="submit" class="btn btn-primary" style="width:100%; padding:13px;">가입 완료하고 10,000P 받기</button>
       </form>
 
       <form id="loginForm" style="display:none;" onsubmit="handleLogin(event)">
         <div class="form-group">
           <label>이메일 아이디</label>
-          <input class="form-control" type="email" id="loginEmail" placeholder="가입하신 이메일 입력" required />
+          <input type="email" class="form-control" id="loginEmail" placeholder="driver@apexrc.kr" required />
         </div>
         <div class="form-group">
           <label>비밀번호</label>
-          <input class="form-control" type="password" id="loginPw" placeholder="비밀번호 입력" required />
+          <input type="password" class="form-control" id="loginPass" placeholder="비밀번호 입력" required />
         </div>
-        <button class="btn-primary-aqua" style="width:100%; padding:12px; margin-top:8px;" type="submit">
-          수조 입장하기 (로그인)
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- ============================================================
-       MODAL 2: 주문 및 결제 (CHECKOUT & RECEIPT MODAL)
-       ============================================================ -->
-  <div class="modal-backdrop" id="checkoutModal">
-    <div class="modal-card wide">
-      <div class="modal-header">
-        <h3 id="checkoutModalTitle">💳 장바구니 수조 생물 입양 결제</h3>
-        <button class="btn-close-modal" type="button" onclick="closeModal('checkoutModal')">✕</button>
-      </div>
-
-      <form id="checkoutForm" onsubmit="submitPayment(event)">
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-          <div class="form-group">
-            <label>입양인(수령인) 성함</label>
-            <input class="form-control" type="text" id="payName" required placeholder="성함 입력" />
-          </div>
-          <div class="form-group">
-            <label>연락처 (산소포장 출발 알림)</label>
-            <input class="form-control" type="tel" id="payPhone" required placeholder="010-1234-5678" />
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>수령지 주소</label>
-          <input class="form-control" type="text" id="payAddress" required placeholder="도로명 주소 및 상세 동·호수 입력" />
-        </div>
-
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-          <div class="form-group">
-            <label>계절별 생물 안전 케어 옵션</label>
-            <select class="form-control" id="payCarePack">
-              <option value="순수 산소포장 + 24시간 온열팩 (무료)">순수 산소포장 + 24시간 온열팩 (기본 무료)</option>
-              <option value="순수 산소포장 + 아이스 냉매팩 (하절기)">순수 산소포장 + 아이스 냉매팩 (기본 무료)</option>
-              <option value="물맞댐 전용 드립호스 + 박테리아제 추가 (+0원)">물맞댐 전용 호스 + 활착 박테리아제 증정</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>아쿠아 포인트 사용 <span id="availPointLabel" style="color:#38bdf8;">(보유: 0P)</span></label>
-            <input class="form-control" type="number" id="payPointInput" min="0" step="100" value="0" oninput="recalcCheckoutTotal()" />
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>결제 수단 선택</label>
-          <div class="pay-methods" id="payMethodsGrid">
-            <div class="pay-method-card selected" data-method="신용/체크카드 간편결제" onclick="selectPayMethod(this)">💳 신용/체크카드</div>
-            <div class="pay-method-card" data-method="카카오페이" onclick="selectPayMethod(this)">💛 카카오페이</div>
-            <div class="pay-method-card" data-method="네이버페이" onclick="selectPayMethod(this)">💚 네이버페이</div>
-            <div class="pay-method-card" data-method="실시간 계좌이체" onclick="selectPayMethod(this)">🏦 실시간 계좌이체</div>
-          </div>
-        </div>
-
-        <div class="summary-box">
-          <div class="summary-row">
-            <span>수조 속 입양 개체</span>
-            <strong id="checkoutItemsSummary">-</strong>
-          </div>
-          <div class="summary-row">
-            <span>산소포장 생물 배송비</span>
-            <strong id="checkoutShippingFee">0원</strong>
-          </div>
-          <div class="summary-row">
-            <span>포인트 할인</span>
-            <strong id="checkoutPointDiscount" style="color:#34d399;">-0원</strong>
-          </div>
-          <div class="summary-row total">
-            <span>최종 결제 금액</span>
-            <span id="checkoutFinalAmount">0원</span>
-          </div>
-        </div>
-
-        <button class="btn-primary-aqua" style="width:100%; padding:13px; margin-top:16px; font-size:0.96rem;" type="submit">
-          결제 확정 및 산소포장 출고 신청
-        </button>
+        <button type="submit" class="btn btn-primary" style="width:100%; padding:13px;">로그인</button>
+        <button type="button" class="btn btn-outline" style="width:100%; margin-top:8px;" onclick="quickDemoLogin()">체험용 프로 드라이버 계정으로 즉시 로그인</button>
       </form>
 
-      <div id="orderReceiptView" style="display:none; text-align:center; padding:14px 6px;">
-        <div style="font-size:3rem; margin-bottom:8px;">🐠✨</div>
-        <h4 style="font-size:1.3rem; font-weight:800; color:#ffffff;">관상어 입양 결제가 완료되었습니다!</h4>
-        <p style="font-size:0.86rem; color:#bae6fd; margin-top:6px;">
-          수조 속 개체들이 전문 아쿠아리스트의 순수 산소 패킹을 거쳐 안전하게 출발합니다.
-        </p>
-        <div class="summary-box" style="text-align:left; margin-top:18px;" id="receiptDetailsBox"></div>
-        <button class="btn-primary-aqua" style="margin-top:18px; width:100%; padding:12px;" type="button" onclick="closeModal('checkoutModal')">
-          수조로 돌아가기
-        </button>
+      <div id="memberProfileView" style="display:none;">
+        <div style="background:var(--asphalt-850); padding:16px; border-radius:12px; margin-bottom:14px;">
+          <p style="font-size:16px; font-weight:900; color:var(--yellow);" id="profName"></p>
+          <p style="font-size:13px; color:var(--text-sub);" id="profEmail"></p>
+          <p style="font-size:13px; color:var(--text-sub); margin-top:4px;" id="profAddr"></p>
+          <p style="font-size:15px; font-weight:900; color:var(--orange); margin-top:10px;">보유 포인트: <span id="profPoints">0</span> P</p>
+        </div>
+        <h4 style="font-size:14px; color:var(--yellow); margin-bottom:8px;">최근 결제 완료 주문 내역</h4>
+        <div id="orderHistoryList" style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;"></div>
+        <button class="btn btn-ghost" style="width:100%;" onclick="logoutMember()">로그아웃</button>
       </div>
     </div>
   </div>
+
+  <!-- Product Detail Modal -->
+  <div class="backdrop" id="detailModal">
+    <div class="modal-box" style="max-width:600px;">
+      <div class="modal-head">
+        <h3 id="detailTitle">모델 상세 스펙</h3>
+        <button class="close-btn" onclick="closeModal('detailModal')">&times;</button>
+      </div>
+      <div id="detailContent"></div>
+    </div>
+  </div>
+
+  <!-- Cart & Payment Drawer -->
+  <div class="drawer-backdrop" id="cartDrawerBackdrop" onclick="if(event.target===this) closeCartDrawer()">
+    <div class="cart-drawer">
+      <div class="modal-head">
+        <h3>장바구니 &amp; 즉시 결제</h3>
+        <button class="close-btn" onclick="closeCartDrawer()">&times;</button>
+      </div>
+
+      <div class="cart-items" id="cartItemsList"></div>
+
+      <!-- Coupon & Points -->
+      <div class="form-group">
+        <label>할인 쿠폰 코드 (APEX10 / DRIFT15)</label>
+        <div style="display:flex; gap:8px;">
+          <input type="text" class="form-control" id="couponInput" placeholder="쿠폰 코드 입력" style="flex:1;" />
+          <button type="button" class="btn btn-outline" onclick="applyCoupon()">적용</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>보유 포인트 사용 (현재 <span id="drawerAvailPts">0</span>P 보유)</label>
+        <div style="display:flex; gap:8px;">
+          <input type="number" class="form-control" id="usePointsInput" min="0" step="100" value="0" style="flex:1;" />
+          <button type="button" class="btn btn-ghost" onclick="useAllPoints()">전액 사용</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>수령인 / 배송지</label>
+        <input type="text" class="form-control" id="checkoutAddress" placeholder="배송받을 주소를 입력하세요" />
+      </div>
+
+      <label style="font-size:12.5px; font-weight:800; color:var(--text-sub);">결제 수단 선택</label>
+      <div class="pay-methods" id="payMethods">
+        <button type="button" class="pay-method-btn active" onclick="selectPayMethod(this, '신용/체크카드')">신용/체크카드</button>
+        <button type="button" class="pay-method-btn" onclick="selectPayMethod(this, '카카오페이')">카카오페이</button>
+        <button type="button" class="pay-method-btn" onclick="selectPayMethod(this, '네이버페이')">네이버페이</button>
+        <button type="button" class="pay-method-btn" onclick="selectPayMethod(this, '무통장입금')">무통장입금</button>
+      </div>
+
+      <div class="summary-box" id="cartSummaryBox"></div>
+
+      <button type="button" class="btn btn-primary" style="width:100%; padding:14px; margin-top:14px; font-size:15px;" onclick="processCheckout()">
+        결제하기
+      </button>
+    </div>
+  </div>
+
+  <!-- Payment Receipt Modal -->
+  <div class="backdrop" id="receiptModal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3>결제가 완료되었습니다!</h3>
+        <button class="close-btn" onclick="closeModal('receiptModal')">&times;</button>
+      </div>
+      <div id="receiptBody"></div>
+      <button class="btn btn-primary" style="width:100%; margin-top:16px;" onclick="closeModal('receiptModal')">트랙으로 돌아가기</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
 
   <script>
-    /* ============================================================
-       1. PRODUCT CATALOG DATA (USING GENERATED img/fish_*.png)
-       ============================================================ */
-    const FISH_PRODUCTS = [
+    // =========================================================================
+    // 1. PHOTOREALISTIC RC CAR CATALOG (Linked directly to ./img/rc_car1..6.png)
+    // =========================================================================
+    const PRODUCTS = [
       {
-        id: "betta",
-        category: "grace",
-        badge: "BEST · 상면 인기 1위",
-        name: "로열 블루 하프문 베타",
-        shortLabel: "블루 베타",
-        price: 28000,
-        unit: "1마리",
-        img: "img/fish_betta.png",
-        temp: "25~28°C · pH 6.8",
-        size: "6~7cm · 수명 2~3년",
-        diff: "초보자 추천",
-        shortDesc: "푸른 비단처럼 펼쳐지는 하프문 지느러미가 위에서 볼 때 가장 우아한 개체",
-        desc: "위에서 내려다볼 때 180도 부채꼴로 펼쳐지는 로열 블루 지느러미가 마치 푸른 실크처럼 물결치는 최고급 쇼 베타입니다.",
-        swimSpeed: 1.45,
-        tailFreq: 0.14,
-        tailAmp: 7.5,
-        spriteScale: 0.88
+        id: 'rc1',
+        name: 'APEX GT-R Pro Drift 1/10',
+        category: 'drift',
+        categoryLabel: '온로드 드리프트',
+        scale: '1/10 SCALE',
+        price: 349000,
+        origPrice: 410000,
+        topSpeed: 82,
+        accel: 0.34,
+        grip: 0.91,
+        driftFactor: 1.25,
+        drive: '4WD 벨트 드라이브',
+        motor: '3800KV 센서드 브러시리스',
+        battery: '7.4V 5200mAh 2S LiPo',
+        img: './img/rc_car1.png',
+        desc: '오렌지-옐로우 에어로 바디와 카본 리어 윙을 장착한 정통 온로드 드리프트 머신. 정교한 카운터 스티어링과 부드러운 슬라이드 밸런스를 제공합니다.'
       },
       {
-        id: "koi",
-        category: "pond",
-        badge: "PREMIUM · 상면 명품",
-        name: "코하쿠 비단잉어 코이",
-        shortLabel: "코하쿠 코이",
-        price: 9999999999,
-        unit: "1마리 (12cm)",
-        img: "img/fish_koi.png",
-        temp: "18~25°C · pH 7.2",
-        size: "12cm 출고 · 대형어",
-        diff: "중급자 추천",
-        shortDesc: "위에서 내려다보는 수조를 위해 탄생한 순백과 선홍빛의 조화로운 코이",
-        desc: "상면 수조에서 위에서 내려다보며 감상하도록 브리딩된 코하쿠 코이입니다. 유려한 S자 유영과 강렬한 진홍색 반점이 수조의 중심을 잡아줍니다.",
-        swimSpeed: 1.82,
-        tailFreq: 0.16,
-        tailAmp: 8.5,
-        spriteScale: 1.02
+        id: 'rc2',
+        name: 'VIPER X-8 Desert Buggy 1/8',
+        category: 'offroad',
+        categoryLabel: '오프로드 버기·몬스터',
+        scale: '1/8 SCALE',
+        price: 429000,
+        origPrice: 495000,
+        topSpeed: 88,
+        accel: 0.38,
+        grip: 0.94,
+        driftFactor: 1.05,
+        drive: '4WD 샤프트 드라이브',
+        motor: '4200KV 방수 브러시리스',
+        battery: '11.1V 5000mAh 3S LiPo',
+        img: './img/rc_car2.png',
+        desc: '아노다이징 알루미늄 오일 쇼크와 롤케이지 튜블러 프레임을 갖춘 1/8 데저트 버기. 거친 코너에서도 흔들림 없는 접지력을 발휘합니다.'
       },
       {
-        id: "goldfish",
-        category: "pond",
-        badge: "CUTE · 순둥이 관상어",
-        name: "오란다 캘리코 금붕어",
-        shortLabel: "오란다 금붕어",
-        price: 22000,
-        unit: "1마리",
-        img: "img/fish_goldfish.png",
-        temp: "18~24°C · pH 7.0",
-        size: "8~10cm · 수명 5~8년",
-        diff: "초보자 추천",
-        shortDesc: "동글동글한 체형과 하늘거리는 이중 나비 꼬리지느러미가 매력적인 금붕어",
-        desc: "앙증맞은 육류(사자머리)와 양쪽으로 우아하게 갈라지는 나비 꼬리지느러미가 특징이며 먹이 반응이 뛰어나 교감하기 좋습니다.",
-        swimSpeed: 1.25,
-        tailFreq: 0.18,
-        tailAmp: 9.0,
-        spriteScale: 0.86
+        id: 'rc3',
+        name: 'TITAN 4x4 Monster Crawler',
+        category: 'offroad',
+        categoryLabel: '오프로드 버기·몬스터',
+        scale: '1/8 SCALE',
+        price: 468000,
+        origPrice: 540000,
+        topSpeed: 74,
+        accel: 0.42,
+        grip: 0.97,
+        driftFactor: 0.95,
+        drive: '상시 4WD 디퍼렌셜 락',
+        motor: '3660 하이토크 브러시리스',
+        battery: '11.1V 6000mAh 3S LiPo',
+        img: './img/rc_car3.png',
+        desc: '대구경 트레드 오프로드 타이어와 롱트래블 서스펜션을 탑재한 몬스터 트럭. 폭발적인 초반 가속과 강력한 제동력을 자랑합니다.'
       },
       {
-        id: "tetra",
-        category: "school",
-        badge: "SCHOOL · 형광 발광",
-        name: "네온 테트라",
-        shortLabel: "네온 테트라",
-        price: 4500,
-        unit: "1마리",
-        img: "img/fish_tetra.png",
-        temp: "22~26°C · pH 6.5",
-        size: "3~3.5cm · 군영어",
-        diff: "입문자 최적",
-        shortDesc: "푸른 수조 조명 아래 형광 블루 라인이 반짝이며 경쾌하게 헤엄치는 소형어",
-        desc: "선명한 네온 블루 스트라이프와 루비 레드 컬러가 대비를 이루며, 여러 마리를 수조에 담으면 함께 군영하는 모습이 환상적입니다.",
-        swimSpeed: 2.25,
-        tailFreq: 0.25,
-        tailAmp: 5.5,
-        spriteScale: 0.68
+        id: 'rc4',
+        name: 'BLITZ F1 Formula Spec 1/10',
+        category: 'formula',
+        categoryLabel: '포뮬러·WRC 랠리',
+        scale: '1/10 FORMULA',
+        price: 389000,
+        origPrice: 450000,
+        topSpeed: 96,
+        accel: 0.36,
+        grip: 0.95,
+        driftFactor: 1.12,
+        drive: '2WD 다이렉트 드라이브',
+        motor: '4500KV 포뮬러 튜닝 모터',
+        battery: '7.4V 4800mAh 2S LiPo',
+        img: './img/rc_car4.png',
+        desc: '카본 프론트·리어 멀티 윙과 슬릭 레이싱 타이어를 적용한 포뮬러 원 스펙 머신. 아스팔트 서킷에서 압도적인 최고속도와 코너링 응답성을 보여줍니다.'
       },
       {
-        id: "discus",
-        category: "school",
-        badge: "ROYAL · 열대어의 황제",
-        name: "블루 다이아몬드 디스커스",
-        shortLabel: "블루 디스커스",
-        price: 89000,
-        unit: "1마리 (준성어)",
-        img: "img/fish_discus.png",
-        temp: "27~30°C · pH 6.4",
-        size: "10~12cm · 수명 6~10년",
-        diff: "애호가 추천",
-        shortDesc: "깊은 사파이어와 터콰이즈 광택이 온몸을 감싸는 위엄 있는 열대어의 황제",
-        desc: "빈틈없이 채워진 메탈릭 블루 발색으로 '열대어의 황제'라 불립니다. 천천히 미끄러지듯 유영하는 품격 있는 움직임이 인상적입니다.",
-        swimSpeed: 1.15,
-        tailFreq: 0.12,
-        tailAmp: 6.0,
-        spriteScale: 0.96
+        id: 'rc5',
+        name: 'STRATOS WRC Rally Turbo',
+        category: 'formula',
+        categoryLabel: '포뮬러·WRC 랠리',
+        scale: '1/10 RALLY',
+        price: 319000,
+        origPrice: 375000,
+        topSpeed: 79,
+        accel: 0.35,
+        grip: 0.92,
+        driftFactor: 1.22,
+        drive: '4WD 랠리 섀시',
+        motor: '3500KV 브러시리스',
+        battery: '7.4V 5000mAh 2S LiPo',
+        img: './img/rc_car5.png',
+        desc: '옐로우·오렌지·화이트 레이싱 리버리와 루프 스쿠프가 돋보이는 WRC 랠리카. 아스팔트와 흙먼지 노면 모두에서 경쾌한 드리프트를 구사합니다.'
       },
       {
-        id: "guppy",
-        category: "grace",
-        badge: "RED TAIL · 보색 대비",
-        name: "알비노 풀레드 구피",
-        shortLabel: "풀레드 구피",
-        price: 12000,
-        unit: "1마리",
-        img: "img/fish_guppy.png",
-        temp: "24~27°C · pH 7.0",
-        size: "4~5cm · 강인함",
-        diff: "초보자 추천",
-        shortDesc: "푸른 수조 배경과 선명한 보색 대비를 이루는 화려한 루비 레드 델타 꼬리 구피",
-        desc: "맑고 푸른 수조 속에서 가장 눈부신 색채 대비를 보여주는 고정구피 품종으로, 넓은 레이스 꼬리지느러미를 펄럭이며 활기차게 헤엄칩니다.",
-        swimSpeed: 1.95,
-        tailFreq: 0.22,
-        tailAmp: 8.5,
-        spriteScale: 0.78
+        id: 'rc6',
+        name: 'PHANTOM Hyper-GT Supercar',
+        category: 'drift',
+        categoryLabel: '온로드 드리프트',
+        scale: '1/10 SUPER-GT',
+        price: 445000,
+        origPrice: 520000,
+        topSpeed: 92,
+        accel: 0.37,
+        grip: 0.93,
+        driftFactor: 1.28,
+        drive: '4WD 카본 더블데크',
+        motor: '4300KV 하이파워 브러시리스',
+        battery: '11.1V 5200mAh 3S LiPo',
+        img: './img/rc_car6.png',
+        desc: '메탈릭 파이어 오렌지 & 옐로우 스트라이프 와이드바디 슈퍼카. 고속 코너 진입 시 날카로운 회두성과 롱 드리프트 유지력이 뛰어납니다.'
       }
     ];
 
-    /* ============================================================
-       2. APPLICATION STATE (CART TANK = SWIMMING FISHES)
-       ============================================================ */
-    let selectedFishId = "betta";
-    let currentCategory = "all";
-    let cart = JSON.parse(localStorage.getItem("bluetank_cart_v2") || "[]");
-    let currentUser = JSON.parse(localStorage.getItem("bluetank_user") || "null");
-    let selectedPayMethod = "신용/체크카드 간편결제";
+    // =========================================================================
+    // 2. STATE & STORAGE
+    // =========================================================================
+    let selectedCar = PRODUCTS[0];
+    let currentCategory = 'all';
+    let cart = JSON.parse(localStorage.getItem('apex_rc_cart') || '[]');
+    let currentUser = JSON.parse(localStorage.getItem('apex_rc_user') || 'null');
+    let orders = JSON.parse(localStorage.getItem('apex_rc_orders') || '[]');
+    let appliedCoupon = null;
+    let selectedPayMethod = '신용/체크카드';
 
-    const fishImagesCache = {};
-    FISH_PRODUCTS.forEach(p => {
+    // Preload all images in ./img/
+    const imgCache = {};
+    const imageFiles = [
+      './img/rc_car1.png', './img/rc_car2.png', './img/rc_car3.png',
+      './img/rc_car4.png', './img/rc_car5.png', './img/rc_car6.png',
+      './img/drift_mark1.png', './img/drift_mark2.png',
+      './img/dust1.png', './img/dust2.png', './img/dust3.png'
+    ];
+    imageFiles.forEach(src => {
       const im = new Image();
-      im.src = p.img;
-      fishImagesCache[p.id] = im;
+      im.src = src;
+      imgCache[src] = im;
     });
-
-    function saveState() {
-      localStorage.setItem("bluetank_cart_v2", JSON.stringify(cart));
-      if (currentUser) {
-        localStorage.setItem("bluetank_user", JSON.stringify(currentUser));
-      } else {
-        localStorage.removeItem("bluetank_user");
-      }
-      updateAllUI();
-    }
 
     function showToast(msg) {
-      const t = document.getElementById("toastBox");
-      t.textContent = msg;
-      t.classList.add("show");
-      clearTimeout(window._toastTimer);
-      window._toastTimer = setTimeout(() => t.classList.remove("show"), 2600);
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.classList.add('show');
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => el.classList.remove('show'), 2600);
     }
 
-    /* ============================================================
-       3. TANK LED & WATER CLICK RIPPLE INTERACTIVITY
-       ============================================================ */
-    function setTankLed(mode, btn) {
-      document.body.classList.remove("led-deep", "led-moon");
-      if (mode === "deep") document.body.classList.add("led-deep");
-      if (mode === "moon") document.body.classList.add("led-moon");
-      document.querySelectorAll(".led-btn").forEach(b => b.classList.remove("active"));
-      if (btn) btn.classList.add("active");
+    function formatWon(n) {
+      return n.toLocaleString('ko-KR') + '원';
     }
 
-    document.getElementById("mainAquariumTank").addEventListener("click", (e) => {
-      if (e.target.closest("button, input, select, .fish-card, .modal-card")) return;
-      const rect = e.currentTarget.getBoundingClientRect();
-      spawnWaterRipple(e.clientX - rect.left, e.clientY - rect.top);
-    });
+    // =========================================================================
+    // 3. CLICK-AND-HOLD DRAG STEERING WHEEL (ONLY MOVES WHEN PRESSED & DRAGGED)
+    // =========================================================================
+    const wheelStage = document.getElementById('wheelStage');
+    const wheelSvg = document.getElementById('steeringWheelSvg');
+    const wheelStatusPill = document.getElementById('wheelStatusPill');
+    const steerAngleDegEl = document.getElementById('steerAngleDeg');
+    const steerDirTextEl = document.getElementById('steerDirText');
 
-    function spawnWaterRipple(x, y) {
-      const tank = document.getElementById("mainAquariumTank");
-      const r = document.createElement("span");
-      r.className = "click-ripple";
-      r.style.left = x + "px";
-      r.style.top = y + "px";
-      tank.appendChild(r);
-      setTimeout(() => r.remove(), 1400);
-    }
+    let isSteeringDragging = false;
+    let dragStartX = 0;
+    let dragStartAngle = 0;
+    let steerAngleDeg = 0; // -45 to +45 degrees
 
-    /* ============================================================
-       4. CART TANK SWIMMING ENGINE (EACH CART ITEM = LIVE SWIMMER!)
-       ============================================================ */
-    const swimCanvas = document.getElementById("swimCanvas");
-    const sctx = swimCanvas.getContext("2d");
-
-    // `cartSwimmers` holds the actual fish in the user's cart!
-    let cartSwimmers = [];
-    // `previewSwimmer` shows the currently clicked product if not in cart yet
-    let previewSwimmer = null;
-    let pellets = [];
-    let bubbles = [];
-    let tankRipples = [];
-
-    function resizeSwimCanvas() {
-      const wrap = document.getElementById("cartTankViewport");
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      swimCanvas.width = wrap.clientWidth * dpr;
-      swimCanvas.height = wrap.clientHeight * dpr;
-      sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-    window.addEventListener("resize", resizeSwimCanvas);
-
-    function createSwimmerEntity(fishProd, spawnX, spawnY, isPreview = false) {
-      const w = swimCanvas.clientWidth || 680;
-      const h = swimCanvas.clientHeight || 390;
-      const x = typeof spawnX === "number" ? Math.max(70, Math.min(w - 70, spawnX)) : w * (0.25 + Math.random() * 0.5);
-      const y = typeof spawnY === "number" ? Math.max(70, Math.min(h - 70, spawnY)) : h * (0.25 + Math.random() * 0.5);
-      const angle = Math.random() * Math.PI * 2;
-      return {
-        fish: fishProd,
-        x,
-        y,
-        angle,
-        targetAngle: angle,
-        speed: fishProd.swimSpeed * (isPreview ? 1.0 : 1.35),
-        phase: Math.random() * Math.PI * 2,
-        scale: fishProd.spriteScale,
-        turnCooldown: 45 + Math.floor(Math.random() * 65),
-        splashAge: isPreview ? 999 : 0, // splash glow ring when newly added!
-        isPreview
-      };
-    }
-
-    /* Synchronize `cartSwimmers` array with `cart` quantities smoothly */
-    function syncSwimmersWithCart(spawnCoord = null) {
-      const targetCounts = {};
-      cart.forEach(item => { targetCounts[item.id] = item.qty; });
-
-      // Remove excess swimmers per species
-      const currentCounts = {};
-      for (let i = cartSwimmers.length - 1; i >= 0; i--) {
-        const id = cartSwimmers[i].fish.id;
-        currentCounts[id] = (currentCounts[id] || 0) + 1;
-        if (currentCounts[id] > (targetCounts[id] || 0)) {
-          const removed = cartSwimmers.splice(i, 1)[0];
-          tankRipples.push({ x: removed.x, y: removed.y, r: 8, maxR: 55, alpha: 0.7 });
-          currentCounts[id]--;
-        }
-      }
-
-      // Add missing swimmers per species
-      cart.forEach(item => {
-        const have = cartSwimmers.filter(s => s.fish.id === item.id).length;
-        const need = item.qty - have;
-        const prod = FISH_PRODUCTS.find(f => f.id === item.id);
-        for (let k = 0; k < need; k++) {
-          const sx = spawnCoord ? spawnCoord.x : undefined;
-          const sy = spawnCoord ? spawnCoord.y : undefined;
-          const swimmer = createSwimmerEntity(prod, sx, sy, false);
-          cartSwimmers.push(swimmer);
-          tankRipples.push({ x: swimmer.x, y: swimmer.y, r: 6, maxR: 88, alpha: 0.92 });
-          for (let b = 0; b < 7; b++) {
-            bubbles.push({
-              x: swimmer.x + (Math.random() - 0.5) * 24,
-              y: swimmer.y + (Math.random() - 0.5) * 24,
-              r: 2 + Math.random() * 2.8,
-              vx: (Math.random() - 0.5) * 0.7,
-              vy: -0.7 - Math.random() * 0.9,
-              alpha: 0.9
-            });
-          }
-        }
-      });
-
-      updatePreviewSwimmer();
-    }
-
-    function updatePreviewSwimmer() {
-      const prod = FISH_PRODUCTS.find(f => f.id === selectedFishId) || FISH_PRODUCTS[0];
-      const alreadyInCart = cart.some(item => item.id === selectedFishId && item.qty > 0);
-      if (alreadyInCart) {
-        // Already swimming as a cart member! No separate preview ghost needed.
-        previewSwimmer = null;
+    function updateWheelVisuals() {
+      wheelSvg.style.transform = `rotate(${steerAngleDeg.toFixed(1)}deg)`;
+      const rounded = Math.round(steerAngleDeg);
+      steerAngleDegEl.textContent = `${rounded > 0 ? '+' : ''}${rounded}°`;
+      if (Math.abs(rounded) <= 2) {
+        steerDirTextEl.textContent = '직진 (CENTER)';
+      } else if (rounded < 0) {
+        steerDirTextEl.textContent = '좌회전 (LEFT)';
       } else {
-        if (!previewSwimmer || previewSwimmer.fish.id !== selectedFishId) {
-          const w = swimCanvas.clientWidth || 680;
-          const h = swimCanvas.clientHeight || 390;
-          previewSwimmer = createSwimmerEntity(prod, w * 0.5, h * 0.5, true);
-        }
+        steerDirTextEl.textContent = '우회전 (RIGHT)';
       }
     }
 
-    function selectFishForPreview(fishId, scrollToTank = false) {
-      selectedFishId = fishId;
-      const prod = FISH_PRODUCTS.find(f => f.id === fishId);
-      if (!prod) return;
-
-      document.getElementById("inspName").textContent = prod.name;
-      document.getElementById("inspPrice").textContent = `${prod.price.toLocaleString()}원 / ${prod.unit}`;
-      document.getElementById("inspDesc").textContent = prod.desc;
-      document.getElementById("inspTemp").textContent = `🌡️ ${prod.temp}`;
-      document.getElementById("inspSize").textContent = `📏 ${prod.size}`;
-      document.getElementById("inspDiff").textContent = `✨ ${prod.diff}`;
-
-      document.querySelectorAll(".fish-card").forEach(c => {
-        c.classList.toggle("selected-tank", c.dataset.id === fishId);
-      });
-
-      updatePreviewSwimmer();
-
-      // Highlight matching swimmers in the cart tank
-      cartSwimmers.forEach(s => {
-        if (s.fish.id === fishId) {
-          s.splashAge = 0;
-          s.speed = s.fish.swimSpeed * 1.6;
-        }
-      });
-
-      if (scrollToTank) {
-        document.getElementById("cartTankSection").scrollIntoView({ behavior: "smooth", block: "nearest" });
-      }
-    }
-
-    function dropPelletAt(x, y) {
-      pellets.push({ x, y, r: 4.5, life: 440 });
-      tankRipples.push({ x, y, r: 6, maxR: 75, alpha: 0.85 });
-      for (let i = 0; i < 5; i++) {
-        bubbles.push({
-          x: x + (Math.random() - 0.5) * 16,
-          y: y + (Math.random() - 0.5) * 16,
-          r: 1.8 + Math.random() * 2.5,
-          vx: (Math.random() - 0.5) * 0.5,
-          vy: -0.6 - Math.random() * 0.7,
-          alpha: 0.85
-        });
-      }
-    }
-
-    function dropPelletCenter() {
-      const w = swimCanvas.clientWidth;
-      const h = swimCanvas.clientHeight;
-      dropPelletAt(w * (0.3 + Math.random() * 0.4), h * (0.3 + Math.random() * 0.4));
-      showToast("🍤 장바구니 수조에 프리미엄 먹이를 투하했습니다!");
-    }
-
-    function triggerTankWave() {
-      const w = swimCanvas.clientWidth;
-      const h = swimCanvas.clientHeight;
-      tankRipples.push({ x: w * 0.5, y: h * 0.5, r: 10, maxR: Math.max(w, h) * 0.55, alpha: 0.75 });
-      const allActive = previewSwimmer ? [...cartSwimmers, previewSwimmer] : cartSwimmers;
-      allActive.forEach(s => {
-        s.speed = s.fish.swimSpeed * 1.85;
-        s.targetAngle += (Math.random() - 0.5) * 1.2;
-      });
-    }
-
-    swimCanvas.addEventListener("click", (e) => {
-      const rect = swimCanvas.getBoundingClientRect();
-      dropPelletAt(e.clientX - rect.left, e.clientY - rect.top);
+    // Steering ONLY responds when user presses down on the wheel and drags!
+    wheelStage.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      isSteeringDragging = true;
+      dragStartX = e.clientX;
+      dragStartAngle = steerAngleDeg;
+      wheelStage.classList.add('dragging');
+      wheelStatusPill.classList.add('active');
+      wheelStatusPill.textContent = 'GRIPPED · 드래그 조향 중';
     });
 
-    function drawUndulatingFish(ctx, img, s) {
-      if (!img || !img.complete || img.naturalWidth === 0) return;
-      const drawSize = 148 * s.scale;
+    window.addEventListener('pointermove', (e) => {
+      // Strictly ignore mouse movement unless the steering wheel is held down!
+      if (!isSteeringDragging) return;
+      const dx = e.clientX - dragStartX;
+      // 115px horizontal drag = full 45 degree lock
+      const nextAngle = Math.max(-45, Math.min(45, dragStartAngle + (dx / 115) * 45));
+      steerAngleDeg = nextAngle;
+      updateWheelVisuals();
+    });
 
-      // Draw splash highlight ring if newly dropped into cart tank
-      if (!s.isPreview && s.splashAge < 55) {
-        s.splashAge++;
-        const ringAlpha = (1 - s.splashAge / 55) * 0.75;
-        ctx.save();
+    function releaseSteeringDrag() {
+      if (!isSteeringDragging) return;
+      isSteeringDragging = false;
+      wheelStage.classList.remove('dragging');
+      wheelStatusPill.classList.remove('active');
+      wheelStatusPill.textContent = 'HOLD & DRAG 대기 중';
+    }
+
+    window.addEventListener('pointerup', releaseSteeringDrag);
+    window.addEventListener('pointercancel', releaseSteeringDrag);
+
+    // =========================================================================
+    // 4. ARROW CONTROLS (UP = FORWARD GAS, DOWN = BRAKE / REVERSE, SPACE = DRIFT)
+    // =========================================================================
+    const keys = { ArrowUp: false, ArrowDown: false, Space: false };
+    const btnGas = document.getElementById('btnGas');
+    const btnBrake = document.getElementById('btnBrake');
+    const btnDrift = document.getElementById('btnDrift');
+
+    function syncPedalUI() {
+      btnGas.classList.toggle('pressed', keys.ArrowUp);
+      btnBrake.classList.toggle('pressed', keys.ArrowDown);
+      btnDrift.classList.toggle('pressed', keys.Space);
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+      if (e.code === 'ArrowUp' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        keys.ArrowUp = true;
+        syncPedalUI();
+      } else if (e.code === 'ArrowDown' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        keys.ArrowDown = true;
+        syncPedalUI();
+      } else if (e.code === 'Space' || e.key === ' ') {
+        e.preventDefault();
+        keys.Space = true;
+        syncPedalUI();
+      }
+    });
+
+    window.addEventListener('keyup', (e) => {
+      if (e.code === 'ArrowUp' || e.key === 'ArrowUp') {
+        keys.ArrowUp = false;
+        syncPedalUI();
+      } else if (e.code === 'ArrowDown' || e.key === 'ArrowDown') {
+        keys.ArrowDown = false;
+        syncPedalUI();
+      } else if (e.code === 'Space' || e.key === ' ') {
+        keys.Space = false;
+        syncPedalUI();
+      }
+    });
+
+    function bindHoldButton(el, keyName) {
+      el.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        keys[keyName] = true;
+        syncPedalUI();
+      });
+      const up = () => {
+        keys[keyName] = false;
+        syncPedalUI();
+      };
+      el.addEventListener('pointerup', up);
+      el.addEventListener('pointerleave', up);
+      el.addEventListener('pointercancel', up);
+    }
+    bindHoldButton(btnGas, 'ArrowUp');
+    bindHoldButton(btnBrake, 'ArrowDown');
+    bindHoldButton(btnDrift, 'Space');
+
+    // =========================================================================
+    // 5. TOP-DOWN TRACK PHYSICS, DRIFT MARKS & DUST PARTICLE ENGINE
+    // =========================================================================
+    const canvas = document.getElementById('trackCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const carState = {
+      x: 340,
+      y: 390,
+      vx: 0,
+      vy: 0,
+      angle: 0, // radians (0 = pointing right)
+      speed: 0,
+      driftPoints: 0,
+      couponUnlocked: false
+    };
+
+    let skidMarks = [];
+    let dustParticles = [];
+    let ambientDust = [];
+
+    function resizeCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (ambientDust.length === 0) {
+        for (let i = 0; i < 8; i++) {
+          ambientDust.push({
+            x: Math.random() * rect.width,
+            y: Math.random() * rect.height,
+            vx: 0.25 + Math.random() * 0.45,
+            vy: -0.1 + Math.random() * 0.2,
+            size: 110 + Math.random() * 120,
+            alpha: 0.08 + Math.random() * 0.1,
+            sprite: `./img/dust${(i % 3) + 1}.png`
+          });
+        }
+      }
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function resetCarToStart() {
+      const w = canvas.parentElement.clientWidth;
+      const h = canvas.parentElement.clientHeight;
+      carState.x = w * 0.34;
+      carState.y = h * 0.80;
+      carState.vx = 0;
+      carState.vy = 0;
+      carState.angle = 0;
+      steerAngleDeg = 0;
+      updateWheelVisuals();
+    }
+    resetCarToStart();
+
+    function clearSkidMarks() {
+      skidMarks = [];
+      dustParticles = [];
+      showToast('트랙의 타이어 드리프트 자국을 말끔히 정리했습니다.');
+    }
+
+    function selectProductForDrive(productId, scrollToArena = true) {
+      const found = PRODUCTS.find(p => p.id === productId);
+      if (!found) return;
+      selectedCar = found;
+
+      document.getElementById('hudCarThumb').src = found.img;
+      document.getElementById('hudCarName').textContent = found.name;
+      document.getElementById('hudCarSpec').textContent =
+        `${found.drive} · 최고 ${found.topSpeed} km/h · ${found.motor}`;
+
+      renderProducts();
+
+      // Give a crisp rolling launch on the track so the user immediately sees it in motion
+      const w = canvas.parentElement.clientWidth;
+      const h = canvas.parentElement.clientHeight;
+      carState.x = w * 0.28;
+      carState.y = h * 0.80;
+      carState.angle = 0;
+      carState.vx = 4.6;
+      carState.vy = 0;
+
+      if (scrollToArena) {
+        document.getElementById('arenaSection').scrollIntoView({ behavior: 'smooth' });
+      }
+      showToast(`[${found.name}] 트랙 투입 완료! 핸들을 꾹 눌러 드래그해 조향하세요.`);
+    }
+
+    function drawTopDownCircuit(w, h) {
+      // Base asphalt
+      ctx.fillStyle = '#131720';
+      ctx.fillRect(0, 0, w, h);
+
+      // Subtle asphalt grain grid
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.025)';
+      ctx.lineWidth = 1;
+      for (let gx = 0; gx < w; gx += 48) {
         ctx.beginPath();
-        ctx.arc(s.x, s.y, 26 + s.splashAge * 0.9, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(125, 211, 252, ${ringAlpha})`;
-        ctx.lineWidth = 2.2;
+        ctx.moveTo(gx, 0);
+        ctx.lineTo(gx, h);
         ctx.stroke();
+      }
+      for (let gy = 0; gy < h; gy += 48) {
+        ctx.beginPath();
+        ctx.moveTo(0, gy);
+        ctx.lineTo(w, gy);
+        ctx.stroke();
+      }
+
+      const padX = Math.max(95, w * 0.12);
+      const padY = Math.max(76, h * 0.17);
+      const trackW = w - padX * 2;
+      const trackH = h - padY * 2;
+      const cornerR = Math.min(125, trackH * 0.38);
+
+      function traceLoopPath() {
+        ctx.beginPath();
+        ctx.roundRect(padX, padY, trackW, trackH, cornerR);
+      }
+
+      // Outer yellow-orange rumble curb
+      ctx.save();
+      traceLoopPath();
+      ctx.lineWidth = 132;
+      ctx.strokeStyle = '#FF6B00';
+      ctx.stroke();
+
+      traceLoopPath();
+      ctx.lineWidth = 132;
+      ctx.setLineDash([24, 24]);
+      ctx.strokeStyle = '#FFD600';
+      ctx.stroke();
+      ctx.restore();
+
+      // Main dark tarmac road surface
+      ctx.save();
+      traceLoopPath();
+      ctx.lineWidth = 112;
+      ctx.strokeStyle = '#1D222E';
+      ctx.stroke();
+
+      // Inner racing groove
+      traceLoopPath();
+      ctx.lineWidth = 74;
+      ctx.strokeStyle = '#181C26';
+      ctx.stroke();
+
+      // Dashed center racing line
+      traceLoopPath();
+      ctx.lineWidth = 2;
+      ctx.setLineDash([16, 18]);
+      ctx.strokeStyle = 'rgba(255, 214, 0, 0.35)';
+      ctx.stroke();
+      ctx.restore();
+
+      // Pre-laid natural corner drift marks using ./img/drift_mark1.png & drift_mark2.png
+      const dm1 = imgCache['./img/drift_mark1.png'];
+      const dm2 = imgCache['./img/drift_mark2.png'];
+      if (dm1 && dm1.complete) {
+        ctx.save();
+        ctx.globalAlpha = 0.42;
+        ctx.drawImage(dm1, w - padX - 110, padY - 25, 165, 165);
+        ctx.restore();
+      }
+      if (dm2 && dm2.complete) {
+        ctx.save();
+        ctx.globalAlpha = 0.42;
+        ctx.drawImage(dm2, padX - 45, h - padY - 135, 165, 165);
         ctx.restore();
       }
 
-      ctx.save();
-      ctx.translate(s.x, s.y);
-
-      if (s.isPreview) {
-        ctx.globalAlpha = 0.78;
+      // Start / Finish Checkered Line on Bottom Straight
+      const startX = w * 0.36;
+      const startY = padY + trackH;
+      const sq = 8;
+      for (let row = -6; row < 6; row++) {
+        for (let col = 0; col < 3; col++) {
+          ctx.fillStyle = (row + col) % 2 === 0 ? '#FFD600' : '#0B0D11';
+          ctx.fillRect(startX + col * sq, startY + row * sq, sq, sq);
+        }
       }
 
-      ctx.rotate(s.angle + Math.PI / 2);
+      // Center Infield Branding
+      ctx.save();
+      ctx.fillStyle = 'rgba(255, 214, 0, 0.09)';
+      ctx.font = '900 32px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('APEX CIRCUIT', w / 2, h / 2 - 4);
+      ctx.fillStyle = 'rgba(255, 107, 0, 0.22)';
+      ctx.font = '800 12px sans-serif';
+      ctx.fillText('HOLD & DRAG STEERING WHEEL · ARROW KEYS GAS / BRAKE', w / 2, h / 2 + 20);
+      ctx.restore();
+    }
 
-      const slices = 22;
-      const srcW = img.naturalWidth;
-      const srcH = img.naturalHeight;
-      const sliceSrcH = srcH / slices;
-      const sliceDstH = drawSize / slices;
+    function updatePhysicsAndRender() {
+      const w = canvas.parentElement.clientWidth;
+      const h = canvas.parentElement.clientHeight;
 
-      for (let i = 0; i < slices; i++) {
-        const t = i / slices;
-        const bendEnvelope = Math.pow(t, 1.65);
-        const offsetX = Math.sin(s.phase - t * 4.2) * s.fish.tailAmp * s.scale * bendEnvelope;
+      // Auto-return steering wheel smoothly to center ONLY when user releases mouse button
+      if (!isSteeringDragging && Math.abs(steerAngleDeg) > 0.05) {
+        steerAngleDeg *= 0.84;
+        if (Math.abs(steerAngleDeg) < 0.2) steerAngleDeg = 0;
+        updateWheelVisuals();
+      }
 
-        ctx.drawImage(
-          img,
-          0, i * sliceSrcH, srcW, sliceSrcH + 0.6,
-          -drawSize / 2 + offsetX, -drawSize / 2 + i * sliceDstH,
-          drawSize, sliceDstH + 0.5
-        );
+      const fwdX = Math.cos(carState.angle);
+      const fwdY = Math.sin(carState.angle);
+      const rightX = -fwdY;
+      const rightY = fwdX;
+
+      let forwardSpeed = carState.vx * fwdX + carState.vy * fwdY;
+      let lateralSpeed = carState.vx * rightX + carState.vy * rightY;
+
+      const maxForward = selectedCar.topSpeed / 10.5;
+      const maxReverse = -3.4;
+
+      // ArrowUp = Forward Throttle
+      if (keys.ArrowUp) {
+        forwardSpeed = Math.min(maxForward, forwardSpeed + selectedCar.accel);
+      }
+
+      // ArrowDown = Brake (when moving forward) -> Reverse (when stopped)
+      let isHardBraking = false;
+      if (keys.ArrowDown) {
+        if (forwardSpeed > 0.35) {
+          forwardSpeed = Math.max(0, forwardSpeed - 0.56);
+          isHardBraking = true;
+        } else {
+          forwardSpeed = Math.max(maxReverse, forwardSpeed - 0.26);
+        }
+      }
+
+      // Natural rolling resistance
+      if (!keys.ArrowUp && !keys.ArrowDown) {
+        forwardSpeed *= 0.982;
+        if (Math.abs(forwardSpeed) < 0.03) forwardSpeed = 0;
+      }
+
+      // Steering based strictly on the dragged steering wheel angle (-45..+45 deg)
+      const steerNorm = steerAngleDeg / 45;
+      if (Math.abs(forwardSpeed) > 0.12) {
+        const reverseSign = forwardSpeed >= 0 ? 1 : -1;
+        const turnRate = 0.054 * steerNorm * reverseSign * Math.min(1.15, Math.abs(forwardSpeed) / 3.2);
+        carState.angle += turnRate;
+      }
+
+      // Lateral tire grip vs drift slide
+      const grip = keys.Space ? 0.82 : selectedCar.grip;
+      lateralSpeed *= grip;
+
+      const nFwdX = Math.cos(carState.angle);
+      const nFwdY = Math.sin(carState.angle);
+      const nRightX = -nFwdY;
+      const nRightY = nFwdX;
+
+      carState.vx = nFwdX * forwardSpeed + nRightX * lateralSpeed;
+      carState.vy = nFwdY * forwardSpeed + nRightY * lateralSpeed;
+
+      carState.x += carState.vx;
+      carState.y += carState.vy;
+
+      // Keep car smoothly within track arena bounds
+      const margin = 42;
+      if (carState.x < margin) { carState.x = margin; carState.vx *= -0.35; }
+      if (carState.x > w - margin) { carState.x = w - margin; carState.vx *= -0.35; }
+      if (carState.y < margin) { carState.y = margin; carState.vy *= -0.35; }
+      if (carState.y > h - margin) { carState.y = h - margin; carState.vy *= -0.35; }
+
+      const speedKmh = Math.round(Math.hypot(carState.vx, carState.vy) * 10.5);
+      const isDrifting =
+        (Math.abs(lateralSpeed) > 0.85 || (keys.Space && speedKmh > 22) || (Math.abs(steerNorm) > 0.45 && speedKmh > 46));
+
+      // Spawn realistic tire skid marks & dust puffs from rear wheels
+      if (isDrifting || isHardBraking) {
+        const rearDist = 24;
+        const trackHalf = 14;
+        const rx = carState.x - nFwdX * rearDist;
+        const ry = carState.y - nFwdY * rearDist;
+
+        skidMarks.push({
+          x1: rx + nRightX * trackHalf,
+          y1: ry + nRightY * trackHalf,
+          x2: rx - nRightX * trackHalf,
+          y2: ry - nRightY * trackHalf,
+          alpha: isHardBraking ? 0.52 : 0.38
+        });
+        if (skidMarks.length > 420) skidMarks.shift();
+
+        if (Math.random() < 0.65) {
+          dustParticles.push({
+            x: rx + (Math.random() - 0.5) * 18,
+            y: ry + (Math.random() - 0.5) * 18,
+            vx: -nFwdX * 0.6 + (Math.random() - 0.5) * 0.9,
+            vy: -nFwdY * 0.6 + (Math.random() - 0.5) * 0.9,
+            size: 26 + Math.random() * 22,
+            alpha: 0.48,
+            sprite: `./img/dust${(Math.floor(Math.random() * 3)) + 1}.png`
+          });
+        }
+
+        if (isDrifting) {
+          carState.driftPoints += Math.round((Math.abs(lateralSpeed) * 2.2 + 1.5) * selectedCar.driftFactor);
+          if (carState.driftPoints >= 1000 && !carState.couponUnlocked) {
+            carState.couponUnlocked = true;
+            showToast('축하합니다! 드리프트 1,000P 달성 — 15% 할인 쿠폰 [DRIFT15] 해금!');
+          }
+        }
+      }
+
+      // Update telemetry HUD
+      document.getElementById('teleSpeed').textContent = speedKmh;
+      document.getElementById('teleGear').textContent =
+        forwardSpeed < -0.2 ? 'R' : speedKmh === 0 ? 'N' : speedKmh < 28 ? 'D1' : speedKmh < 55 ? 'D2' : speedKmh < 75 ? 'D3' : 'D4';
+      document.getElementById('teleDrift').textContent = carState.driftPoints.toLocaleString();
+
+      const pct = Math.min(100, (carState.driftPoints / 1000) * 100);
+      document.getElementById('driftBarFill').style.width = `${pct}%`;
+      document.getElementById('driftCouponStatus').textContent =
+        carState.couponUnlocked ? '해금 완료! 코드: DRIFT15' : `${Math.min(1000, carState.driftPoints)} / 1,000 P`;
+
+      // Render Track
+      drawTopDownCircuit(w, h);
+
+      // Render Dynamic Tire Skid Marks
+      for (let i = 0; i < skidMarks.length; i++) {
+        const m = skidMarks[i];
+        m.alpha *= 0.9965;
+        ctx.fillStyle = `rgba(10, 12, 16, ${m.alpha.toFixed(3)})`;
+        ctx.beginPath();
+        ctx.arc(m.x1, m.y1, 3.2, 0, Math.PI * 2);
+        ctx.arc(m.x2, m.y2, 3.2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Render Ambient Drifting Dust Clouds
+      ambientDust.forEach(d => {
+        d.x += d.vx;
+        d.y += d.vy;
+        if (d.x > w + 120) d.x = -120;
+        const img = imgCache[d.sprite];
+        if (img && img.complete) {
+          ctx.save();
+          ctx.globalAlpha = d.alpha;
+          ctx.drawImage(img, d.x - d.size / 2, d.y - d.size / 2, d.size, d.size);
+          ctx.restore();
+        }
+      });
+
+      // Render Dynamic Tire Smoke / Dust Puffs
+      for (let i = dustParticles.length - 1; i >= 0; i--) {
+        const p = dustParticles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.size += 0.55;
+        p.alpha *= 0.945;
+        if (p.alpha < 0.02) {
+          dustParticles.splice(i, 1);
+          continue;
+        }
+        const img = imgCache[p.sprite];
+        if (img && img.complete) {
+          ctx.save();
+          ctx.globalAlpha = p.alpha;
+          ctx.drawImage(img, p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
+          ctx.restore();
+        }
+      }
+
+      // Render Photorealistic RC Car Sprite (top-down image oriented upward -> +90deg rotation)
+      ctx.save();
+      ctx.translate(carState.x, carState.y);
+      ctx.rotate(carState.angle + Math.PI / 2);
+
+      // Front turned wheel indicators when steering wheel is dragged
+      const wheelTurnRad = (steerAngleDeg * Math.PI) / 180 * 0.65;
+      [[-17, -20], [17, -20]].forEach(([wx, wy]) => {
+        ctx.save();
+        ctx.translate(wx, wy);
+        ctx.rotate(wheelTurnRad);
+        ctx.fillStyle = '#0F1117';
+        ctx.fillRect(-3.5, -7, 7, 14);
+        ctx.restore();
+      });
+
+      // Headlight beams
+      const beamGrad = ctx.createLinearGradient(0, -34, 0, -95);
+      beamGrad.addColorStop(0, 'rgba(255, 232, 77, 0.34)');
+      beamGrad.addColorStop(1, 'rgba(255, 232, 77, 0)');
+      ctx.fillStyle = beamGrad;
+      ctx.beginPath();
+      ctx.moveTo(-14, -32);
+      ctx.lineTo(-28, -95);
+      ctx.lineTo(28, -95);
+      ctx.lineTo(14, -32);
+      ctx.closePath();
+      ctx.fill();
+
+      // Photorealistic RC Car Image
+      const carImg = imgCache[selectedCar.img];
+      if (carImg && carImg.complete) {
+        ctx.drawImage(carImg, -42, -42, 84, 84);
+      }
+
+      // Bright Red Brake Tail Lights when ArrowDown is pressed
+      if (keys.ArrowDown) {
+        ctx.fillStyle = '#FF2A4B';
+        ctx.shadowColor = '#FF2A4B';
+        ctx.shadowBlur = 14;
+        ctx.fillRect(-16, 33, 9, 4);
+        ctx.fillRect(7, 33, 9, 4);
       }
       ctx.restore();
 
-      // Subtle floating tag for preview swimmer so user distinguishes preview vs cart items
-      if (s.isPreview) {
-        ctx.save();
-        ctx.font = "700 11px Pretendard, sans-serif";
-        const label = `미리보기 · ${s.fish.shortLabel}`;
-        const tw = ctx.measureText(label).width + 14;
-        ctx.fillStyle = "rgba(3, 24, 48, 0.78)";
-        ctx.strokeStyle = "rgba(125, 211, 252, 0.65)";
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.roundRect(s.x - tw / 2, s.y + drawSize * 0.36, tw, 20, 10);
-        ctx.fill();
-        ctx.stroke();
-        ctx.fillStyle = "#e0f2fe";
-        ctx.textAlign = "center";
-        ctx.fillText(label, s.x, s.y + drawSize * 0.36 + 14);
-        ctx.restore();
-      }
+      requestAnimationFrame(updatePhysicsAndRender);
+    }
+    requestAnimationFrame(updatePhysicsAndRender);
+
+    // =========================================================================
+    // 6. SHOWROOM PRODUCT RENDERING & DETAIL MODAL
+    // =========================================================================
+    function setCategory(cat, btn) {
+      currentCategory = cat;
+      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      renderProducts();
     }
 
-    function animateSwimTank() {
-      const w = swimCanvas.clientWidth;
-      const h = swimCanvas.clientHeight;
-      sctx.clearRect(0, 0, w, h);
+    function renderProducts() {
+      const sortBy = document.getElementById('sortSelect').value;
+      let list = PRODUCTS.filter(p => currentCategory === 'all' || p.category === currentCategory);
 
-      // Ripples
-      for (let i = tankRipples.length - 1; i >= 0; i--) {
-        const rp = tankRipples[i];
-        rp.r += 2.1;
-        rp.alpha *= 0.968;
-        sctx.beginPath();
-        sctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
-        sctx.strokeStyle = `rgba(224, 242, 254, ${rp.alpha})`;
-        sctx.lineWidth = 2;
-        sctx.stroke();
-        if (rp.r >= rp.maxR || rp.alpha < 0.03) tankRipples.splice(i, 1);
-      }
+      if (sortBy === 'speed') list.sort((a, b) => b.topSpeed - a.topSpeed);
+      if (sortBy === 'priceAsc') list.sort((a, b) => a.price - b.price);
+      if (sortBy === 'priceDesc') list.sort((a, b) => b.price - a.price);
 
-      // Food pellets
-      for (let i = pellets.length - 1; i >= 0; i--) {
-        const p = pellets[i];
-        p.life--;
-        const pulse = Math.sin(p.life * 0.15) * 0.8;
-        sctx.beginPath();
-        sctx.arc(p.x, p.y, p.r + pulse, 0, Math.PI * 2);
-        sctx.fillStyle = "#fbbf24";
-        sctx.fill();
-        sctx.strokeStyle = "rgba(255,255,255,0.85)";
-        sctx.lineWidth = 1.5;
-        sctx.stroke();
-        if (p.life <= 0) pellets.splice(i, 1);
-      }
-
-      const allSwimmers = previewSwimmer ? [...cartSwimmers, previewSwimmer] : cartSwimmers;
-      const margin = 64;
-
-      allSwimmers.forEach((s, idx) => {
-        s.phase += s.fish.tailFreq * (0.85 + s.speed * 0.35);
-        s.speed += (s.fish.swimSpeed - s.speed) * 0.03;
-
-        if (pellets.length > 0) {
-          let nearest = pellets[0];
-          let minDist = Math.hypot(nearest.x - s.x, nearest.y - s.y);
-          pellets.forEach(p => {
-            const d = Math.hypot(p.x - s.x, p.y - s.y);
-            if (d < minDist) { minDist = d; nearest = p; }
-          });
-          s.targetAngle = Math.atan2(nearest.y - s.y, nearest.x - s.x);
-          if (minDist < 24) {
-            const pIdx = pellets.indexOf(nearest);
-            if (pIdx > -1) pellets.splice(pIdx, 1);
-            tankRipples.push({ x: s.x, y: s.y, r: 4, maxR: 45, alpha: 0.7 });
-          }
-        } else {
-          s.turnCooldown--;
-          if (s.turnCooldown <= 0) {
-            s.targetAngle += (Math.random() - 0.5) * 1.15;
-            s.turnCooldown = 55 + Math.floor(Math.random() * 75);
-          }
-
-          // Gentle separation force so multiple fish in the cart tank swim gracefully without overlapping
-          allSwimmers.forEach((other, oIdx) => {
-            if (idx === oIdx) return;
-            const dx = s.x - other.x;
-            const dy = s.y - other.y;
-            const dist = Math.hypot(dx, dy);
-            if (dist > 0 && dist < 78) {
-              const away = Math.atan2(dy, dx);
-              s.targetAngle += Math.sin(away - s.targetAngle) * 0.06;
-            }
-          });
-        }
-
-        if (s.x < margin) s.targetAngle = (Math.random() - 0.5) * 0.5;
-        if (s.x > w - margin) s.targetAngle = Math.PI + (Math.random() - 0.5) * 0.5;
-        if (s.y < margin) s.targetAngle = Math.PI / 2 + (Math.random() - 0.5) * 0.5;
-        if (s.y > h - margin) s.targetAngle = -Math.PI / 2 + (Math.random() - 0.5) * 0.5;
-
-        let diff = s.targetAngle - s.angle;
-        while (diff > Math.PI) diff -= Math.PI * 2;
-        while (diff < -Math.PI) diff += Math.PI * 2;
-        s.angle += diff * 0.045;
-
-        s.x += Math.cos(s.angle) * s.speed;
-        s.y += Math.sin(s.angle) * s.speed;
-
-        if (Math.random() < 0.035) {
-          bubbles.push({
-            x: s.x - Math.cos(s.angle) * 16,
-            y: s.y - Math.sin(s.angle) * 16,
-            r: 1.4 + Math.random() * 2.0,
-            vx: (Math.random() - 0.5) * 0.4,
-            vy: -0.55 - Math.random() * 0.65,
-            alpha: 0.72
-          });
-        }
-
-        drawUndulatingFish(sctx, fishImagesCache[s.fish.id], s);
-      });
-
-      // Rising bubbles
-      for (let i = bubbles.length - 1; i >= 0; i--) {
-        const b = bubbles[i];
-        b.x += b.vx;
-        b.y += b.vy;
-        b.alpha -= 0.008;
-        sctx.beginPath();
-        sctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
-        sctx.strokeStyle = `rgba(224, 242, 254, ${b.alpha})`;
-        sctx.lineWidth = 1.2;
-        sctx.stroke();
-        if (b.alpha <= 0) bubbles.splice(i, 1);
-      }
-
-      requestAnimationFrame(animateSwimTank);
-    }
-
-    /* ============================================================
-       5. PRODUCT GRID & DRAG-DIRECTLY-INTO-CART-TANK SYSTEM
-       ============================================================ */
-    function renderFishGrid() {
-      const grid = document.getElementById("fishGrid");
-      const list = currentCategory === "all"
-        ? FISH_PRODUCTS
-        : FISH_PRODUCTS.filter(f => f.category === currentCategory);
-
-      grid.innerHTML = list.map(fish => {
-        const inCartItem = cart.find(c => c.id === fish.id);
-        const qtyInTank = inCartItem ? inCartItem.qty : 0;
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = list.map(p => {
+        const isActive = p.id === selectedCar.id;
         return `
-          <article class="fish-card ${fish.id === selectedFishId ? "selected-tank" : ""}"
-                   data-id="${fish.id}"
-                   draggable="true"
-                   onclick="selectFishForPreview('${fish.id}', true)">
-            <div class="card-top-meta">
-              <span class="tag-chip">${fish.badge}</span>
-              ${qtyInTank > 0
-                ? `<span class="in-tank-count-badge">🐠 수조 유영 ${qtyInTank}마리</span>`
-                : `<span class="drag-handle-pill" title="수조로 드래그해 담기">⠿ 수조로 드래그</span>`}
+          <article class="product-card ${isActive ? 'selected-drive' : ''}">
+            <div class="studio-photo-stage" onclick="selectProductForDrive('${p.id}', true)">
+              <div class="studio-turntable-ring"></div>
+              <div class="card-badges">
+                <span class="badge-scale">${p.scale}</span>
+                ${isActive ? '<span class="badge-drive-now">현재 트랙 주행 중</span>' : ''}
+              </div>
+              <img class="studio-car-img" src="${p.img}" alt="${p.name}" />
+              <span class="hover-drive-overlay">클릭하여 즉시 트랙 시승</span>
             </div>
 
-            <div class="fish-tank-window">
-              <img class="fish-thumb" src="${fish.img}" alt="${fish.name}" />
-              <span class="swim-trigger-overlay">▶ 유영 미리보기</span>
-            </div>
+            <div class="card-body">
+              <div>
+                <div class="card-category">${p.categoryLabel}</div>
+                <h3 class="card-title">${p.name}</h3>
+              </div>
+              <p class="card-desc">${p.desc}</p>
 
-            <div class="card-info">
-              <h3>${fish.name}</h3>
-              <p>${fish.shortDesc}</p>
-            </div>
+              <div class="spec-pills">
+                <div class="spec-item">
+                  <span>최고속도</span>
+                  <strong>${p.topSpeed} km/h</strong>
+                </div>
+                <div class="spec-item">
+                  <span>구동방식</span>
+                  <strong>${p.drive.split(' ')[0]}</strong>
+                </div>
+                <div class="spec-item">
+                  <span>배터리</span>
+                  <strong>${p.battery.split(' ')[0]}</strong>
+                </div>
+              </div>
 
-            <div class="card-footer">
-              <div class="card-price">${fish.price.toLocaleString()}원</div>
-              <div class="card-actions" onclick="event.stopPropagation()">
-                <button class="btn-card-sub" type="button" onclick="selectFishForPreview('${fish.id}', true)">미리보기</button>
-                <button class="btn-card-add" type="button" onclick="addToCart('${fish.id}')">+ 수조에 담기</button>
+              <div class="card-footer">
+                <div class="price-block">
+                  <span class="price-orig">${formatWon(p.origPrice)}</span>
+                  <span class="price-now">${formatWon(p.price)}</span>
+                </div>
+                <div class="card-btn-group">
+                  <button class="btn btn-ghost" onclick="openDetailModal('${p.id}')">상세</button>
+                  <button class="btn btn-outline" onclick="selectProductForDrive('${p.id}', true)">시승</button>
+                  <button class="btn btn-primary" onclick="addToCart('${p.id}')">담기</button>
+                </div>
               </div>
             </div>
           </article>
         `;
-      }).join("");
-
-      bindDragInteractions();
+      }).join('');
     }
 
-    function filterCatalog(cat, btn) {
-      currentCategory = cat;
-      document.querySelectorAll(".filter-pill").forEach(b => b.classList.remove("active"));
-      if (btn) btn.classList.add("active");
-      renderFishGrid();
-    }
-
-    let draggedFishId = null;
-    let pointerDragging = false;
-    let pointerStartX = 0;
-    let pointerStartY = 0;
-
-    function setTankDropVisualState(isDragging, isHoveringTank = false, isHoveringDock = false) {
-      const tankEl = document.getElementById("cartTankViewport");
-      const dockEl = document.getElementById("floatingTankDock");
-      tankEl.classList.toggle("drag-target-ready", isDragging);
-      tankEl.classList.toggle("drag-over", isHoveringTank);
-      dockEl.classList.toggle("drag-over", isHoveringDock);
-    }
-
-    function getTankDropPosition(clientX, clientY) {
-      const tankEl = document.getElementById("cartTankViewport");
-      const r = tankEl.getBoundingClientRect();
-      if (clientX >= r.left && clientX <= r.right && clientY >= r.top && clientY <= r.bottom) {
-        return { x: clientX - r.left, y: clientY - r.top };
-      }
-      return null;
-    }
-
-    function isOverFloatingDock(clientX, clientY) {
-      const dockEl = document.getElementById("floatingTankDock");
-      const r = dockEl.getBoundingClientRect();
-      const pad = 22;
-      return clientX >= r.left - pad && clientX <= r.right + pad &&
-             clientY >= r.top - pad && clientY <= r.bottom + pad;
-    }
-
-    function bindDragInteractions() {
-      const cards = document.querySelectorAll(".fish-card");
-      const ghost = document.getElementById("dragGhost");
-      const ghostImg = document.getElementById("dragGhostImg");
-      const ghostLabel = document.getElementById("dragGhostLabel");
-      const tankEl = document.getElementById("cartTankViewport");
-      const dockEl = document.getElementById("floatingTankDock");
-
-      cards.forEach(card => {
-        const fishId = card.dataset.id;
-        const fish = FISH_PRODUCTS.find(f => f.id === fishId);
-
-        // Native HTML5 Drag
-        card.addEventListener("dragstart", (e) => {
-          draggedFishId = fishId;
-          card.classList.add("dragging-source");
-          setTankDropVisualState(true, false, false);
-          if (e.dataTransfer) {
-            e.dataTransfer.setData("text/plain", fishId);
-            e.dataTransfer.effectAllowed = "copy";
-          }
-        });
-
-        card.addEventListener("dragend", () => {
-          card.classList.remove("dragging-source");
-          setTankDropVisualState(false, false, false);
-          draggedFishId = null;
-        });
-
-        // Smooth Custom Pointer Drag
-        card.addEventListener("mousedown", (e) => {
-          if (e.button !== 0 || e.target.closest("button")) return;
-          pointerDragging = false;
-          draggedFishId = fishId;
-          pointerStartX = e.clientX;
-          pointerStartY = e.clientY;
-
-          const onMouseMove = (mv) => {
-            const dist = Math.hypot(mv.clientX - pointerStartX, mv.clientY - pointerStartY);
-            if (dist > 10) {
-              pointerDragging = true;
-              card.classList.add("dragging-source");
-              ghost.style.display = "flex";
-              ghost.style.left = mv.clientX + "px";
-              ghost.style.top = mv.clientY + "px";
-              ghostImg.src = fish.img;
-              ghostLabel.textContent = `${fish.shortLabel} → 수조에 입수`;
-
-              const overTank = Boolean(getTankDropPosition(mv.clientX, mv.clientY));
-              const overDock = isOverFloatingDock(mv.clientX, mv.clientY);
-              setTankDropVisualState(true, overTank, overDock);
-            }
-          };
-
-          const onMouseUp = (up) => {
-            window.removeEventListener("mousemove", onMouseMove);
-            window.removeEventListener("mouseup", onMouseUp);
-            card.classList.remove("dragging-source");
-            ghost.style.display = "none";
-
-            if (pointerDragging) {
-              const dropPos = getTankDropPosition(up.clientX, up.clientY);
-              if (dropPos) {
-                addToCart(fishId, dropPos);
-              } else if (isOverFloatingDock(up.clientX, up.clientY)) {
-                addToCart(fishId);
-                scrollToCartTank();
-              }
-            }
-            setTankDropVisualState(false, false, false);
-            pointerDragging = false;
-            draggedFishId = null;
-          };
-
-          window.addEventListener("mousemove", onMouseMove);
-          window.addEventListener("mouseup", onMouseUp);
-        });
-      });
-
-      // Native drop on Cart Tank
-      tankEl.ondragover = (e) => {
-        e.preventDefault();
-        setTankDropVisualState(true, true, false);
-      };
-      tankEl.ondragleave = () => {
-        setTankDropVisualState(true, false, false);
-      };
-      tankEl.ondrop = (e) => {
-        e.preventDefault();
-        const id = (e.dataTransfer && e.dataTransfer.getData("text/plain")) || draggedFishId;
-        const dropPos = getTankDropPosition(e.clientX, e.clientY);
-        setTankDropVisualState(false, false, false);
-        if (id) addToCart(id, dropPos);
-      };
-
-      // Native drop on Floating Dock
-      dockEl.ondragover = (e) => {
-        e.preventDefault();
-        setTankDropVisualState(true, false, true);
-      };
-      dockEl.ondragleave = () => {
-        setTankDropVisualState(true, false, false);
-      };
-      dockEl.ondrop = (e) => {
-        e.preventDefault();
-        const id = (e.dataTransfer && e.dataTransfer.getData("text/plain")) || draggedFishId;
-        setTankDropVisualState(false, false, false);
-        if (id) {
-          addToCart(id);
-          scrollToCartTank();
-        }
-      };
-    }
-
-    function scrollToCartTank() {
-      document.getElementById("cartTankSection").scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }
-
-    /* ============================================================
-       6. CART TANK ACTIONS, MEMBERSHIP & CHECKOUT
-       ============================================================ */
-    function addToCart(fishId, spawnCoord = null) {
-      const prod = FISH_PRODUCTS.find(f => f.id === fishId);
-      if (!prod) return;
-      selectedFishId = fishId;
-
-      const existing = cart.find(item => item.id === fishId);
-      if (existing) {
-        existing.qty += 1;
-      } else {
-        cart.push({ id: fishId, qty: 1 });
-      }
-
-      syncSwimmersWithCart(spawnCoord);
-      saveState();
-      showToast(`💦 '${prod.name}' 개체가 장바구니 수조에 입수되어 헤엄치기 시작했습니다!`);
-    }
-
-    function updateCartQty(fishId, delta) {
-      const idx = cart.findIndex(item => item.id === fishId);
-      if (idx === -1) return;
-      cart[idx].qty += delta;
-      if (cart[idx].qty <= 0) {
-        cart.splice(idx, 1);
-      }
-      syncSwimmersWithCart();
-      saveState();
-    }
-
-    function clearCartTank() {
-      if (cart.length === 0) return;
-      cart = [];
-      syncSwimmersWithCart();
-      saveState();
-      showToast("🥅 장바구니 수조의 모든 개체를 채집해 비웠습니다.");
-    }
-
-    function buyNowSingle(fishId) {
-      const existing = cart.find(item => item.id === fishId);
-      if (!existing) {
-        cart.push({ id: fishId, qty: 1 });
-        syncSwimmersWithCart();
-        saveState();
-      }
-      openCheckoutModal();
-    }
-
-    function getCartTotals() {
-      let subtotal = 0;
-      let totalCount = 0;
-      cart.forEach(item => {
-        const prod = FISH_PRODUCTS.find(f => f.id === item.id);
-        if (prod) {
-          subtotal += prod.price * item.qty;
-          totalCount += item.qty;
-        }
-      });
-      const shipping = subtotal === 0 ? 0 : (subtotal >= 40000 ? 0 : 3500);
-      return { subtotal, shipping, total: subtotal + shipping, totalCount };
-    }
-
-    function updateAllUI() {
-      const { subtotal, shipping, total, totalCount } = getCartTotals();
-
-      document.getElementById("headerCartCount").textContent = totalCount;
-      document.getElementById("floatingCartCount").textContent = totalCount;
-      document.getElementById("cartTankStatusText").textContent = `장바구니 수조 · 유영 중 ${totalCount}마리`;
-      document.getElementById("emptyTankGuide").style.display = totalCount === 0 ? "block" : "none";
-
-      // Auth header button
-      const authBtn = document.getElementById("authHeaderBtn");
-      if (currentUser) {
-        authBtn.innerHTML = `<span>💧 ${currentUser.name}님 · ${currentUser.points.toLocaleString()}P</span>`;
-      } else {
-        authBtn.innerHTML = `<span>👤 회원가입 · 로그인</span>`;
-      }
-
-      // Live Roster inside Tank Panel
-      const rosterBox = document.getElementById("rosterListContainer");
-      if (cart.length === 0) {
-        rosterBox.innerHTML = `
-          <div class="roster-empty">
-            수조에 담긴 물고기가 없습니다.<br/>
-            물고기 카드를 <strong>수조로 드래그</strong>하거나 <strong>[+ 수조에 담기]</strong>를 누르면<br/>
-            수조 안에서 물고기가 늘어나며 함께 헤엄칩니다!
+    function openDetailModal(productId) {
+      const p = PRODUCTS.find(x => x.id === productId);
+      if (!p) return;
+      document.getElementById('detailTitle').textContent = p.name;
+      document.getElementById('detailContent').innerHTML = `
+        <div class="studio-photo-stage" style="height:240px; border-radius:12px; margin-bottom:16px;" onclick="closeModal('detailModal'); selectProductForDrive('${p.id}', true);">
+          <img class="studio-car-img" src="${p.img}" alt="${p.name}" />
+          <span class="hover-drive-overlay">클릭 시 즉시 트랙 주행</span>
+        </div>
+        <p style="font-size:14px; color:var(--text-sub); margin-bottom:14px;">${p.desc}</p>
+        <div class="spec-pills" style="margin-bottom:16px;">
+          <div class="spec-item"><span>최고속도</span><strong>${p.topSpeed} km/h</strong></div>
+          <div class="spec-item"><span>모터 스펙</span><strong>${p.motor}</strong></div>
+          <div class="spec-item"><span>배터리</span><strong>${p.battery}</strong></div>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+          <strong style="font-size:22px; color:var(--yellow);">${formatWon(p.price)}</strong>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-outline" onclick="closeModal('detailModal'); selectProductForDrive('${p.id}', true);">트랙에서 바로 운전</button>
+            <button class="btn btn-primary" onclick="addToCart('${p.id}'); closeModal('detailModal');">장바구니 담기</button>
           </div>
+        </div>
+      `;
+      document.getElementById('detailModal').classList.add('open');
+    }
+
+    // =========================================================================
+    // 7. MEMBER AUTHENTICATION (SIGNUP / LOGIN / POINTS / ORDERS)
+    // =========================================================================
+    function renderHeaderAuth() {
+      const area = document.getElementById('headerAuthArea');
+      const totalItems = cart.reduce((s, item) => s + item.qty, 0);
+
+      if (currentUser) {
+        area.innerHTML = `
+          <div class="member-chip" style="cursor:pointer;" onclick="openAuthModal('profile')">
+            <span>${currentUser.name} 드라이버</span>
+            <strong>${currentUser.points.toLocaleString()}P</strong>
+          </div>
+          <button class="btn btn-ghost" onclick="openAuthModal('profile')">마이페이지</button>
+          <button class="cart-pill" onclick="openCartDrawer()">
+            <span>장바구니</span>
+            <span class="cart-count">${totalItems}</span>
+          </button>
         `;
       } else {
-        rosterBox.innerHTML = cart.map(item => {
-          const prod = FISH_PRODUCTS.find(f => f.id === item.id);
-          return `
-            <div class="roster-item">
-              <img src="${prod.img}" alt="${prod.name}" />
-              <div class="roster-item-name">
-                <strong>${prod.name}</strong>
-                <span>${(prod.price * item.qty).toLocaleString()}원 (${item.qty}마리 유영 중)</span>
+        area.innerHTML = `
+          <button class="btn btn-ghost" onclick="openAuthModal('login')">로그인</button>
+          <button class="btn btn-outline" onclick="openAuthModal('signup')">회원가입 (+10,000P)</button>
+          <button class="cart-pill" onclick="openCartDrawer()">
+            <span>장바구니</span>
+            <span class="cart-count">${totalItems}</span>
+          </button>
+        `;
+      }
+    }
+
+    function openAuthModal(mode) {
+      document.getElementById('authModal').classList.add('open');
+      if (currentUser && mode === 'profile') {
+        document.getElementById('authModalTitle').textContent = '드라이버 멤버십 & 주문내역';
+        document.getElementById('authTabs').style.display = 'none';
+        document.getElementById('signupForm').style.display = 'none';
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('memberProfileView').style.display = 'block';
+
+        document.getElementById('profName').textContent = `${currentUser.name} 님 (PRO MEMBER)`;
+        document.getElementById('profEmail').textContent = currentUser.email;
+        document.getElementById('profAddr').textContent = `기본 배송지: ${currentUser.address}`;
+        document.getElementById('profPoints').textContent = currentUser.points.toLocaleString();
+
+        const listEl = document.getElementById('orderHistoryList');
+        if (orders.length === 0) {
+          listEl.innerHTML = '<p style="font-size:13px; color:var(--text-muted);">아직 결제 완료된 주문이 없습니다.</p>';
+        } else {
+          listEl.innerHTML = orders.map(o => `
+            <div style="background:var(--asphalt-850); padding:10px 12px; border-radius:8px; border:1px solid rgba(255,214,0,0.2); font-size:12.5px;">
+              <div style="display:flex; justify-content:space-between; font-weight:800; color:var(--yellow);">
+                <span>주문번호 ${o.orderNo}</span>
+                <span>${formatWon(o.finalAmount)}</span>
               </div>
-              <div class="qty-stepper">
-                <button type="button" onclick="updateCartQty('${prod.id}', -1)" title="1마리 빼기">−</button>
-                <span>${item.qty}</span>
-                <button type="button" onclick="updateCartQty('${prod.id}', 1)" title="1마리 추가 입수">+</button>
-              </div>
+              <div style="color:var(--text-sub); margin-top:3px;">${o.summary} · ${o.payMethod}</div>
             </div>
-          `;
-        }).join("");
-      }
-
-      document.getElementById("rosterShippingHint").textContent =
-        subtotal === 0 ? "4만원 이상 산소포장 무료배송"
-        : (shipping === 0 ? "산소포장 무료배송 적용됨" : `배송비 ${shipping.toLocaleString()}원 포함`);
-      document.getElementById("rosterTotalPrice").textContent = `${total.toLocaleString()}원`;
-
-      renderFishGrid();
-    }
-
-    function openModal(id) {
-      document.getElementById(id).classList.add("open");
-    }
-
-    function closeModal(id) {
-      document.getElementById(id).classList.remove("open");
-    }
-
-    /* Auth Handlers */
-    function openAuthModal() {
-      if (currentUser) {
-        if (confirm(`${currentUser.name}님 (${currentUser.tankSize})\n보유 포인트: ${currentUser.points.toLocaleString()}P\n\n로그아웃 하시겠습니까?`)) {
-          currentUser = null;
-          saveState();
-          showToast("로그아웃 되었습니다.");
+          `).join('');
         }
-        return;
+      } else {
+        document.getElementById('authModalTitle').textContent = '드라이버 회원가입 / 로그인';
+        document.getElementById('authTabs').style.display = 'grid';
+        document.getElementById('memberProfileView').style.display = 'none';
+        switchAuthTab(mode || 'signup');
       }
-      openModal("authModal");
     }
 
     function switchAuthTab(tab) {
-      document.getElementById("tabSignup").classList.toggle("active", tab === "signup");
-      document.getElementById("tabLogin").classList.toggle("active", tab === "login");
-      document.getElementById("signupForm").style.display = tab === "signup" ? "block" : "none";
-      document.getElementById("loginForm").style.display = tab === "login" ? "block" : "none";
+      document.getElementById('tabSignup').classList.toggle('active', tab === 'signup');
+      document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+      document.getElementById('signupForm').style.display = tab === 'signup' ? 'block' : 'none';
+      document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
     }
 
     function handleSignup(e) {
       e.preventDefault();
-      const name = document.getElementById("regName").value.trim();
-      const email = document.getElementById("regEmail").value.trim();
-      const pw = document.getElementById("regPw").value;
-      const tankSize = document.getElementById("regTankSize").value;
-
-      currentUser = { name, email, pw, tankSize, points: 3000 };
-      saveState();
-      closeModal("authModal");
-      showToast(`🎉 ${name}님 환영합니다! 가입 축하 3,000P가 지급되었습니다.`);
+      currentUser = {
+        name: document.getElementById('regName').value.trim(),
+        email: document.getElementById('regEmail').value.trim(),
+        password: document.getElementById('regPass').value,
+        address: document.getElementById('regAddr').value.trim(),
+        points: 10000
+      };
+      localStorage.setItem('apex_rc_user', JSON.stringify(currentUser));
+      renderHeaderAuth();
+      closeModal('authModal');
+      showToast(`환영합니다, ${currentUser.name} 드라이버님! 가입 축하 10,000P가 지급되었습니다.`);
     }
 
     function handleLogin(e) {
       e.preventDefault();
-      const email = document.getElementById("loginEmail").value.trim();
-      const namePart = email.split("@")[0] || "아쿠아회원";
-      currentUser = {
-        name: namePart,
-        email,
-        tankSize: "45cm 슬림수조 (40L)",
-        points: 3000
-      };
-      saveState();
-      closeModal("authModal");
-      showToast(`💧 ${namePart}님, 장바구니 수조에 오신 것을 환영합니다!`);
+      const email = document.getElementById('loginEmail').value.trim();
+      const saved = JSON.parse(localStorage.getItem('apex_rc_user') || 'null');
+      if (saved && saved.email === email) {
+        currentUser = saved;
+      } else {
+        currentUser = {
+          name: email.split('@')[0],
+          email,
+          address: '경기도 오산시 한신대길 137',
+          points: 10000
+        };
+        localStorage.setItem('apex_rc_user', JSON.stringify(currentUser));
+      }
+      renderHeaderAuth();
+      closeModal('authModal');
+      showToast(`${currentUser.name} 드라이버님 로그인 완료!`);
     }
 
-    /* Checkout Handlers */
-    function openCheckoutModal() {
-      if (cart.length === 0) {
-        showToast("먼저 장바구니 수조에 관상어를 입수시켜 주세요!");
-        scrollToCartTank();
+    function quickDemoLogin() {
+      currentUser = {
+        name: 'APEX프로드라이버',
+        email: 'pro@apexrc.kr',
+        address: '경기도 오산시 한신대길 137 서킷빌딩 1층',
+        points: 15000
+      };
+      localStorage.setItem('apex_rc_user', JSON.stringify(currentUser));
+      renderHeaderAuth();
+      closeModal('authModal');
+      showToast('체험용 프로 드라이버 계정(15,000P)으로 로그인되었습니다.');
+    }
+
+    function logoutMember() {
+      currentUser = null;
+      renderHeaderAuth();
+      closeModal('authModal');
+      showToast('로그아웃되었습니다.');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
+    }
+
+    // =========================================================================
+    // 8. CART & CHECKOUT PAYMENT SYSTEM
+    // =========================================================================
+    function saveCart() {
+      localStorage.setItem('apex_rc_cart', JSON.stringify(cart));
+      renderHeaderAuth();
+    }
+
+    function addToCart(productId) {
+      const existing = cart.find(c => c.id === productId);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ id: productId, qty: 1 });
+      }
+      saveCart();
+      const prod = PRODUCTS.find(p => p.id === productId);
+      showToast(`[${prod.name}] 장바구니에 담았습니다.`);
+    }
+
+    function addActiveCarToCart() {
+      addToCart(selectedCar.id);
+      openCartDrawer();
+    }
+
+    function openCartDrawer() {
+      document.getElementById('cartDrawerBackdrop').classList.add('open');
+      if (currentUser && !document.getElementById('checkoutAddress').value) {
+        document.getElementById('checkoutAddress').value = currentUser.address || '';
+      }
+      renderCartDrawer();
+    }
+
+    function closeCartDrawer() {
+      document.getElementById('cartDrawerBackdrop').classList.remove('open');
+    }
+
+    function updateCartQty(productId, delta) {
+      const idx = cart.findIndex(c => c.id === productId);
+      if (idx === -1) return;
+      cart[idx].qty += delta;
+      if (cart[idx].qty <= 0) cart.splice(idx, 1);
+      saveCart();
+      renderCartDrawer();
+    }
+
+    function copyCoupon(code) {
+      if (navigator.clipboard) navigator.clipboard.writeText(code).catch(() => {});
+      document.getElementById('couponInput').value = code;
+      showToast(`쿠폰 코드 [${code}]가 복사 및 입력되었습니다.`);
+    }
+
+    function applyCoupon() {
+      const code = document.getElementById('couponInput').value.trim().toUpperCase();
+      if (code === 'APEX10') {
+        appliedCoupon = { code: 'APEX10', rate: 0.10 };
+        showToast('10% 할인 쿠폰(APEX10)이 적용되었습니다!');
+      } else if (code === 'DRIFT15') {
+        if (carState.driftPoints >= 1000 || carState.couponUnlocked) {
+          appliedCoupon = { code: 'DRIFT15', rate: 0.15 };
+          showToast('15% 드리프트 마스터 쿠폰(DRIFT15)이 적용되었습니다!');
+        } else {
+          showToast(`DRIFT15 쿠폰은 트랙 드리프트 1,000P 달성 시 사용 가능합니다. (현재 ${carState.driftPoints}P)`);
+          return;
+        }
+      } else {
+        appliedCoupon = null;
+        showToast('유효하지 않은 쿠폰 코드입니다. (APEX10 또는 DRIFT15)');
+      }
+      renderCartDrawer();
+    }
+
+    function useAllPoints() {
+      if (!currentUser) {
+        showToast('포인트를 사용하려면 먼저 로그인 또는 회원가입해 주세요.');
         return;
       }
-      document.getElementById("checkoutForm").style.display = "block";
-      document.getElementById("orderReceiptView").style.display = "none";
-      document.getElementById("checkoutModalTitle").textContent = "💳 장바구니 수조 생물 입양 결제";
+      document.getElementById('usePointsInput').value = currentUser.points;
+      renderCartDrawer();
+    }
+
+    document.getElementById('usePointsInput').addEventListener('input', renderCartDrawer);
+
+    function selectPayMethod(btn, method) {
+      selectedPayMethod = method;
+      document.querySelectorAll('.pay-method-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    function renderCartDrawer() {
+      const listEl = document.getElementById('cartItemsList');
+      const availPts = currentUser ? currentUser.points : 0;
+      document.getElementById('drawerAvailPts').textContent = availPts.toLocaleString();
+
+      if (cart.length === 0) {
+        listEl.innerHTML = `
+          <div style="text-align:center; padding:36px 16px; color:var(--text-muted); border:1px dashed rgba(255,255,255,0.12); border-radius:12px;">
+            장바구니가 비어 있습니다.<br />쇼룸에서 마음에 드는 RC카를 담아보세요!
+          </div>
+        `;
+      } else {
+        listEl.innerHTML = cart.map(item => {
+          const p = PRODUCTS.find(x => x.id === item.id);
+          return `
+            <div class="cart-item">
+              <img src="${p.img}" alt="${p.name}" />
+              <div class="cart-item-info">
+                <h4>${p.name}</h4>
+                <p>${formatWon(p.price * item.qty)}</p>
+              </div>
+              <div class="qty-controls">
+                <button class="qty-btn" onclick="updateCartQty('${p.id}', -1)">-</button>
+                <span style="min-width:20px; text-align:center; font-weight:800;">${item.qty}</span>
+                <button class="qty-btn" onclick="updateCartQty('${p.id}', 1)">+</button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      const subtotal = cart.reduce((sum, item) => {
+        const p = PRODUCTS.find(x => x.id === item.id);
+        return sum + p.price * item.qty;
+      }, 0);
+
+      const couponDiscount = appliedCoupon ? Math.round(subtotal * appliedCoupon.rate) : 0;
+      let ptsUsed = Math.max(0, Math.min(availPts, parseInt(document.getElementById('usePointsInput').value || '0', 10)));
+      ptsUsed = Math.min(ptsUsed, Math.max(0, subtotal - couponDiscount));
+      const shipping = subtotal === 0 || subtotal >= 300000 ? 0 : 3500;
+      const finalAmount = Math.max(0, subtotal - couponDiscount - ptsUsed + shipping);
+
+      document.getElementById('cartSummaryBox').innerHTML = `
+        <div class="summary-row"><span>상품 합계</span><span>${formatWon(subtotal)}</span></div>
+        <div class="summary-row"><span>쿠폰 할인 ${appliedCoupon ? `(${appliedCoupon.code})` : ''}</span><span style="color:var(--orange);">-${formatWon(couponDiscount)}</span></div>
+        <div class="summary-row"><span>포인트 사용</span><span style="color:var(--orange);">-${formatWon(ptsUsed)}</span></div>
+        <div class="summary-row"><span>배송비 (30만원 이상 무료)</span><span>${shipping === 0 ? '무료' : formatWon(shipping)}</span></div>
+        <div class="summary-row total"><span>최종 결제금액</span><span>${formatWon(finalAmount)}</span></div>
+      `;
+    }
+
+    function processCheckout() {
+      if (cart.length === 0) {
+        showToast('결제할 상품을 먼저 장바구니에 담아주세요.');
+        return;
+      }
+      const address = document.getElementById('checkoutAddress').value.trim();
+      if (!address) {
+        showToast('배송지 주소를 입력해 주세요.');
+        return;
+      }
+
+      const subtotal = cart.reduce((sum, item) => {
+        const p = PRODUCTS.find(x => x.id === item.id);
+        return sum + p.price * item.qty;
+      }, 0);
+      const couponDiscount = appliedCoupon ? Math.round(subtotal * appliedCoupon.rate) : 0;
+      const availPts = currentUser ? currentUser.points : 0;
+      let ptsUsed = Math.max(0, Math.min(availPts, parseInt(document.getElementById('usePointsInput').value || '0', 10)));
+      ptsUsed = Math.min(ptsUsed, Math.max(0, subtotal - couponDiscount));
+      const finalAmount = Math.max(0, subtotal - couponDiscount - ptsUsed);
+
+      const orderNo = 'APEX-' + Math.floor(100000 + Math.random() * 900000);
+      const firstProd = PRODUCTS.find(x => x.id === cart[0].id);
+      const summary = cart.length > 1 ? `${firstProd.name} 외 ${cart.length - 1}건` : `${firstProd.name} (${cart[0].qty}대)`;
 
       if (currentUser) {
-        document.getElementById("payName").value = currentUser.name;
-        document.getElementById("availPointLabel").textContent = `(보유: ${currentUser.points.toLocaleString()}P)`;
-        document.getElementById("payPointInput").max = currentUser.points;
-      } else {
-        document.getElementById("availPointLabel").textContent = "(비회원 · 가입 시 3,000P)";
-        document.getElementById("payPointInput").value = 0;
-        document.getElementById("payPointInput").max = 0;
+        const earned = Math.round(finalAmount * 0.03);
+        currentUser.points = currentUser.points - ptsUsed + earned;
+        localStorage.setItem('apex_rc_user', JSON.stringify(currentUser));
       }
 
-      const { shipping } = getCartTotals();
-      document.getElementById("checkoutShippingFee").textContent = shipping === 0 ? "무료배송 (산소포장)" : `${shipping.toLocaleString()}원`;
-
-      const names = cart.map(i => {
-        const p = FISH_PRODUCTS.find(f => f.id === i.id);
-        return `${p.name} ${i.qty}마리`;
-      }).join(", ");
-      document.getElementById("checkoutItemsSummary").textContent = names;
-
-      recalcCheckoutTotal();
-      openModal("checkoutModal");
-    }
-
-    function selectPayMethod(el) {
-      document.querySelectorAll(".pay-method-card").forEach(c => c.classList.remove("selected"));
-      el.classList.add("selected");
-      selectedPayMethod = el.dataset.method;
-    }
-
-    function recalcCheckoutTotal() {
-      const { total } = getCartTotals();
-      const maxPts = currentUser ? currentUser.points : 0;
-      let pts = parseInt(document.getElementById("payPointInput").value || "0", 10);
-      if (isNaN(pts) || pts < 0) pts = 0;
-      if (pts > maxPts) pts = maxPts;
-      if (pts > total) pts = total;
-      document.getElementById("payPointInput").value = pts;
-
-      const finalPay = Math.max(0, total - pts);
-      document.getElementById("checkoutPointDiscount").textContent = `-${pts.toLocaleString()}원`;
-      document.getElementById("checkoutFinalAmount").textContent = `${finalPay.toLocaleString()}원`;
-    }
-
-    function submitPayment(e) {
-      e.preventDefault();
-      const receiver = document.getElementById("payName").value.trim();
-      const phone = document.getElementById("payPhone").value.trim();
-      const addr = document.getElementById("payAddress").value.trim();
-      const care = document.getElementById("payCarePack").value;
-      const usedPts = parseInt(document.getElementById("payPointInput").value || "0", 10);
-      const { total } = getCartTotals();
-      const paidAmount = Math.max(0, total - usedPts);
-      const orderNo = "BT-" + new Date().getFullYear() + "-" + Math.floor(100000 + Math.random() * 900000);
-
-      if (currentUser && usedPts > 0) {
-        currentUser.points = Math.max(0, currentUser.points - usedPts);
-      }
-
-      document.getElementById("receiptDetailsBox").innerHTML = `
-        <div class="summary-row"><span>주문번호</span><strong>${orderNo}</strong></div>
-        <div class="summary-row"><span>입양인 / 연락처</span><strong>${receiver} (${phone})</strong></div>
-        <div class="summary-row"><span>배송지</span><strong>${addr}</strong></div>
-        <div class="summary-row"><span>생물 패킹 케어</span><strong>${care}</strong></div>
-        <div class="summary-row"><span>결제 수단</span><strong>${selectedPayMethod}</strong></div>
-        <div class="summary-row total"><span>최종 결제 완료 금액</span><span>${paidAmount.toLocaleString()}원</span></div>
-      `;
+      orders.unshift({
+        orderNo,
+        summary,
+        finalAmount,
+        payMethod: selectedPayMethod,
+        address,
+        date: new Date().toLocaleString('ko-KR')
+      });
+      localStorage.setItem('apex_rc_orders', JSON.stringify(orders));
 
       cart = [];
-      syncSwimmersWithCart();
-      saveState();
+      appliedCoupon = null;
+      document.getElementById('usePointsInput').value = 0;
+      saveCart();
+      closeCartDrawer();
 
-      document.getElementById("checkoutForm").style.display = "none";
-      document.getElementById("orderReceiptView").style.display = "block";
-      document.getElementById("checkoutModalTitle").textContent = "✅ 입양 주문서 발급 완료";
+      document.getElementById('receiptBody').innerHTML = `
+        <div style="background:var(--asphalt-850); padding:16px; border-radius:12px; border:1px solid var(--yellow); display:flex; flex-direction:column; gap:8px; font-size:13.5px;">
+          <div style="display:flex; justify-content:space-between;"><span style="color:var(--text-muted);">주문번호</span><strong style="color:var(--yellow);">${orderNo}</strong></div>
+          <div style="display:flex; justify-content:space-between;"><span style="color:var(--text-muted);">주문상품</span><strong>${summary}</strong></div>
+          <div style="display:flex; justify-content:space-between;"><span style="color:var(--text-muted);">결제수단</span><strong>${selectedPayMethod}</strong></div>
+          <div style="display:flex; justify-content:space-between;"><span style="color:var(--text-muted);">배송지</span><strong>${address}</strong></div>
+          <div style="display:flex; justify-content:space-between; border-top:1px solid rgba(255,255,255,0.1); padding-top:8px; font-size:16px;">
+            <span>최종 결제금액</span><strong style="color:var(--orange);">${formatWon(finalAmount)}</strong>
+          </div>
+        </div>
+      `;
+      document.getElementById('receiptModal').classList.add('open');
     }
 
-    /* ============================================================
-       7. INITIALIZE ON LOAD
-       ============================================================ */
-    window.addEventListener("DOMContentLoaded", () => {
-      resizeSwimCanvas();
-      syncSwimmersWithCart();
-      selectFishForPreview("betta", false);
-      updateAllUI();
-      animateSwimTank();
-    });
+    // Initialize Page
+    renderHeaderAuth();
+    renderProducts();
+    updateWheelVisuals();
   </script>
 </body>
 </html>
