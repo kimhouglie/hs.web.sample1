@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BLUE TANK AQUA | 위에서 내려다보는 디자이너 관상어 수조 쇼핑몰</title>
+  <title>BLUE TANK AQUA | 위에서 내려다보는 장바구니 수조 쇼핑몰</title>
   <style>
     :root {
       --bg-studio: #031120;
@@ -11,10 +11,9 @@
       --tank-mid: #0284c7;
       --tank-deep: #0369a1;
       --tank-abyss: #075985;
-      --glass-rim: rgba(186, 230, 253, 0.42);
-      --glass-card: rgba(7, 46, 84, 0.46);
-      --glass-card-hover: rgba(12, 74, 130, 0.62);
-      --glass-border: rgba(186, 230, 253, 0.34);
+      --glass-card: rgba(7, 46, 84, 0.48);
+      --glass-card-hover: rgba(12, 74, 130, 0.65);
+      --glass-border: rgba(186, 230, 253, 0.36);
       --text-main: #f0f9ff;
       --text-sub: #bae6fd;
       --text-muted: #7dd3fc;
@@ -52,8 +51,7 @@
 
     body {
       min-height: 100vh;
-      background:
-        radial-gradient(circle at 50% 0%, #0c2d4d 0%, var(--bg-studio) 65%);
+      background: radial-gradient(circle at 50% 0%, #0c2d4d 0%, var(--bg-studio) 65%);
       color: var(--text-main);
       font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
       padding: 20px;
@@ -75,9 +73,7 @@
       position: relative;
     }
 
-    /* Glass tank corner silicone seals */
-    .aquarium-outer-bezel::before,
-    .aquarium-outer-bezel::after {
+    .aquarium-outer-bezel::before {
       content: "";
       position: absolute;
       inset: 6px;
@@ -92,13 +88,12 @@
       border-radius: 18px;
       overflow: hidden;
       background:
-        radial-gradient(ellipse at 50% 28%, var(--tank-top) 0%, var(--tank-mid) 46%, var(--tank-deep) 80%, var(--tank-abyss) 100%);
+        radial-gradient(ellipse at 50% 26%, var(--tank-top) 0%, var(--tank-mid) 46%, var(--tank-deep) 80%, var(--tank-abyss) 100%);
       box-shadow: var(--shadow-tank);
       transition: background 0.7s ease;
       min-height: calc(100vh - 64px);
     }
 
-    /* Inner glass wall depth rim */
     .tank-glass-wall-rim {
       position: absolute;
       inset: 0;
@@ -134,66 +129,37 @@
       will-change: transform, opacity;
     }
 
-    .wave-1 {
-      mix-blend-mode: screen;
-      opacity: 0.44;
-      animation: waveFlow1 16s ease-in-out infinite alternate;
-    }
-
-    .wave-2 {
-      mix-blend-mode: overlay;
-      opacity: 0.52;
-      animation: waveFlow2 21s ease-in-out infinite alternate;
-    }
-
-    .wave-3 {
-      mix-blend-mode: screen;
-      opacity: 0.36;
-      animation: waveFlow3 14s ease-in-out infinite alternate;
-    }
-
-    .wave-4 {
-      mix-blend-mode: plus-lighter;
-      opacity: 0.34;
-      animation: waveFlow4 19s ease-in-out infinite alternate;
-    }
-
-    .wave-5 {
-      mix-blend-mode: soft-light;
-      opacity: 0.58;
-      animation: waveFlow5 25s ease-in-out infinite alternate;
-    }
+    .wave-1 { mix-blend-mode: screen; opacity: 0.44; animation: waveFlow1 16s ease-in-out infinite alternate; }
+    .wave-2 { mix-blend-mode: overlay; opacity: 0.52; animation: waveFlow2 21s ease-in-out infinite alternate; }
+    .wave-3 { mix-blend-mode: screen; opacity: 0.36; animation: waveFlow3 14s ease-in-out infinite alternate; }
+    .wave-4 { mix-blend-mode: plus-lighter; opacity: 0.34; animation: waveFlow4 19s ease-in-out infinite alternate; }
+    .wave-5 { mix-blend-mode: soft-light; opacity: 0.58; animation: waveFlow5 25s ease-in-out infinite alternate; }
 
     @keyframes waveFlow1 {
       0%   { transform: translate3d(-2.5%, -2%, 0) scale(1.04) rotate(0deg); }
       50%  { transform: translate3d(1.8%, 1.5%, 0) scale(1.09) rotate(1.2deg); }
       100% { transform: translate3d(3%, -1.5%, 0) scale(1.05) rotate(-1deg); }
     }
-
     @keyframes waveFlow2 {
       0%   { transform: translate3d(2.5%, 2%, 0) scale(1.08) rotate(0deg); }
       50%  { transform: translate3d(-1.5%, -2%, 0) scale(1.03) rotate(-1.5deg); }
       100% { transform: translate3d(-3%, 1.8%, 0) scale(1.07) rotate(1.1deg); }
     }
-
     @keyframes waveFlow3 {
       0%   { transform: translate3d(-1.5%, 2.5%, 0) scale(1.02); opacity: 0.25; }
       50%  { transform: translate3d(2%, -1%, 0) scale(1.12); opacity: 0.44; }
       100% { transform: translate3d(-2%, -2%, 0) scale(1.05); opacity: 0.28; }
     }
-
     @keyframes waveFlow4 {
       0%   { transform: translate3d(2%, -2.5%, 0) scale(1.06) rotate(-0.8deg); }
       100% { transform: translate3d(-2.5%, 2.2%, 0) scale(1.10) rotate(0.9deg); }
     }
-
     @keyframes waveFlow5 {
       0%   { transform: translate3d(0%, -1.5%, 0) scale(1.05); }
       50%  { transform: translate3d(-2%, 2%, 0) scale(1.09); }
       100% { transform: translate3d(2.2%, 0.5%, 0) scale(1.04); }
     }
 
-    /* Interactive click ripple ring on water surface */
     .click-ripple {
       position: absolute;
       width: 24px;
@@ -213,7 +179,6 @@
       100% { transform: scale(9.5); opacity: 0; }
     }
 
-    /* Subtle bottom-corner tank pebbles */
     .tank-pebbles {
       position: absolute;
       bottom: 14px;
@@ -232,28 +197,27 @@
         radial-gradient(ellipse 20px 11px at 96% 80%, #f0f9ff 0%, #0369a1 75%, transparent 78%);
     }
 
-    /* Main Content Container inside the Tank */
     .tank-content {
       position: relative;
       z-index: 10;
-      padding: 24px 28px 42px;
+      padding: 22px 26px 40px;
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 20px;
     }
 
     /* ============================================================
-       HEADER BAR (TOP TANK BRIDGE)
+       HEADER BAR
        ============================================================ */
     .tank-header {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
-      padding: 14px 22px;
+      gap: 14px;
+      padding: 13px 20px;
       border-radius: 16px;
-      background: rgba(5, 36, 70, 0.56);
+      background: rgba(5, 36, 70, 0.58);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border: 1px solid var(--glass-border);
@@ -263,22 +227,22 @@
     .brand-area {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 13px;
     }
 
     .brand-emblem {
-      width: 44px;
-      height: 44px;
+      width: 42px;
+      height: 42px;
       border-radius: 13px;
       background: linear-gradient(135deg, #38bdf8, #1d4ed8);
       display: grid;
       place-items: center;
-      font-size: 22px;
+      font-size: 21px;
       box-shadow: 0 4px 16px rgba(37, 99, 235, 0.5), inset 0 1px 1px rgba(255,255,255,0.6);
     }
 
     .brand-title h1 {
-      font-size: 1.25rem;
+      font-size: 1.22rem;
       font-weight: 800;
       letter-spacing: 0.04em;
       color: #ffffff;
@@ -298,7 +262,7 @@
     }
 
     .brand-sub {
-      font-size: 0.78rem;
+      font-size: 0.77rem;
       color: var(--text-sub);
       margin-top: 2px;
     }
@@ -316,9 +280,9 @@
       gap: 6px;
       padding: 6px 12px;
       border-radius: 999px;
-      background: rgba(3, 27, 54, 0.6);
+      background: rgba(3, 27, 54, 0.62);
       border: 1px solid rgba(125, 211, 252, 0.28);
-      font-size: 0.78rem;
+      font-size: 0.77rem;
       color: #e0f2fe;
     }
 
@@ -342,7 +306,7 @@
       border: none;
       background: transparent;
       color: var(--text-sub);
-      font-size: 0.74rem;
+      font-size: 0.73rem;
       font-weight: 600;
       padding: 5px 10px;
       border-radius: 999px;
@@ -366,9 +330,9 @@
       border: 1px solid rgba(186, 230, 253, 0.42);
       background: rgba(14, 116, 144, 0.35);
       color: #fff;
-      padding: 9px 15px;
+      padding: 8px 14px;
       border-radius: 12px;
-      font-size: 0.84rem;
+      font-size: 0.83rem;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
@@ -382,38 +346,29 @@
       transform: translateY(-1px);
     }
 
-    /* Drop-Zone Cart Net Button */
-    .cart-net-dropzone {
-      position: relative;
-      border: 1.5px dashed rgba(125, 211, 252, 0.75);
-      background: linear-gradient(135deg, rgba(37, 99, 235, 0.65), rgba(2, 132, 199, 0.75));
+    .btn-primary-aqua {
+      border: none;
+      background: linear-gradient(135deg, #38bdf8, #2563eb);
       color: #fff;
-      padding: 9px 16px;
-      border-radius: 14px;
-      font-size: 0.85rem;
       font-weight: 700;
+      font-size: 0.85rem;
+      padding: 9px 16px;
+      border-radius: 12px;
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 6px 20px rgba(3, 37, 76, 0.45);
-      transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.45);
+      transition: all 0.2s;
     }
 
-    .cart-net-dropzone:hover,
-    .cart-net-dropzone.drag-over {
-      transform: scale(1.06);
-      border-style: solid;
-      border-color: #fde047;
-      background: linear-gradient(135deg, #2563eb, #06b6d4);
-      box-shadow: 0 0 28px rgba(56, 189, 248, 0.95);
+    .btn-primary-aqua:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.08);
     }
 
     .cart-count-pill {
       background: #ffffff;
       color: #0369a1;
       font-weight: 800;
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       min-width: 22px;
       height: 22px;
       padding: 0 6px;
@@ -423,36 +378,79 @@
     }
 
     /* ============================================================
-       HERO LIVE SWIMMING TANK VIEWER (CLICK FISH TO WATCH SWIM)
+       CART TANK SHOWCASE: THE AQUARIUM ITSELF IS THE SHOPPING CART!
        ============================================================ */
-    .live-tank-showcase {
+    .cart-tank-showcase {
       display: grid;
-      grid-template-columns: 1.45fr 1fr;
-      gap: 20px;
-      padding: 20px;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 18px;
+      padding: 18px;
       border-radius: 20px;
-      background: rgba(4, 31, 61, 0.52);
+      background: rgba(4, 31, 61, 0.54);
       backdrop-filter: blur(12px);
-      border: 1px solid var(--glass-border);
-      box-shadow: 0 14px 36px rgba(2, 22, 48, 0.38);
+      border: 1.5px solid var(--glass-border);
+      box-shadow: 0 14px 36px rgba(2, 22, 48, 0.42);
+      transition: border-color 0.25s, box-shadow 0.25s;
     }
 
-    .swim-viewport-wrapper {
+    /* Rectangular Cart Aquarium Drop-Zone */
+    .cart-tank-viewport {
       position: relative;
       border-radius: 16px;
       overflow: hidden;
-      min-height: 340px;
+      min-height: 390px;
       background:
-        radial-gradient(circle at 50% 45%, rgba(56, 189, 248, 0.42), rgba(3, 105, 161, 0.75) 75%, rgba(7, 89, 133, 0.92));
-      border: 2px solid rgba(186, 230, 253, 0.48);
-      box-shadow: inset 0 0 40px rgba(2, 32, 68, 0.65);
+        radial-gradient(circle at 50% 45%, rgba(56, 189, 248, 0.46), rgba(3, 105, 161, 0.78) 72%, rgba(7, 89, 133, 0.94));
+      border: 2.5px solid rgba(186, 230, 253, 0.55);
+      box-shadow: inset 0 0 45px rgba(2, 32, 68, 0.65);
       cursor: crosshair;
+      transition: all 0.25s ease;
+    }
+
+    /* Highlight Cart Tank when dragging a fish! */
+    .cart-tank-viewport.drag-target-ready {
+      border: 2.5px dashed #7dd3fc;
+      box-shadow: inset 0 0 40px rgba(56, 189, 248, 0.55), 0 0 25px rgba(56, 189, 248, 0.45);
+    }
+
+    .cart-tank-viewport.drag-over {
+      border: 3px solid #fde047;
+      box-shadow: inset 0 0 60px rgba(253, 224, 71, 0.35), 0 0 36px rgba(56, 189, 248, 0.95);
+      transform: scale(1.006);
     }
 
     #swimCanvas {
       width: 100%;
       height: 100%;
       display: block;
+    }
+
+    .tank-drop-overlay-banner {
+      position: absolute;
+      inset: 14px;
+      border-radius: 12px;
+      border: 2px dashed rgba(253, 224, 71, 0.85);
+      background: rgba(3, 32, 68, 0.36);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 6;
+    }
+
+    .cart-tank-viewport.drag-target-ready .tank-drop-overlay-banner {
+      display: flex;
+    }
+
+    .tank-drop-overlay-banner span {
+      background: rgba(3, 24, 48, 0.88);
+      border: 1.5px solid #fde047;
+      color: #fef08a;
+      font-size: 0.95rem;
+      font-weight: 800;
+      padding: 10px 20px;
+      border-radius: 999px;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.55);
     }
 
     .swim-hud-top {
@@ -465,19 +463,20 @@
       align-items: center;
       pointer-events: none;
       gap: 8px;
+      flex-wrap: wrap;
     }
 
-    .live-rec-badge {
+    .cart-tank-badge {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
-      background: rgba(3, 24, 48, 0.68);
-      border: 1px solid rgba(125, 211, 252, 0.4);
-      padding: 5px 12px;
+      gap: 8px;
+      background: rgba(3, 24, 48, 0.76);
+      border: 1px solid rgba(125, 211, 252, 0.5);
+      padding: 6px 13px;
       border-radius: 999px;
-      font-size: 0.76rem;
-      font-weight: 700;
-      color: #e0f2fe;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #f0f9ff;
     }
 
     .rec-dot {
@@ -494,11 +493,28 @@
     }
 
     .swim-hint-tag {
-      background: rgba(3, 24, 48, 0.65);
+      background: rgba(3, 24, 48, 0.68);
       padding: 5px 11px;
       border-radius: 999px;
       font-size: 0.74rem;
       color: #bae6fd;
+    }
+
+    /* Empty Cart Tank Watermark Hint */
+    .empty-tank-guide {
+      position: absolute;
+      left: 50%;
+      bottom: 54px;
+      transform: translateX(-50%);
+      background: rgba(3, 24, 48, 0.72);
+      border: 1px dashed rgba(125, 211, 252, 0.55);
+      color: #e0f2fe;
+      font-size: 0.78rem;
+      padding: 6px 14px;
+      border-radius: 999px;
+      pointer-events: none;
+      white-space: nowrap;
+      text-align: center;
     }
 
     .swim-controls-bar {
@@ -521,135 +537,213 @@
 
     .btn-tank-ctrl {
       border: 1px solid rgba(186, 230, 253, 0.45);
-      background: rgba(4, 34, 68, 0.74);
+      background: rgba(4, 34, 68, 0.78);
       backdrop-filter: blur(8px);
       color: #f0f9ff;
       padding: 6px 12px;
       border-radius: 10px;
-      font-size: 0.78rem;
+      font-size: 0.77rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.18s;
     }
 
-    .btn-tank-ctrl:hover,
-    .btn-tank-ctrl.active {
+    .btn-tank-ctrl:hover {
       background: #0284c7;
       border-color: #7dd3fc;
     }
 
-    /* Active Fish Spec Panel next to Live Swim Tank */
-    .active-fish-inspector {
+    /* ============================================================
+       RIGHT SIDE OF TANK: SELECTED FISH PREVIEW + LIVE CART TANK ROSTER
+       ============================================================ */
+    .tank-side-panel {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: 14px;
-      padding: 6px 4px;
+      gap: 12px;
+    }
+
+    .preview-card-box {
+      background: rgba(3, 27, 54, 0.62);
+      border: 1px solid rgba(125, 211, 252, 0.3);
+      border-radius: 15px;
+      padding: 13px 15px;
+    }
+
+    .preview-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
     }
 
     .inspector-eyebrow {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
       color: var(--accent-cyan);
     }
 
-    .inspector-title-row {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 10px;
-      margin-top: 4px;
-    }
-
-    .inspector-title-row h2 {
-      font-size: 1.45rem;
+    .preview-top-row h2 {
+      font-size: 1.18rem;
       font-weight: 800;
-      color: #ffffff;
-    }
-
-    .inspector-eng {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    .inspector-desc {
-      font-size: 0.88rem;
-      line-height: 1.55;
-      color: #e0f2fe;
-      margin-top: 8px;
-    }
-
-    .spec-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 9px;
-      margin-top: 12px;
-    }
-
-    .spec-box {
-      background: rgba(3, 27, 54, 0.56);
-      border: 1px solid rgba(125, 211, 252, 0.25);
-      border-radius: 11px;
-      padding: 9px 12px;
-    }
-
-    .spec-label {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-    }
-
-    .spec-val {
-      font-size: 0.88rem;
-      font-weight: 700;
       color: #ffffff;
       margin-top: 2px;
     }
 
-    .inspector-purchase-box {
+    .preview-price-tag {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #7dd3fc;
+      white-space: nowrap;
+    }
+
+    .preview-desc {
+      font-size: 0.8rem;
+      line-height: 1.45;
+      color: #e0f2fe;
+      margin-top: 6px;
+    }
+
+    .preview-specs-inline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .mini-spec-chip {
+      font-size: 0.71rem;
+      background: rgba(2, 132, 199, 0.26);
+      border: 1px solid rgba(125, 211, 252, 0.28);
+      color: #bae6fd;
+      padding: 3px 8px;
+      border-radius: 7px;
+    }
+
+    /* Live Cart Tank Roster Box */
+    .cart-roster-box {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: rgba(3, 24, 48, 0.72);
+      border: 1.5px solid rgba(56, 189, 248, 0.42);
+      border-radius: 15px;
+      padding: 13px 15px;
+      gap: 10px;
+    }
+
+    .roster-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .roster-header h3 {
+      font-size: 0.94rem;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .roster-list {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      max-height: 145px;
+      overflow-y: auto;
+      padding-right: 3px;
+    }
+
+    .roster-empty {
+      text-align: center;
+      font-size: 0.79rem;
+      color: #93c5fd;
+      padding: 16px 8px;
+      border: 1px dashed rgba(125, 211, 252, 0.3);
+      border-radius: 10px;
+    }
+
+    .roster-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      background: rgba(7, 46, 84, 0.65);
+      border: 1px solid rgba(125, 211, 252, 0.25);
+      border-radius: 10px;
+      padding: 6px 9px;
+      font-size: 0.8rem;
+    }
+
+    .roster-item img {
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+      background: rgba(2, 132, 199, 0.35);
+      border-radius: 7px;
+      padding: 2px;
+    }
+
+    .roster-item-name {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .roster-item-name strong {
+      display: block;
+      font-size: 0.81rem;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .roster-item-name span {
+      font-size: 0.72rem;
+      color: #7dd3fc;
+    }
+
+    .qty-stepper {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(3, 24, 48, 0.9);
+      border: 1px solid rgba(125, 211, 252, 0.35);
+      border-radius: 8px;
+      padding: 2px 7px;
+    }
+
+    .qty-stepper button {
+      border: none;
+      background: transparent;
+      color: #fff;
+      font-weight: 800;
+      cursor: pointer;
+      width: 17px;
+      font-size: 0.9rem;
+    }
+
+    .roster-checkout-footer {
+      border-top: 1px solid rgba(186, 230, 253, 0.22);
+      padding-top: 10px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      padding-top: 12px;
-      border-top: 1px solid rgba(186, 230, 253, 0.22);
-      flex-wrap: wrap;
+      gap: 10px;
     }
 
-    .inspector-price {
-      font-size: 1.4rem;
+    .roster-total-info small {
+      display: block;
+      font-size: 0.71rem;
+      color: #bae6fd;
+    }
+
+    .roster-total-info strong {
+      font-size: 1.15rem;
       font-weight: 800;
       color: #ffffff;
-    }
-
-    .inspector-price span {
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: var(--text-sub);
-    }
-
-    .inspector-btns {
-      display: flex;
-      gap: 8px;
-    }
-
-    .btn-primary-aqua {
-      border: none;
-      background: linear-gradient(135deg, #38bdf8, #2563eb);
-      color: #fff;
-      font-weight: 700;
-      font-size: 0.86rem;
-      padding: 10px 18px;
-      border-radius: 12px;
-      cursor: pointer;
-      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.45);
-      transition: all 0.2s;
-    }
-
-    .btn-primary-aqua:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.08);
     }
 
     /* ============================================================
@@ -661,9 +755,9 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      padding: 12px 18px;
+      padding: 11px 16px;
       border-radius: 14px;
-      background: rgba(4, 32, 62, 0.48);
+      background: rgba(4, 32, 62, 0.5);
       border: 1px solid rgba(186, 230, 253, 0.28);
     }
 
@@ -677,9 +771,9 @@
       border: 1px solid rgba(125, 211, 252, 0.35);
       background: rgba(3, 28, 56, 0.55);
       color: #bae6fd;
-      padding: 7px 14px;
+      padding: 6px 13px;
       border-radius: 999px;
-      font-size: 0.82rem;
+      font-size: 0.81rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s;
@@ -696,16 +790,16 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-size: 0.82rem;
+      font-size: 0.81rem;
       color: #e0f2fe;
-      background: rgba(2, 132, 199, 0.32);
-      border: 1px dashed rgba(125, 211, 252, 0.6);
+      background: rgba(2, 132, 199, 0.34);
+      border: 1px dashed rgba(125, 211, 252, 0.65);
       padding: 6px 14px;
       border-radius: 999px;
     }
 
     /* ============================================================
-       FISH PRODUCT GRID (TOP-DOWN GLASS COMPARTMENTS)
+       FISH PRODUCT GRID
        ============================================================ */
     .fish-grid {
       display: grid;
@@ -719,10 +813,10 @@
       background: var(--glass-card);
       backdrop-filter: blur(10px);
       border: 1.5px solid var(--glass-border);
-      padding: 16px;
+      padding: 15px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 11px;
       cursor: pointer;
       transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
     }
@@ -752,7 +846,7 @@
     }
 
     .tag-chip {
-      font-size: 0.72rem;
+      font-size: 0.71rem;
       font-weight: 700;
       padding: 3px 9px;
       border-radius: 999px;
@@ -761,10 +855,20 @@
       border: 1px solid rgba(125, 211, 252, 0.35);
     }
 
+    .in-tank-count-badge {
+      font-size: 0.71rem;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(52, 211, 153, 0.22);
+      border: 1px solid rgba(52, 211, 153, 0.55);
+      color: #a7f3d0;
+    }
+
     .drag-handle-pill {
-      font-size: 0.72rem;
+      font-size: 0.71rem;
       color: #bae6fd;
-      background: rgba(3, 25, 50, 0.6);
+      background: rgba(3, 25, 50, 0.65);
       padding: 3px 9px;
       border-radius: 999px;
       cursor: grab;
@@ -773,13 +877,9 @@
       gap: 4px;
     }
 
-    .drag-handle-pill:active {
-      cursor: grabbing;
-    }
-
     .fish-tank-window {
       position: relative;
-      height: 195px;
+      height: 185px;
       border-radius: 14px;
       background: radial-gradient(circle at 50% 45%, rgba(56, 189, 248, 0.35), rgba(3, 105, 161, 0.68));
       border: 1px solid rgba(186, 230, 253, 0.32);
@@ -789,21 +889,16 @@
     }
 
     .fish-tank-window img.fish-thumb {
-      width: 158px;
-      height: 158px;
+      width: 152px;
+      height: 152px;
       object-fit: contain;
       pointer-events: none;
       transition: transform 0.35s ease;
       animation: idleFloat 3.6s ease-in-out infinite;
     }
 
-    .fish-card:nth-child(2n) .fish-tank-window img.fish-thumb {
-      animation-delay: -1.4s;
-    }
-
-    .fish-card:nth-child(3n) .fish-tank-window img.fish-thumb {
-      animation-delay: -2.3s;
-    }
+    .fish-card:nth-child(2n) .fish-tank-window img.fish-thumb { animation-delay: -1.4s; }
+    .fish-card:nth-child(3n) .fish-tank-window img.fish-thumb { animation-delay: -2.3s; }
 
     @keyframes idleFloat {
       0%, 100% { transform: translateY(0px) rotate(-2deg); }
@@ -816,28 +911,25 @@
 
     .swim-trigger-overlay {
       position: absolute;
-      bottom: 9px;
-      right: 9px;
-      background: rgba(3, 24, 48, 0.76);
+      bottom: 8px;
+      right: 8px;
+      background: rgba(3, 24, 48, 0.78);
       border: 1px solid rgba(125, 211, 252, 0.45);
       color: #f0f9ff;
-      font-size: 0.72rem;
+      font-size: 0.71rem;
       font-weight: 700;
-      padding: 4px 10px;
+      padding: 4px 9px;
       border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
     }
 
     .card-info h3 {
-      font-size: 1.05rem;
+      font-size: 1.03rem;
       font-weight: 800;
       color: #ffffff;
     }
 
     .card-info p {
-      font-size: 0.8rem;
+      font-size: 0.79rem;
       color: var(--text-sub);
       margin-top: 3px;
       line-height: 1.4;
@@ -854,7 +946,7 @@
     }
 
     .card-price {
-      font-size: 1.08rem;
+      font-size: 1.05rem;
       font-weight: 800;
       color: #ffffff;
     }
@@ -868,9 +960,9 @@
       border: 1px solid rgba(125, 211, 252, 0.45);
       background: rgba(3, 32, 64, 0.65);
       color: #e0f2fe;
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       font-weight: 700;
-      padding: 6px 10px;
+      padding: 6px 9px;
       border-radius: 9px;
       cursor: pointer;
       transition: all 0.18s;
@@ -885,7 +977,7 @@
       border: none;
       background: linear-gradient(135deg, #0ea5e9, #2563eb);
       color: #fff;
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       font-weight: 700;
       padding: 6px 11px;
       border-radius: 9px;
@@ -898,30 +990,30 @@
     }
 
     /* ============================================================
-       FLOATING BOTTOM-RIGHT DROP NET (CONVENIENT WHEN SCROLLED)
+       FLOATING BOTTOM-RIGHT DROP TARGET (WHEN SCROLLED DOWN)
        ============================================================ */
-    .floating-net-dock {
+    .floating-tank-dock {
       position: fixed;
-      right: 26px;
-      bottom: 26px;
+      right: 24px;
+      bottom: 24px;
       z-index: 90;
       display: flex;
       align-items: center;
       gap: 10px;
       padding: 12px 18px;
       border-radius: 999px;
-      background: linear-gradient(135deg, rgba(14, 165, 233, 0.92), rgba(29, 78, 216, 0.94));
-      border: 2px dashed rgba(224, 242, 254, 0.85);
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.94), rgba(29, 78, 216, 0.96));
+      border: 2px dashed rgba(224, 242, 254, 0.88);
       color: #fff;
       font-weight: 800;
-      font-size: 0.86rem;
+      font-size: 0.85rem;
       cursor: pointer;
       box-shadow: 0 14px 34px rgba(2, 18, 42, 0.65);
       transition: all 0.22s ease;
     }
 
-    .floating-net-dock:hover,
-    .floating-net-dock.drag-over {
+    .floating-tank-dock:hover,
+    .floating-tank-dock.drag-over {
       transform: scale(1.08);
       border-style: solid;
       border-color: #fde047;
@@ -933,15 +1025,15 @@
       position: fixed;
       pointer-events: none;
       z-index: 9999;
-      width: 110px;
-      height: 110px;
-      margin-left: -55px;
-      margin-top: -55px;
+      width: 114px;
+      height: 114px;
+      margin-left: -57px;
+      margin-top: -57px;
       display: none;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      filter: drop-shadow(0 14px 22px rgba(2, 20, 48, 0.7));
+      filter: drop-shadow(0 14px 22px rgba(2, 20, 48, 0.72));
     }
 
     #dragGhost img {
@@ -952,7 +1044,7 @@
     }
 
     #dragGhost span {
-      background: rgba(3, 28, 56, 0.88);
+      background: rgba(3, 28, 56, 0.9);
       color: #e0f2fe;
       font-size: 0.7rem;
       font-weight: 700;
@@ -968,12 +1060,12 @@
     }
 
     /* ============================================================
-       MODALS & DRAWERS (AUTH, CART, CHECKOUT, LIVE FISH MODAL)
+       MODALS (AUTH & CHECKOUT)
        ============================================================ */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(2, 12, 27, 0.74);
+      background: rgba(2, 12, 27, 0.76);
       backdrop-filter: blur(8px);
       z-index: 200;
       display: none;
@@ -994,7 +1086,7 @@
       border-radius: 22px;
       background: linear-gradient(165deg, #072c54 0%, #041d3a 100%);
       border: 1.5px solid rgba(125, 211, 252, 0.45);
-      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.82);
       padding: 24px;
       color: #f0f9ff;
       position: relative;
@@ -1014,7 +1106,7 @@
     }
 
     .modal-header h3 {
-      font-size: 1.22rem;
+      font-size: 1.2rem;
       font-weight: 800;
     }
 
@@ -1029,7 +1121,6 @@
       cursor: pointer;
     }
 
-    /* Tabs */
     .auth-tabs {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1092,71 +1183,8 @@
       margin: 8px 0 16px;
     }
 
-    /* Cart Items */
-    .cart-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      max-height: 330px;
-      overflow-y: auto;
-      padding-right: 4px;
-    }
-
-    .cart-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: rgba(3, 25, 50, 0.65);
-      border: 1px solid rgba(125, 211, 252, 0.25);
-      border-radius: 14px;
-      padding: 10px 12px;
-    }
-
-    .cart-item img {
-      width: 56px;
-      height: 56px;
-      object-fit: contain;
-      background: rgba(2, 132, 199, 0.35);
-      border-radius: 10px;
-      padding: 4px;
-    }
-
-    .cart-item-info {
-      flex: 1;
-    }
-
-    .cart-item-info h4 {
-      font-size: 0.92rem;
-      font-weight: 700;
-    }
-
-    .cart-item-info span {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    .qty-stepper {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(4, 34, 68, 0.9);
-      border: 1px solid rgba(125, 211, 252, 0.35);
-      border-radius: 9px;
-      padding: 4px 8px;
-    }
-
-    .qty-stepper button {
-      border: none;
-      background: transparent;
-      color: #fff;
-      font-weight: 800;
-      cursor: pointer;
-      width: 20px;
-      font-size: 0.95rem;
-    }
-
     .summary-box {
-      margin-top: 16px;
+      margin-top: 14px;
       padding: 14px;
       border-radius: 14px;
       background: rgba(3, 24, 48, 0.72);
@@ -1171,6 +1199,7 @@
       display: flex;
       justify-content: space-between;
       color: #bae6fd;
+      gap: 12px;
     }
 
     .summary-row.total {
@@ -1181,7 +1210,6 @@
       color: #ffffff;
     }
 
-    /* Payment Method Grid */
     .pay-methods {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -1213,7 +1241,7 @@
       top: 22px;
       left: 50%;
       transform: translateX(-50%) translateY(-20px);
-      background: rgba(4, 34, 68, 0.94);
+      background: rgba(4, 34, 68, 0.95);
       border: 1.5px solid #38bdf8;
       color: #f0f9ff;
       padding: 11px 20px;
@@ -1232,8 +1260,8 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    @media (max-width: 980px) {
-      .live-tank-showcase {
+    @media (max-width: 1020px) {
+      .cart-tank-showcase {
         grid-template-columns: 1fr;
       }
       .fish-grid {
@@ -1242,15 +1270,9 @@
     }
 
     @media (max-width: 620px) {
-      body {
-        padding: 10px;
-      }
-      .fish-grid {
-        grid-template-columns: 1fr;
-      }
-      .tank-content {
-        padding: 16px;
-      }
+      body { padding: 10px; }
+      .fish-grid { grid-template-columns: 1fr; }
+      .tank-content { padding: 15px; }
     }
   </style>
 </head>
@@ -1260,12 +1282,12 @@
   <!-- Custom Pointer Drag Ghost -->
   <div id="dragGhost">
     <img id="dragGhostImg" src="" alt="" />
-    <span id="dragGhostLabel">수조 채집 중...</span>
+    <span id="dragGhostLabel">수조 장바구니로 입수...</span>
   </div>
 
-  <!-- Floating Bottom-Right Cart Net Drop Zone -->
-  <button class="floating-net-dock" id="floatingCartNet" type="button" onclick="openCartModal()">
-    <span>🥅 수조 채집망</span>
+  <!-- Floating Bottom-Right Quick Drop / Scroll-to-Tank Dock -->
+  <button class="floating-tank-dock" id="floatingTankDock" type="button" onclick="scrollToCartTank()">
+    <span>🐠 장바구니 수조</span>
     <span class="cart-count-pill" id="floatingCartCount">0</span>
   </button>
 
@@ -1290,8 +1312,8 @@
           <div class="brand-area">
             <div class="brand-emblem">🐠</div>
             <div class="brand-title">
-              <h1>BLUE TANK <span class="brand-badge">TOP-DOWN AQUA</span></h1>
-              <div class="brand-sub">위에서 내려다보는 디자이너 관상어 수조 부티크 · 생물 안심 산소포장 직배송</div>
+              <h1>BLUE TANK <span class="brand-badge">CART AQUARIUM</span></h1>
+              <div class="brand-sub">담을 때마다 수조 속 물고기가 늘어나는 위에서 내려다보는 관상어 부티크</div>
             </div>
           </div>
 
@@ -1308,72 +1330,92 @@
             <button class="btn-glass" id="authHeaderBtn" type="button" onclick="openAuthModal()">
               <span>👤 회원가입 · 로그인</span>
             </button>
-            <button class="cart-net-dropzone" id="headerCartNet" type="button" onclick="openCartModal()">
-              <span>🥅 채집망 장바구니</span>
+            <button class="btn-primary-aqua" type="button" onclick="openCheckoutModal()">
+              <span>💳 수조 입양 결제</span>
               <span class="cart-count-pill" id="headerCartCount">0</span>
             </button>
           </div>
         </header>
 
-        <!-- LIVE TOP-DOWN SWIMMING TANK VIEWER -->
-        <section class="live-tank-showcase" id="liveTankSection">
-          <div class="swim-viewport-wrapper" id="swimViewport" title="수조 안을 클릭하면 먹이를 주거나 물결을 일으킵니다">
+        <!-- ============================================================
+             CART AQUARIUM STAGE: EVERY ADDED FISH SWIMS HERE!
+             ============================================================ -->
+        <section class="cart-tank-showcase" id="cartTankSection">
+          <!-- Left: Top-Down Rectangular Cart Tank Canvas (Also Drag Drop-Zone!) -->
+          <div class="cart-tank-viewport" id="cartTankViewport" title="물고기 카드를 이곳으로 드래그해 입수시키거나, 물 위를 클릭해 먹이를 주세요!">
             <canvas id="swimCanvas"></canvas>
 
+            <div class="tank-drop-overlay-banner">
+              <span>💦 수조 위에 놓으면 장바구니 물고기가 입수됩니다!</span>
+            </div>
+
             <div class="swim-hud-top">
-              <div class="live-rec-badge">
+              <div class="cart-tank-badge">
                 <span class="rec-dot"></span>
-                <span id="liveTankFishBadge">실시간 유영 뷰 · 로열 블루 하프문 베타</span>
+                <span id="cartTankStatusText">장바구니 수조 · 유영 중 0마리</span>
               </div>
-              <div class="swim-hint-tag">💧 수조 클릭: 먹이 투하 &amp; 유영 유도</div>
+              <div class="swim-hint-tag">💧 수조 클릭: 먹이 투하 · 상품 드래그: 수조에 입수</div>
+            </div>
+
+            <div class="empty-tank-guide" id="emptyTankGuide">
+              현재 수조 장바구니가 비어 있습니다 (선택한 상품의 실시간 유영 미리보기 중 · [+ 수조에 담기]로 입수시키세요!)
             </div>
 
             <div class="swim-controls-bar">
               <div class="swim-action-group">
                 <button class="btn-tank-ctrl" type="button" onclick="dropPelletCenter()">🍤 먹이 주기</button>
                 <button class="btn-tank-ctrl" type="button" onclick="triggerTankWave()">🌊 물결 일으키기</button>
-                <button class="btn-tank-ctrl" id="schoolToggleBtn" type="button" onclick="toggleSchoolMode()">🐟 군영 모드 (1마리)</button>
               </div>
-              <button class="btn-tank-ctrl" type="button" onclick="dragCurrentFishToCart()">➕ 현재 유영 개체 담기</button>
+              <button class="btn-tank-ctrl" type="button" onclick="addToCart(selectedFishId)">➕ 선택 물고기 수조에 입수</button>
             </div>
           </div>
 
-          <div class="active-fish-inspector">
-            <div>
-              <div class="inspector-eyebrow">LIVE TOP-DOWN INSPECTION · 상면 실시간 관상</div>
-              <div class="inspector-title-row">
-                <h2 id="inspName">로열 블루 하프문 베타</h2>
-                <span class="inspector-eng" id="inspEng">Betta splendens · Halfmoon</span>
+          <!-- Right: Selected Fish Live Inspector + Live Cart Tank Roster -->
+          <div class="tank-side-panel">
+            <!-- Top: Selected Fish Quick Spec & Instant Add -->
+            <div class="preview-card-box">
+              <div class="preview-top-row">
+                <div>
+                  <div class="inspector-eyebrow">SELECTED FISH PREVIEW · 상품 유영 확인</div>
+                  <h2 id="inspName">로열 블루 하프문 베타</h2>
+                </div>
+                <div class="preview-price-tag" id="inspPrice">28,000원</div>
               </div>
-              <p class="inspector-desc" id="inspDesc">
-                위에서 내려다볼 때 180도 부채꼴로 펼쳐지는 로열 블루 지느러미가 마치 푸른 실크처럼 물결치는 최고급 쇼 베타입니다.
+              <p class="preview-desc" id="inspDesc">
+                위에서 내려다볼 때 180도 부채꼴로 펼쳐지는 로열 블루 지느러미가 푸른 실크처럼 물결치는 최고급 쇼 베타입니다.
               </p>
-
-              <div class="spec-grid">
-                <div class="spec-box">
-                  <div class="spec-label">적정 수온 / pH</div>
-                  <div class="spec-val" id="inspTemp">25 ~ 28°C · pH 6.8</div>
-                </div>
-                <div class="spec-box">
-                  <div class="spec-label">성체 크기 / 수명</div>
-                  <div class="spec-val" id="inspSize">약 6~7cm · 2~3년</div>
-                </div>
-                <div class="spec-box">
-                  <div class="spec-label">사육 난이도</div>
-                  <div class="spec-val" id="inspDiff">초보자 추천 (단독 사육)</div>
-                </div>
-                <div class="spec-box">
-                  <div class="spec-label">상면 관상 포인트</div>
-                  <div class="spec-val" id="inspPoint">하프문 꼬리 유영 &amp; 광택</div>
-                </div>
+              <div class="preview-specs-inline">
+                <span class="mini-spec-chip" id="inspTemp">🌡️ 25~28°C · pH 6.8</span>
+                <span class="mini-spec-chip" id="inspSize">📏 6~7cm</span>
+                <span class="mini-spec-chip" id="inspDiff">✨ 초보자 추천</span>
+              </div>
+              <div style="display:flex; gap:8px; margin-top:11px;">
+                <button class="btn-primary-aqua" style="flex:1; padding:8px 12px; font-size:0.82rem;" type="button" onclick="addToCart(selectedFishId)">
+                  💦 이 물고기 수조에 담기
+                </button>
+                <button class="btn-glass" style="padding:8px 12px; font-size:0.82rem;" type="button" onclick="buyNowSingle(selectedFishId)">
+                  바로 결제
+                </button>
               </div>
             </div>
 
-            <div class="inspector-purchase-box">
-              <div class="inspector-price" id="inspPrice">28,000원 <span>/ 1마리 (산소포장)</span></div>
-              <div class="inspector-btns">
-                <button class="btn-glass" type="button" onclick="addToCart(selectedFishId)">🥅 장바구니 담기</button>
-                <button class="btn-primary-aqua" type="button" onclick="buyNowSingle(selectedFishId)">바로 입양 결제</button>
+            <!-- Bottom: Live Cart Tank Roster (Synchronized with Swimming Fish!) -->
+            <div class="cart-roster-box">
+              <div class="roster-header">
+                <h3>🐠 수조 속 장바구니 개체 목록</h3>
+                <button class="btn-card-sub" style="font-size:0.71rem; padding:3px 8px;" type="button" onclick="clearCartTank()">수조 비우기</button>
+              </div>
+
+              <div class="roster-list" id="rosterListContainer"></div>
+
+              <div class="roster-checkout-footer">
+                <div class="roster-total-info">
+                  <small id="rosterShippingHint">4만원 이상 산소포장 무료배송</small>
+                  <strong id="rosterTotalPrice">0원</strong>
+                </div>
+                <button class="btn-primary-aqua" type="button" onclick="openCheckoutModal()">
+                  입양 결제하기 →
+                </button>
               </div>
             </div>
           </div>
@@ -1388,7 +1430,7 @@
             <button class="filter-pill" data-cat="school" onclick="filterCatalog('school', this)">테트라 · 디스커스</button>
           </div>
           <div class="drag-guide-banner">
-            🖱️ <strong>상품을 클릭</strong>하면 위 수조에서 바로 헤엄치고, <strong>마우스로 드래그</strong>해 채집망 장바구니에 넣을 수 있습니다!
+            🖱️ <strong>상품 클릭:</strong> 유영 미리보기 · <strong>수조로 드래그 / [+ 수조에 담기]:</strong> 장바구니 수조에 유영 물고기 추가!
           </div>
         </div>
 
@@ -1413,7 +1455,6 @@
         <button class="auth-tab" id="tabLogin" type="button" onclick="switchAuthTab('login')">로그인</button>
       </div>
 
-      <!-- Sign Up Form -->
       <form id="signupForm" onsubmit="handleSignup(event)">
         <div class="form-group">
           <label>닉네임 (수령인 성함)</label>
@@ -1445,7 +1486,6 @@
         </button>
       </form>
 
-      <!-- Login Form -->
       <form id="loginForm" style="display:none;" onsubmit="handleLogin(event)">
         <div class="form-group">
           <label>이메일 아이디</label>
@@ -1463,48 +1503,12 @@
   </div>
 
   <!-- ============================================================
-       MODAL 2: 장바구니 (CART MODAL)
-       ============================================================ -->
-  <div class="modal-backdrop" id="cartModal">
-    <div class="modal-card wide">
-      <div class="modal-header">
-        <h3>🥅 수조 채집망 장바구니</h3>
-        <button class="btn-close-modal" type="button" onclick="closeModal('cartModal')">✕</button>
-      </div>
-
-      <div class="cart-list" id="cartItemsContainer"></div>
-
-      <div class="summary-box" id="cartSummaryBox">
-        <div class="summary-row">
-          <span>관상어 합계 금액</span>
-          <strong id="cartSubtotal">0원</strong>
-        </div>
-        <div class="summary-row">
-          <span>생물 전용 산소·보온 스티로폼 배송비 (4만원 이상 무료)</span>
-          <strong id="cartShipping">0원</strong>
-        </div>
-        <div class="summary-row total">
-          <span>예상 결제 금액</span>
-          <span id="cartTotal">0원</span>
-        </div>
-      </div>
-
-      <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
-        <button class="btn-glass" type="button" onclick="closeModal('cartModal')">수조 더 둘러보기</button>
-        <button class="btn-primary-aqua" id="proceedCheckoutBtn" type="button" onclick="openCheckoutModal()">
-          주문 및 결제하기
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ============================================================
-       MODAL 3: 주문 및 결제 (CHECKOUT & RECEIPT MODAL)
+       MODAL 2: 주문 및 결제 (CHECKOUT & RECEIPT MODAL)
        ============================================================ -->
   <div class="modal-backdrop" id="checkoutModal">
     <div class="modal-card wide">
       <div class="modal-header">
-        <h3 id="checkoutModalTitle">💳 생물 안심 입양 결제</h3>
+        <h3 id="checkoutModalTitle">💳 장바구니 수조 생물 입양 결제</h3>
         <button class="btn-close-modal" type="button" onclick="closeModal('checkoutModal')">✕</button>
       </div>
 
@@ -1552,8 +1556,12 @@
 
         <div class="summary-box">
           <div class="summary-row">
-            <span>주문 내역</span>
+            <span>수조 속 입양 개체</span>
             <strong id="checkoutItemsSummary">-</strong>
+          </div>
+          <div class="summary-row">
+            <span>산소포장 생물 배송비</span>
+            <strong id="checkoutShippingFee">0원</strong>
           </div>
           <div class="summary-row">
             <span>포인트 할인</span>
@@ -1570,12 +1578,11 @@
         </button>
       </form>
 
-      <!-- Order Receipt View -->
       <div id="orderReceiptView" style="display:none; text-align:center; padding:14px 6px;">
         <div style="font-size:3rem; margin-bottom:8px;">🐠✨</div>
         <h4 style="font-size:1.3rem; font-weight:800; color:#ffffff;">관상어 입양 결제가 완료되었습니다!</h4>
         <p style="font-size:0.86rem; color:#bae6fd; margin-top:6px;">
-          전문 아쿠아리스트가 건강한 개체를 선별하여 순수 산소 패킹 후 안전하게 발송해 드립니다.
+          수조 속 개체들이 전문 아쿠아리스트의 순수 산소 패킹을 거쳐 안전하게 출발합니다.
         </p>
         <div class="summary-box" style="text-align:left; margin-top:18px;" id="receiptDetailsBox"></div>
         <button class="btn-primary-aqua" style="margin-top:18px; width:100%; padding:12px;" type="button" onclick="closeModal('checkoutModal')">
@@ -1595,124 +1602,123 @@
         category: "grace",
         badge: "BEST · 상면 인기 1위",
         name: "로열 블루 하프문 베타",
-        eng: "Betta splendens · Royal Blue Halfmoon",
+        shortLabel: "블루 베타",
         price: 28000,
-        unit: "1마리 (특선 개체)",
+        unit: "1마리",
         img: "img/fish_betta.png",
-        temp: "25 ~ 28°C · pH 6.8",
-        size: "약 6~7cm · 수명 2~3년",
-        diff: "초보자 추천 (단독 사육)",
-        point: "180도 부채꼴 지느러미 유영",
+        temp: "25~28°C · pH 6.8",
+        size: "6~7cm · 수명 2~3년",
+        diff: "초보자 추천",
         shortDesc: "푸른 비단처럼 펼쳐지는 하프문 지느러미가 위에서 볼 때 가장 우아한 개체",
-        desc: "위에서 내려다볼 때 180도 부채꼴로 펼쳐지는 로열 블루 지느러미가 마치 푸른 실크처럼 물결치는 최고급 쇼 베타입니다. 산소 호흡(라비린스 기관)이 가능해 나노 큐브 수조에서도 건강하게 유영합니다.",
+        desc: "위에서 내려다볼 때 180도 부채꼴로 펼쳐지는 로열 블루 지느러미가 마치 푸른 실크처럼 물결치는 최고급 쇼 베타입니다.",
         swimSpeed: 1.45,
         tailFreq: 0.14,
-        tailAmp: 7.5
+        tailAmp: 7.5,
+        spriteScale: 0.88
       },
       {
         id: "koi",
         category: "pond",
-        badge: "PREMIUM · 상면 관상 명품",
+        badge: "PREMIUM · 상면 명품",
         name: "코하쿠 비단잉어 코이",
-        eng: "Cyprinus rubrofuscus · Kohaku Koi",
+        shortLabel: "코하쿠 코이",
         price: 65000,
-        unit: "1마리 (유어 12cm급)",
+        unit: "1마리 (12cm)",
         img: "img/fish_koi.png",
-        temp: "18 ~ 25°C · pH 7.2",
-        size: "12cm 출고 · 성어 35cm+",
-        diff: "중급자 추천 (여과기 필수)",
-        point: "순백 바탕 위 선홍빛 무늬",
+        temp: "18~25°C · pH 7.2",
+        size: "12cm 출고 · 대형어",
+        diff: "중급자 추천",
         shortDesc: "위에서 내려다보는 수조를 위해 탄생한 순백과 선홍빛의 조화로운 코이",
-        desc: "전통적으로 연못과 상면 수조에서 위에서 내려다보며 감상하도록 브리딩된 코하쿠 코이입니다. 유려한 S자 곡선 유영과 맑은 백색 바탕 위의 강렬한 진홍색 반점이 수조의 품격을 높여줍니다.",
-        swimSpeed: 1.85,
+        desc: "상면 수조에서 위에서 내려다보며 감상하도록 브리딩된 코하쿠 코이입니다. 유려한 S자 유영과 강렬한 진홍색 반점이 수조의 중심을 잡아줍니다.",
+        swimSpeed: 1.82,
         tailFreq: 0.16,
-        tailAmp: 8.5
+        tailAmp: 8.5,
+        spriteScale: 1.02
       },
       {
         id: "goldfish",
         category: "pond",
         badge: "CUTE · 순둥이 관상어",
         name: "오란다 캘리코 금붕어",
-        eng: "Carassius auratus · Oranda Goldfish",
+        shortLabel: "오란다 금붕어",
         price: 22000,
         unit: "1마리",
         img: "img/fish_goldfish.png",
-        temp: "18 ~ 24°C · pH 7.0",
-        size: "약 8~10cm · 수명 5~8년",
-        diff: "초보자 추천 (온순한 성격)",
-        point: "복스러운 체형과 나비 꼬리",
+        temp: "18~24°C · pH 7.0",
+        size: "8~10cm · 수명 5~8년",
+        diff: "초보자 추천",
         shortDesc: "동글동글한 체형과 하늘거리는 이중 나비 꼬리지느러미가 매력적인 금붕어",
-        desc: "머리 위의 앙증맞은 육류(사자머리)와 양쪽으로 우아하게 갈라지는 나비 꼬리지느러미가 특징입니다. 사람을 잘 따르며 먹이 반응이 뛰어나 상면 수조에서 교감하기 좋습니다.",
+        desc: "앙증맞은 육류(사자머리)와 양쪽으로 우아하게 갈라지는 나비 꼬리지느러미가 특징이며 먹이 반응이 뛰어나 교감하기 좋습니다.",
         swimSpeed: 1.25,
         tailFreq: 0.18,
-        tailAmp: 9.0
+        tailAmp: 9.0,
+        spriteScale: 0.86
       },
       {
         id: "tetra",
         category: "school",
-        badge: "SCHOOL · 군영 추천",
-        name: "네온 테트라 (5마리 세트)",
-        eng: "Paracheirodon innesi · Neon Tetra",
-        price: 15000,
-        unit: "5마리 1세트",
+        badge: "SCHOOL · 형광 발광",
+        name: "네온 테트라",
+        shortLabel: "네온 테트라",
+        price: 4500,
+        unit: "1마리",
         img: "img/fish_tetra.png",
-        temp: "22 ~ 26°C · pH 6.5",
-        size: "약 3~3.5cm · 소형 군영어",
-        diff: "입문자 최적 (합사 우수)",
-        point: "에메랄드 블루 네온 발광",
-        shortDesc: "푸른 수조 조명 아래 형광 블루 라인이 반짝이며 떼 지어 헤엄치는 인기 소형어",
-        desc: "몸 측면을 가로지르는 선명한 네온 블루 스트라이프와 꼬리 쪽 루비 레드 컬러가 환상적인 대비를 이룹니다. 여러 마리가 함께 군영할 때 물결치는 푸른 빛의 흐름을 감상할 수 있습니다.",
+        temp: "22~26°C · pH 6.5",
+        size: "3~3.5cm · 군영어",
+        diff: "입문자 최적",
+        shortDesc: "푸른 수조 조명 아래 형광 블루 라인이 반짝이며 경쾌하게 헤엄치는 소형어",
+        desc: "선명한 네온 블루 스트라이프와 루비 레드 컬러가 대비를 이루며, 여러 마리를 수조에 담으면 함께 군영하는 모습이 환상적입니다.",
         swimSpeed: 2.25,
         tailFreq: 0.25,
-        tailAmp: 5.5
+        tailAmp: 5.5,
+        spriteScale: 0.68
       },
       {
         id: "discus",
         category: "school",
         badge: "ROYAL · 열대어의 황제",
         name: "블루 다이아몬드 디스커스",
-        eng: "Symphysodon aequifasciatus · Blue Diamond",
+        shortLabel: "블루 디스커스",
         price: 89000,
         unit: "1마리 (준성어)",
         img: "img/fish_discus.png",
-        temp: "27 ~ 30°C · pH 6.4",
-        size: "약 10~12cm · 수명 6~10년",
-        diff: "애호가 추천 (고수온 유지)",
-        point: "메탈릭 사파이어 전신 발색",
+        temp: "27~30°C · pH 6.4",
+        size: "10~12cm · 수명 6~10년",
+        diff: "애호가 추천",
         shortDesc: "깊은 사파이어와 터콰이즈 광택이 온몸을 감싸는 위엄 있는 열대어의 황제",
-        desc: "원반형의 우아한 실루엣과 빈틈없이 채워진 메탈릭 블루 발색으로 '열대어의 황제'라 불립니다. 천천히 미끄러지듯 유영하는 품격 있는 움직임이 인상적입니다.",
+        desc: "빈틈없이 채워진 메탈릭 블루 발색으로 '열대어의 황제'라 불립니다. 천천히 미끄러지듯 유영하는 품격 있는 움직임이 인상적입니다.",
         swimSpeed: 1.15,
         tailFreq: 0.12,
-        tailAmp: 6.0
+        tailAmp: 6.0,
+        spriteScale: 0.96
       },
       {
         id: "guppy",
         category: "grace",
-        badge: "PAIR · 암수 한 쌍",
-        name: "알비노 풀레드 구피 (1쌍)",
-        eng: "Poecilia reticulata · Albino Full Red",
-        price: 19000,
-        unit: "암수 1쌍 (2마리)",
+        badge: "RED TAIL · 보색 대비",
+        name: "알비노 풀레드 구피",
+        shortLabel: "풀레드 구피",
+        price: 12000,
+        unit: "1마리",
         img: "img/fish_guppy.png",
-        temp: "24 ~ 27°C · pH 7.0",
-        size: "약 4~5cm · 번식 용이",
-        diff: "초보자 추천 (강인한 생명력)",
-        point: "푸른 물결과 대비되는 루비 꼬리",
+        temp: "24~27°C · pH 7.0",
+        size: "4~5cm · 강인함",
+        diff: "초보자 추천",
         shortDesc: "푸른 수조 배경과 선명한 보색 대비를 이루는 화려한 루비 레드 델타 꼬리 구피",
-        desc: "맑고 투명한 푸른 수조 속에서 가장 눈부신 색채 대비를 보여주는 고정구피 품종입니다. 얇고 넓은 레이스 꼬리지느러미를 펄럭이며 활기차게 수면 근처를 유영합니다.",
+        desc: "맑고 푸른 수조 속에서 가장 눈부신 색채 대비를 보여주는 고정구피 품종으로, 넓은 레이스 꼬리지느러미를 펄럭이며 활기차게 헤엄칩니다.",
         swimSpeed: 1.95,
         tailFreq: 0.22,
-        tailAmp: 8.5
+        tailAmp: 8.5,
+        spriteScale: 0.78
       }
     ];
 
     /* ============================================================
-       2. APPLICATION STATE (LOCALSTORAGE PERSISTENCE)
+       2. APPLICATION STATE (CART TANK = SWIMMING FISHES)
        ============================================================ */
     let selectedFishId = "betta";
     let currentCategory = "all";
-    let schoolMode = false;
-    let cart = JSON.parse(localStorage.getItem("bluetank_cart") || "[]");
+    let cart = JSON.parse(localStorage.getItem("bluetank_cart_v2") || "[]");
     let currentUser = JSON.parse(localStorage.getItem("bluetank_user") || "null");
     let selectedPayMethod = "신용/체크카드 간편결제";
 
@@ -1724,13 +1730,13 @@
     });
 
     function saveState() {
-      localStorage.setItem("bluetank_cart", JSON.stringify(cart));
+      localStorage.setItem("bluetank_cart_v2", JSON.stringify(cart));
       if (currentUser) {
         localStorage.setItem("bluetank_user", JSON.stringify(currentUser));
       } else {
         localStorage.removeItem("bluetank_user");
       }
-      updateHeaderUI();
+      updateAllUI();
     }
 
     function showToast(msg) {
@@ -1769,17 +1775,21 @@
     }
 
     /* ============================================================
-       4. LIVE TOP-DOWN SWIMMING TANK ENGINE (CANVAS SPINE WAVE)
+       4. CART TANK SWIMMING ENGINE (EACH CART ITEM = LIVE SWIMMER!)
        ============================================================ */
     const swimCanvas = document.getElementById("swimCanvas");
     const sctx = swimCanvas.getContext("2d");
-    let swimmers = [];
+
+    // `cartSwimmers` holds the actual fish in the user's cart!
+    let cartSwimmers = [];
+    // `previewSwimmer` shows the currently clicked product if not in cart yet
+    let previewSwimmer = null;
     let pellets = [];
     let bubbles = [];
     let tankRipples = [];
 
     function resizeSwimCanvas() {
-      const wrap = document.getElementById("swimViewport");
+      const wrap = document.getElementById("cartTankViewport");
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       swimCanvas.width = wrap.clientWidth * dpr;
       swimCanvas.height = wrap.clientHeight * dpr;
@@ -1787,64 +1797,119 @@
     }
     window.addEventListener("resize", resizeSwimCanvas);
 
-    function initSwimmers(fishId) {
-      const prod = FISH_PRODUCTS.find(f => f.id === fishId) || FISH_PRODUCTS[0];
-      const w = swimCanvas.clientWidth || 640;
-      const h = swimCanvas.clientHeight || 340;
-      const count = schoolMode ? 3 : 1;
-      swimmers = [];
-      for (let i = 0; i < count; i++) {
-        swimmers.push({
-          fish: prod,
-          x: w * (0.35 + i * 0.16),
-          y: h * (0.45 + (i % 2 === 0 ? -0.08 : 0.1)),
-          angle: -Math.PI / 4 + i * 0.8,
-          targetAngle: -Math.PI / 4 + i * 0.8,
-          speed: prod.swimSpeed,
-          phase: i * 2.1,
-          scale: count === 1 ? 1.0 : 0.76,
-          turnCooldown: 40 + i * 25
-        });
+    function createSwimmerEntity(fishProd, spawnX, spawnY, isPreview = false) {
+      const w = swimCanvas.clientWidth || 680;
+      const h = swimCanvas.clientHeight || 390;
+      const x = typeof spawnX === "number" ? Math.max(70, Math.min(w - 70, spawnX)) : w * (0.25 + Math.random() * 0.5);
+      const y = typeof spawnY === "number" ? Math.max(70, Math.min(h - 70, spawnY)) : h * (0.25 + Math.random() * 0.5);
+      const angle = Math.random() * Math.PI * 2;
+      return {
+        fish: fishProd,
+        x,
+        y,
+        angle,
+        targetAngle: angle,
+        speed: fishProd.swimSpeed * (isPreview ? 1.0 : 1.35),
+        phase: Math.random() * Math.PI * 2,
+        scale: fishProd.spriteScale,
+        turnCooldown: 45 + Math.floor(Math.random() * 65),
+        splashAge: isPreview ? 999 : 0, // splash glow ring when newly added!
+        isPreview
+      };
+    }
+
+    /* Synchronize `cartSwimmers` array with `cart` quantities smoothly */
+    function syncSwimmersWithCart(spawnCoord = null) {
+      const targetCounts = {};
+      cart.forEach(item => { targetCounts[item.id] = item.qty; });
+
+      // Remove excess swimmers per species
+      const currentCounts = {};
+      for (let i = cartSwimmers.length - 1; i >= 0; i--) {
+        const id = cartSwimmers[i].fish.id;
+        currentCounts[id] = (currentCounts[id] || 0) + 1;
+        if (currentCounts[id] > (targetCounts[id] || 0)) {
+          const removed = cartSwimmers.splice(i, 1)[0];
+          tankRipples.push({ x: removed.x, y: removed.y, r: 8, maxR: 55, alpha: 0.7 });
+          currentCounts[id]--;
+        }
+      }
+
+      // Add missing swimmers per species
+      cart.forEach(item => {
+        const have = cartSwimmers.filter(s => s.fish.id === item.id).length;
+        const need = item.qty - have;
+        const prod = FISH_PRODUCTS.find(f => f.id === item.id);
+        for (let k = 0; k < need; k++) {
+          const sx = spawnCoord ? spawnCoord.x : undefined;
+          const sy = spawnCoord ? spawnCoord.y : undefined;
+          const swimmer = createSwimmerEntity(prod, sx, sy, false);
+          cartSwimmers.push(swimmer);
+          tankRipples.push({ x: swimmer.x, y: swimmer.y, r: 6, maxR: 88, alpha: 0.92 });
+          for (let b = 0; b < 7; b++) {
+            bubbles.push({
+              x: swimmer.x + (Math.random() - 0.5) * 24,
+              y: swimmer.y + (Math.random() - 0.5) * 24,
+              r: 2 + Math.random() * 2.8,
+              vx: (Math.random() - 0.5) * 0.7,
+              vy: -0.7 - Math.random() * 0.9,
+              alpha: 0.9
+            });
+          }
+        }
+      });
+
+      updatePreviewSwimmer();
+    }
+
+    function updatePreviewSwimmer() {
+      const prod = FISH_PRODUCTS.find(f => f.id === selectedFishId) || FISH_PRODUCTS[0];
+      const alreadyInCart = cart.some(item => item.id === selectedFishId && item.qty > 0);
+      if (alreadyInCart) {
+        // Already swimming as a cart member! No separate preview ghost needed.
+        previewSwimmer = null;
+      } else {
+        if (!previewSwimmer || previewSwimmer.fish.id !== selectedFishId) {
+          const w = swimCanvas.clientWidth || 680;
+          const h = swimCanvas.clientHeight || 390;
+          previewSwimmer = createSwimmerEntity(prod, w * 0.5, h * 0.5, true);
+        }
       }
     }
 
-    function selectFishForLiveTank(fishId, scrollToTank = false) {
+    function selectFishForPreview(fishId, scrollToTank = false) {
       selectedFishId = fishId;
       const prod = FISH_PRODUCTS.find(f => f.id === fishId);
       if (!prod) return;
 
-      document.getElementById("liveTankFishBadge").textContent = `실시간 유영 뷰 · ${prod.name}`;
       document.getElementById("inspName").textContent = prod.name;
-      document.getElementById("inspEng").textContent = prod.eng;
+      document.getElementById("inspPrice").textContent = `${prod.price.toLocaleString()}원 / ${prod.unit}`;
       document.getElementById("inspDesc").textContent = prod.desc;
-      document.getElementById("inspTemp").textContent = prod.temp;
-      document.getElementById("inspSize").textContent = prod.size;
-      document.getElementById("inspDiff").textContent = prod.diff;
-      document.getElementById("inspPoint").textContent = prod.point;
-      document.getElementById("inspPrice").innerHTML = `${prod.price.toLocaleString()}원 <span>/ ${prod.unit}</span>`;
+      document.getElementById("inspTemp").textContent = `🌡️ ${prod.temp}`;
+      document.getElementById("inspSize").textContent = `📏 ${prod.size}`;
+      document.getElementById("inspDiff").textContent = `✨ ${prod.diff}`;
 
       document.querySelectorAll(".fish-card").forEach(c => {
         c.classList.toggle("selected-tank", c.dataset.id === fishId);
       });
 
-      initSwimmers(fishId);
-      triggerTankWave();
+      updatePreviewSwimmer();
+
+      // Highlight matching swimmers in the cart tank
+      cartSwimmers.forEach(s => {
+        if (s.fish.id === fishId) {
+          s.splashAge = 0;
+          s.speed = s.fish.swimSpeed * 1.6;
+        }
+      });
 
       if (scrollToTank) {
-        document.getElementById("liveTankSection").scrollIntoView({ behavior: "smooth", block: "nearest" });
+        document.getElementById("cartTankSection").scrollIntoView({ behavior: "smooth", block: "nearest" });
       }
     }
 
-    function toggleSchoolMode() {
-      schoolMode = !schoolMode;
-      const btn = document.getElementById("schoolToggleBtn");
-      btn.textContent = schoolMode ? "🐟 군영 모드 (3마리)" : "🐟 군영 모드 (1마리)";
-      btn.classList.toggle("active", schoolMode);
-      initSwimmers(selectedFishId);
-    }
-
     function dropPelletAt(x, y) {
-      pellets.push({ x, y, r: 4.5, life: 420 });
+      pellets.push({ x, y, r: 4.5, life: 440 });
       tankRipples.push({ x, y, r: 6, maxR: 75, alpha: 0.85 });
       for (let i = 0; i < 5; i++) {
         bubbles.push({
@@ -1862,15 +1927,16 @@
       const w = swimCanvas.clientWidth;
       const h = swimCanvas.clientHeight;
       dropPelletAt(w * (0.3 + Math.random() * 0.4), h * (0.3 + Math.random() * 0.4));
-      showToast("🍤 수조에 프리미엄 먹이를 투하했습니다!");
+      showToast("🍤 장바구니 수조에 프리미엄 먹이를 투하했습니다!");
     }
 
     function triggerTankWave() {
       const w = swimCanvas.clientWidth;
       const h = swimCanvas.clientHeight;
       tankRipples.push({ x: w * 0.5, y: h * 0.5, r: 10, maxR: Math.max(w, h) * 0.55, alpha: 0.75 });
-      swimmers.forEach(s => {
-        s.speed = s.fish.swimSpeed * 1.9;
+      const allActive = previewSwimmer ? [...cartSwimmers, previewSwimmer] : cartSwimmers;
+      allActive.forEach(s => {
+        s.speed = s.fish.swimSpeed * 1.85;
         s.targetAngle += (Math.random() - 0.5) * 1.2;
       });
     }
@@ -1880,13 +1946,30 @@
       dropPelletAt(e.clientX - rect.left, e.clientY - rect.top);
     });
 
-    /* Render a single fish image with realistic head-to-tail sinusoidal undulation */
     function drawUndulatingFish(ctx, img, s) {
       if (!img || !img.complete || img.naturalWidth === 0) return;
-      const drawSize = 152 * s.scale;
+      const drawSize = 148 * s.scale;
+
+      // Draw splash highlight ring if newly dropped into cart tank
+      if (!s.isPreview && s.splashAge < 55) {
+        s.splashAge++;
+        const ringAlpha = (1 - s.splashAge / 55) * 0.75;
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, 26 + s.splashAge * 0.9, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(125, 211, 252, ${ringAlpha})`;
+        ctx.lineWidth = 2.2;
+        ctx.stroke();
+        ctx.restore();
+      }
+
       ctx.save();
       ctx.translate(s.x, s.y);
-      // Fish PNG faces UP (-Y), while angle=0 is RIGHT (+X), so rotate by angle + PI/2
+
+      if (s.isPreview) {
+        ctx.globalAlpha = 0.78;
+      }
+
       ctx.rotate(s.angle + Math.PI / 2);
 
       const slices = 22;
@@ -1896,8 +1979,7 @@
       const sliceDstH = drawSize / slices;
 
       for (let i = 0; i < slices; i++) {
-        const t = i / slices; // 0 = nose, 1 = tail tip
-        // Head stays steady, tail oscillates smoothly
+        const t = i / slices;
         const bendEnvelope = Math.pow(t, 1.65);
         const offsetX = Math.sin(s.phase - t * 4.2) * s.fish.tailAmp * s.scale * bendEnvelope;
 
@@ -1909,6 +1991,25 @@
         );
       }
       ctx.restore();
+
+      // Subtle floating tag for preview swimmer so user distinguishes preview vs cart items
+      if (s.isPreview) {
+        ctx.save();
+        ctx.font = "700 11px Pretendard, sans-serif";
+        const label = `미리보기 · ${s.fish.shortLabel}`;
+        const tw = ctx.measureText(label).width + 14;
+        ctx.fillStyle = "rgba(3, 24, 48, 0.78)";
+        ctx.strokeStyle = "rgba(125, 211, 252, 0.65)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.roundRect(s.x - tw / 2, s.y + drawSize * 0.36, tw, 20, 10);
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = "#e0f2fe";
+        ctx.textAlign = "center";
+        ctx.fillText(label, s.x, s.y + drawSize * 0.36 + 14);
+        ctx.restore();
+      }
     }
 
     function animateSwimTank() {
@@ -1916,7 +2017,7 @@
       const h = swimCanvas.clientHeight;
       sctx.clearRect(0, 0, w, h);
 
-      // Draw water ripples inside live tank
+      // Ripples
       for (let i = tankRipples.length - 1; i >= 0; i--) {
         const rp = tankRipples[i];
         rp.r += 2.1;
@@ -1929,7 +2030,7 @@
         if (rp.r >= rp.maxR || rp.alpha < 0.03) tankRipples.splice(i, 1);
       }
 
-      // Draw food pellets
+      // Food pellets
       for (let i = pellets.length - 1; i >= 0; i--) {
         const p = pellets[i];
         p.life--;
@@ -1944,13 +2045,13 @@
         if (p.life <= 0) pellets.splice(i, 1);
       }
 
-      // Update & draw swimmers
-      const margin = 68;
-      swimmers.forEach((s, idx) => {
+      const allSwimmers = previewSwimmer ? [...cartSwimmers, previewSwimmer] : cartSwimmers;
+      const margin = 64;
+
+      allSwimmers.forEach((s, idx) => {
         s.phase += s.fish.tailFreq * (0.85 + s.speed * 0.35);
         s.speed += (s.fish.swimSpeed - s.speed) * 0.03;
 
-        // Check nearest food pellet
         if (pellets.length > 0) {
           let nearest = pellets[0];
           let minDist = Math.hypot(nearest.x - s.x, nearest.y - s.y);
@@ -1970,15 +2071,25 @@
             s.targetAngle += (Math.random() - 0.5) * 1.15;
             s.turnCooldown = 55 + Math.floor(Math.random() * 75);
           }
+
+          // Gentle separation force so multiple fish in the cart tank swim gracefully without overlapping
+          allSwimmers.forEach((other, oIdx) => {
+            if (idx === oIdx) return;
+            const dx = s.x - other.x;
+            const dy = s.y - other.y;
+            const dist = Math.hypot(dx, dy);
+            if (dist > 0 && dist < 78) {
+              const away = Math.atan2(dy, dx);
+              s.targetAngle += Math.sin(away - s.targetAngle) * 0.06;
+            }
+          });
         }
 
-        // Smooth wall avoidance inside rectangular glass tank
-        if (s.x < margin) s.targetAngle = 0 + (Math.random() - 0.5) * 0.5;
+        if (s.x < margin) s.targetAngle = (Math.random() - 0.5) * 0.5;
         if (s.x > w - margin) s.targetAngle = Math.PI + (Math.random() - 0.5) * 0.5;
         if (s.y < margin) s.targetAngle = Math.PI / 2 + (Math.random() - 0.5) * 0.5;
         if (s.y > h - margin) s.targetAngle = -Math.PI / 2 + (Math.random() - 0.5) * 0.5;
 
-        // Shortest angle interpolation
         let diff = s.targetAngle - s.angle;
         while (diff > Math.PI) diff -= Math.PI * 2;
         while (diff < -Math.PI) diff += Math.PI * 2;
@@ -1987,23 +2098,21 @@
         s.x += Math.cos(s.angle) * s.speed;
         s.y += Math.sin(s.angle) * s.speed;
 
-        // Occasional oxygen bubbles from gills
-        if (Math.random() < 0.045) {
+        if (Math.random() < 0.035) {
           bubbles.push({
-            x: s.x - Math.cos(s.angle) * 18,
-            y: s.y - Math.sin(s.angle) * 18,
-            r: 1.5 + Math.random() * 2.2,
+            x: s.x - Math.cos(s.angle) * 16,
+            y: s.y - Math.sin(s.angle) * 16,
+            r: 1.4 + Math.random() * 2.0,
             vx: (Math.random() - 0.5) * 0.4,
             vy: -0.55 - Math.random() * 0.65,
             alpha: 0.72
           });
         }
 
-        const img = fishImagesCache[s.fish.id];
-        drawUndulatingFish(sctx, img, s);
+        drawUndulatingFish(sctx, fishImagesCache[s.fish.id], s);
       });
 
-      // Draw rising oxygen bubbles
+      // Rising bubbles
       for (let i = bubbles.length - 1; i >= 0; i--) {
         const b = bubbles[i];
         b.x += b.vx;
@@ -2021,7 +2130,7 @@
     }
 
     /* ============================================================
-       5. RENDER PRODUCT GRID & MOUSE DRAG-TO-CART SYSTEM
+       5. PRODUCT GRID & DRAG-DIRECTLY-INTO-CART-TANK SYSTEM
        ============================================================ */
     function renderFishGrid() {
       const grid = document.getElementById("fishGrid");
@@ -2029,35 +2138,41 @@
         ? FISH_PRODUCTS
         : FISH_PRODUCTS.filter(f => f.category === currentCategory);
 
-      grid.innerHTML = list.map(fish => `
-        <article class="fish-card ${fish.id === selectedFishId ? "selected-tank" : ""}"
-                 data-id="${fish.id}"
-                 draggable="true"
-                 onclick="selectFishForLiveTank('${fish.id}', true)">
-          <div class="card-top-meta">
-            <span class="tag-chip">${fish.badge}</span>
-            <span class="drag-handle-pill" title="드래그하여 채집망에 담기">⠿ 드래그 담기</span>
-          </div>
-
-          <div class="fish-tank-window">
-            <img class="fish-thumb" src="${fish.img}" alt="${fish.name}" />
-            <span class="swim-trigger-overlay">▶ 유영 보기</span>
-          </div>
-
-          <div class="card-info">
-            <h3>${fish.name}</h3>
-            <p>${fish.shortDesc}</p>
-          </div>
-
-          <div class="card-footer">
-            <div class="card-price">${fish.price.toLocaleString()}원</div>
-            <div class="card-actions" onclick="event.stopPropagation()">
-              <button class="btn-card-sub" type="button" onclick="selectFishForLiveTank('${fish.id}', true)">유영</button>
-              <button class="btn-card-add" type="button" onclick="addToCart('${fish.id}')">+ 담기</button>
+      grid.innerHTML = list.map(fish => {
+        const inCartItem = cart.find(c => c.id === fish.id);
+        const qtyInTank = inCartItem ? inCartItem.qty : 0;
+        return `
+          <article class="fish-card ${fish.id === selectedFishId ? "selected-tank" : ""}"
+                   data-id="${fish.id}"
+                   draggable="true"
+                   onclick="selectFishForPreview('${fish.id}', true)">
+            <div class="card-top-meta">
+              <span class="tag-chip">${fish.badge}</span>
+              ${qtyInTank > 0
+                ? `<span class="in-tank-count-badge">🐠 수조 유영 ${qtyInTank}마리</span>`
+                : `<span class="drag-handle-pill" title="수조로 드래그해 담기">⠿ 수조로 드래그</span>`}
             </div>
-          </div>
-        </article>
-      `).join("");
+
+            <div class="fish-tank-window">
+              <img class="fish-thumb" src="${fish.img}" alt="${fish.name}" />
+              <span class="swim-trigger-overlay">▶ 유영 미리보기</span>
+            </div>
+
+            <div class="card-info">
+              <h3>${fish.name}</h3>
+              <p>${fish.shortDesc}</p>
+            </div>
+
+            <div class="card-footer">
+              <div class="card-price">${fish.price.toLocaleString()}원</div>
+              <div class="card-actions" onclick="event.stopPropagation()">
+                <button class="btn-card-sub" type="button" onclick="selectFishForPreview('${fish.id}', true)">미리보기</button>
+                <button class="btn-card-add" type="button" onclick="addToCart('${fish.id}')">+ 수조에 담기</button>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join("");
 
       bindDragInteractions();
     }
@@ -2069,29 +2184,34 @@
       renderFishGrid();
     }
 
-    /* Dual Drag-and-Drop (Native HTML5 DnD + Smooth Pointer Ghost Drag) */
     let draggedFishId = null;
     let pointerDragging = false;
     let pointerStartX = 0;
     let pointerStartY = 0;
 
-    function setDropTargetsHighlight(active) {
-      document.getElementById("headerCartNet").classList.toggle("drag-over", active);
-      document.getElementById("floatingCartNet").classList.toggle("drag-over", active);
+    function setTankDropVisualState(isDragging, isHoveringTank = false, isHoveringDock = false) {
+      const tankEl = document.getElementById("cartTankViewport");
+      const dockEl = document.getElementById("floatingTankDock");
+      tankEl.classList.toggle("drag-target-ready", isDragging);
+      tankEl.classList.toggle("drag-over", isHoveringTank);
+      dockEl.classList.toggle("drag-over", isHoveringDock);
     }
 
-    function isOverCartNet(clientX, clientY) {
-      const targets = [
-        document.getElementById("headerCartNet"),
-        document.getElementById("floatingCartNet")
-      ];
-      return targets.some(el => {
-        if (!el) return false;
-        const r = el.getBoundingClientRect();
-        const pad = 24;
-        return clientX >= r.left - pad && clientX <= r.right + pad &&
-               clientY >= r.top - pad && clientY <= r.bottom + pad;
-      });
+    function getTankDropPosition(clientX, clientY) {
+      const tankEl = document.getElementById("cartTankViewport");
+      const r = tankEl.getBoundingClientRect();
+      if (clientX >= r.left && clientX <= r.right && clientY >= r.top && clientY <= r.bottom) {
+        return { x: clientX - r.left, y: clientY - r.top };
+      }
+      return null;
+    }
+
+    function isOverFloatingDock(clientX, clientY) {
+      const dockEl = document.getElementById("floatingTankDock");
+      const r = dockEl.getBoundingClientRect();
+      const pad = 22;
+      return clientX >= r.left - pad && clientX <= r.right + pad &&
+             clientY >= r.top - pad && clientY <= r.bottom + pad;
     }
 
     function bindDragInteractions() {
@@ -2099,16 +2219,18 @@
       const ghost = document.getElementById("dragGhost");
       const ghostImg = document.getElementById("dragGhostImg");
       const ghostLabel = document.getElementById("dragGhostLabel");
+      const tankEl = document.getElementById("cartTankViewport");
+      const dockEl = document.getElementById("floatingTankDock");
 
       cards.forEach(card => {
         const fishId = card.dataset.id;
         const fish = FISH_PRODUCTS.find(f => f.id === fishId);
 
-        // Native HTML5 Drag Events
+        // Native HTML5 Drag
         card.addEventListener("dragstart", (e) => {
           draggedFishId = fishId;
           card.classList.add("dragging-source");
-          setDropTargetsHighlight(true);
+          setTankDropVisualState(true, false, false);
           if (e.dataTransfer) {
             e.dataTransfer.setData("text/plain", fishId);
             e.dataTransfer.effectAllowed = "copy";
@@ -2117,11 +2239,11 @@
 
         card.addEventListener("dragend", () => {
           card.classList.remove("dragging-source");
-          setDropTargetsHighlight(false);
+          setTankDropVisualState(false, false, false);
           draggedFishId = null;
         });
 
-        // Custom Mouse/Pointer Drag for ultra-smooth visual feedback
+        // Smooth Custom Pointer Drag
         card.addEventListener("mousedown", (e) => {
           if (e.button !== 0 || e.target.closest("button")) return;
           pointerDragging = false;
@@ -2138,8 +2260,11 @@
               ghost.style.left = mv.clientX + "px";
               ghost.style.top = mv.clientY + "px";
               ghostImg.src = fish.img;
-              ghostLabel.textContent = `${fish.name} → 채집망`;
-              setDropTargetsHighlight(isOverCartNet(mv.clientX, mv.clientY));
+              ghostLabel.textContent = `${fish.shortLabel} → 수조에 입수`;
+
+              const overTank = Boolean(getTankDropPosition(mv.clientX, mv.clientY));
+              const overDock = isOverFloatingDock(mv.clientX, mv.clientY);
+              setTankDropVisualState(true, overTank, overDock);
             }
           };
 
@@ -2148,11 +2273,17 @@
             window.removeEventListener("mouseup", onMouseUp);
             card.classList.remove("dragging-source");
             ghost.style.display = "none";
-            setDropTargetsHighlight(false);
 
-            if (pointerDragging && isOverCartNet(up.clientX, up.clientY)) {
-              addToCart(fishId);
+            if (pointerDragging) {
+              const dropPos = getTankDropPosition(up.clientX, up.clientY);
+              if (dropPos) {
+                addToCart(fishId, dropPos);
+              } else if (isOverFloatingDock(up.clientX, up.clientY)) {
+                addToCart(fishId);
+                scrollToCartTank();
+              }
             }
+            setTankDropVisualState(false, false, false);
             pointerDragging = false;
             draggedFishId = null;
           };
@@ -2162,51 +2293,63 @@
         });
       });
 
-      // Bind native drop zones
-      [document.getElementById("headerCartNet"), document.getElementById("floatingCartNet")].forEach(zone => {
-        zone.ondragover = (e) => {
-          e.preventDefault();
-          zone.classList.add("drag-over");
-        };
-        zone.ondragleave = () => {
-          zone.classList.remove("drag-over");
-        };
-        zone.ondrop = (e) => {
-          e.preventDefault();
-          zone.classList.remove("drag-over");
-          const id = (e.dataTransfer && e.dataTransfer.getData("text/plain")) || draggedFishId;
-          if (id) addToCart(id);
-        };
-      });
+      // Native drop on Cart Tank
+      tankEl.ondragover = (e) => {
+        e.preventDefault();
+        setTankDropVisualState(true, true, false);
+      };
+      tankEl.ondragleave = () => {
+        setTankDropVisualState(true, false, false);
+      };
+      tankEl.ondrop = (e) => {
+        e.preventDefault();
+        const id = (e.dataTransfer && e.dataTransfer.getData("text/plain")) || draggedFishId;
+        const dropPos = getTankDropPosition(e.clientX, e.clientY);
+        setTankDropVisualState(false, false, false);
+        if (id) addToCart(id, dropPos);
+      };
+
+      // Native drop on Floating Dock
+      dockEl.ondragover = (e) => {
+        e.preventDefault();
+        setTankDropVisualState(true, false, true);
+      };
+      dockEl.ondragleave = () => {
+        setTankDropVisualState(true, false, false);
+      };
+      dockEl.ondrop = (e) => {
+        e.preventDefault();
+        const id = (e.dataTransfer && e.dataTransfer.getData("text/plain")) || draggedFishId;
+        setTankDropVisualState(false, false, false);
+        if (id) {
+          addToCart(id);
+          scrollToCartTank();
+        }
+      };
     }
 
-    function dragCurrentFishToCart() {
-      addToCart(selectedFishId);
+    function scrollToCartTank() {
+      document.getElementById("cartTankSection").scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
 
     /* ============================================================
-       6. CART, MEMBERSHIP (SIGN UP / LOGIN) & CHECKOUT LOGIC
+       6. CART TANK ACTIONS, MEMBERSHIP & CHECKOUT
        ============================================================ */
-    function addToCart(fishId) {
+    function addToCart(fishId, spawnCoord = null) {
       const prod = FISH_PRODUCTS.find(f => f.id === fishId);
       if (!prod) return;
+      selectedFishId = fishId;
+
       const existing = cart.find(item => item.id === fishId);
       if (existing) {
         existing.qty += 1;
       } else {
         cart.push({ id: fishId, qty: 1 });
       }
-      saveState();
-      showToast(`🥅 '${prod.name}' 개체가 채집망 장바구니에 담겼습니다!`);
-    }
 
-    function buyNowSingle(fishId) {
-      const existing = cart.find(item => item.id === fishId);
-      if (!existing) {
-        cart.push({ id: fishId, qty: 1 });
-        saveState();
-      }
-      openCheckoutModal();
+      syncSwimmersWithCart(spawnCoord);
+      saveState();
+      showToast(`💦 '${prod.name}' 개체가 장바구니 수조에 입수되어 헤엄치기 시작했습니다!`);
     }
 
     function updateCartQty(fishId, delta) {
@@ -2216,8 +2359,26 @@
       if (cart[idx].qty <= 0) {
         cart.splice(idx, 1);
       }
+      syncSwimmersWithCart();
       saveState();
-      renderCartModal();
+    }
+
+    function clearCartTank() {
+      if (cart.length === 0) return;
+      cart = [];
+      syncSwimmersWithCart();
+      saveState();
+      showToast("🥅 장바구니 수조의 모든 개체를 채집해 비웠습니다.");
+    }
+
+    function buyNowSingle(fishId) {
+      const existing = cart.find(item => item.id === fishId);
+      if (!existing) {
+        cart.push({ id: fishId, qty: 1 });
+        syncSwimmersWithCart();
+        saveState();
+      }
+      openCheckoutModal();
     }
 
     function getCartTotals() {
@@ -2234,17 +2395,58 @@
       return { subtotal, shipping, total: subtotal + shipping, totalCount };
     }
 
-    function updateHeaderUI() {
-      const { totalCount } = getCartTotals();
+    function updateAllUI() {
+      const { subtotal, shipping, total, totalCount } = getCartTotals();
+
       document.getElementById("headerCartCount").textContent = totalCount;
       document.getElementById("floatingCartCount").textContent = totalCount;
+      document.getElementById("cartTankStatusText").textContent = `장바구니 수조 · 유영 중 ${totalCount}마리`;
+      document.getElementById("emptyTankGuide").style.display = totalCount === 0 ? "block" : "none";
 
+      // Auth header button
       const authBtn = document.getElementById("authHeaderBtn");
       if (currentUser) {
         authBtn.innerHTML = `<span>💧 ${currentUser.name}님 · ${currentUser.points.toLocaleString()}P</span>`;
       } else {
         authBtn.innerHTML = `<span>👤 회원가입 · 로그인</span>`;
       }
+
+      // Live Roster inside Tank Panel
+      const rosterBox = document.getElementById("rosterListContainer");
+      if (cart.length === 0) {
+        rosterBox.innerHTML = `
+          <div class="roster-empty">
+            수조에 담긴 물고기가 없습니다.<br/>
+            물고기 카드를 <strong>수조로 드래그</strong>하거나 <strong>[+ 수조에 담기]</strong>를 누르면<br/>
+            수조 안에서 물고기가 늘어나며 함께 헤엄칩니다!
+          </div>
+        `;
+      } else {
+        rosterBox.innerHTML = cart.map(item => {
+          const prod = FISH_PRODUCTS.find(f => f.id === item.id);
+          return `
+            <div class="roster-item">
+              <img src="${prod.img}" alt="${prod.name}" />
+              <div class="roster-item-name">
+                <strong>${prod.name}</strong>
+                <span>${(prod.price * item.qty).toLocaleString()}원 (${item.qty}마리 유영 중)</span>
+              </div>
+              <div class="qty-stepper">
+                <button type="button" onclick="updateCartQty('${prod.id}', -1)" title="1마리 빼기">−</button>
+                <span>${item.qty}</span>
+                <button type="button" onclick="updateCartQty('${prod.id}', 1)" title="1마리 추가 입수">+</button>
+              </div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      document.getElementById("rosterShippingHint").textContent =
+        subtotal === 0 ? "4만원 이상 산소포장 무료배송"
+        : (shipping === 0 ? "산소포장 무료배송 적용됨" : `배송비 ${shipping.toLocaleString()}원 포함`);
+      document.getElementById("rosterTotalPrice").textContent = `${total.toLocaleString()}원`;
+
+      renderFishGrid();
     }
 
     function openModal(id) {
@@ -2282,13 +2484,7 @@
       const pw = document.getElementById("regPw").value;
       const tankSize = document.getElementById("regTankSize").value;
 
-      currentUser = {
-        name,
-        email,
-        pw,
-        tankSize,
-        points: 3000
-      };
+      currentUser = { name, email, pw, tankSize, points: 3000 };
       saveState();
       closeModal("authModal");
       showToast(`🎉 ${name}님 환영합니다! 가입 축하 3,000P가 지급되었습니다.`);
@@ -2306,66 +2502,19 @@
       };
       saveState();
       closeModal("authModal");
-      showToast(`💧 ${namePart}님, 수조에 오신 것을 환영합니다!`);
+      showToast(`💧 ${namePart}님, 장바구니 수조에 오신 것을 환영합니다!`);
     }
 
-    /* Cart & Checkout Handlers */
-    function openCartModal() {
-      renderCartModal();
-      openModal("cartModal");
-    }
-
-    function renderCartModal() {
-      const box = document.getElementById("cartItemsContainer");
-      const { subtotal, shipping, total } = getCartTotals();
-
-      if (cart.length === 0) {
-        box.innerHTML = `
-          <div style="text-align:center; padding:34px 12px; color:#bae6fd;">
-            <div style="font-size:2.2rem; margin-bottom:8px;">🥅</div>
-            아직 채집망에 담긴 관상어가 없습니다.<br/>
-            수조 속 물고기를 마우스로 드래그하거나 <strong>[+ 담기]</strong>를 눌러보세요!
-          </div>
-        `;
-        document.getElementById("proceedCheckoutBtn").disabled = true;
-        document.getElementById("proceedCheckoutBtn").style.opacity = "0.5";
-      } else {
-        document.getElementById("proceedCheckoutBtn").disabled = false;
-        document.getElementById("proceedCheckoutBtn").style.opacity = "1";
-        box.innerHTML = cart.map(item => {
-          const prod = FISH_PRODUCTS.find(f => f.id === item.id);
-          return `
-            <div class="cart-item">
-              <img src="${prod.img}" alt="${prod.name}" />
-              <div class="cart-item-info">
-                <h4>${prod.name}</h4>
-                <span>${prod.price.toLocaleString()}원 · ${prod.unit}</span>
-              </div>
-              <div class="qty-stepper">
-                <button type="button" onclick="updateCartQty('${prod.id}', -1)">−</button>
-                <span>${item.qty}</span>
-                <button type="button" onclick="updateCartQty('${prod.id}', 1)">+</button>
-              </div>
-              <strong style="min-width:78px; text-align:right;">${(prod.price * item.qty).toLocaleString()}원</strong>
-            </div>
-          `;
-        }).join("");
-      }
-
-      document.getElementById("cartSubtotal").textContent = subtotal.toLocaleString() + "원";
-      document.getElementById("cartShipping").textContent = shipping === 0 ? "무료배송 (산소포장)" : shipping.toLocaleString() + "원";
-      document.getElementById("cartTotal").textContent = total.toLocaleString() + "원";
-    }
-
+    /* Checkout Handlers */
     function openCheckoutModal() {
       if (cart.length === 0) {
-        showToast("먼저 장바구니에 관상어를 담아주세요!");
+        showToast("먼저 장바구니 수조에 관상어를 입수시켜 주세요!");
+        scrollToCartTank();
         return;
       }
-      closeModal("cartModal");
       document.getElementById("checkoutForm").style.display = "block";
       document.getElementById("orderReceiptView").style.display = "none";
-      document.getElementById("checkoutModalTitle").textContent = "💳 생물 안심 입양 결제";
+      document.getElementById("checkoutModalTitle").textContent = "💳 장바구니 수조 생물 입양 결제";
 
       if (currentUser) {
         document.getElementById("payName").value = currentUser.name;
@@ -2377,9 +2526,12 @@
         document.getElementById("payPointInput").max = 0;
       }
 
+      const { shipping } = getCartTotals();
+      document.getElementById("checkoutShippingFee").textContent = shipping === 0 ? "무료배송 (산소포장)" : `${shipping.toLocaleString()}원`;
+
       const names = cart.map(i => {
         const p = FISH_PRODUCTS.find(f => f.id === i.id);
-        return `${p.name} x${i.qty}`;
+        return `${p.name} ${i.qty}마리`;
       }).join(", ");
       document.getElementById("checkoutItemsSummary").textContent = names;
 
@@ -2432,6 +2584,7 @@
       `;
 
       cart = [];
+      syncSwimmersWithCart();
       saveState();
 
       document.getElementById("checkoutForm").style.display = "none";
@@ -2444,9 +2597,9 @@
        ============================================================ */
     window.addEventListener("DOMContentLoaded", () => {
       resizeSwimCanvas();
-      renderFishGrid();
-      selectFishForLiveTank("betta", false);
-      updateHeaderUI();
+      syncSwimmersWithCart();
+      selectFishForPreview("betta", false);
+      updateAllUI();
       animateSwimTank();
     });
   </script>
