@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>APEX RC CIRCUIT — 관리자 회원 관리 (ADMIN)</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --yellow: #FFD600;
+      --yellow-bright: #FFE84D;
+      --orange: #FF6B00;
+      --orange-deep: #E04F00;
+      --asphalt-950: #0B0D11;
+      --asphalt-900: #11141B;
+      --asphalt-850: #161A23;
+      --asphalt-800: #1E2430;
+      --asphalt-700: #2A3242;
+      --border: rgba(255, 214, 0, 0.22);
+      --border-strong: rgba(255, 107, 0, 0.55);
+      --text-main: #F8FAFC;
+      --text-sub: #A3B1C6;
+      --text-muted: #6B788E;
+      --danger: #FF3B5C;
+      --success: #22C55E;
+      --grad-brand: linear-gradient(135deg, #FFD600 0%, #FF6B00 100%);
+      --grad-card: linear-gradient(180deg, rgba(30, 36, 48, 0.92) 0%, rgba(17, 20, 27, 0.98) 100%);
+      --shadow-glow: 0 12px 36px rgba(255, 107, 0, 0.22);
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Malgun Gothic', 'Segoe UI', sans-serif;
+      background-color: var(--asphalt-950);
+      background-image:
+        radial-gradient(circle at 15% 10%, rgba(255, 214, 0, 0.08), transparent 36%),
+        radial-gradient(circle at 85% 20%, rgba(255, 107, 0, 0.10), transparent 40%),
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 2px, transparent 2px, transparent 10px);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* Ambient background drift & dust layer matching index.html */
+    .ambient-track-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      opacity: 0.32;
+    }
+
+    .ambient-drift {
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      filter: brightness(0.65);
+    }
+
+    .ambient-drift.d1 {
+      top: 10%;
+      left: -110px;
+      background-image: url('./img/drift_mark1.png');
+    }
+
+    .ambient-drift.d2 {
+      bottom: 6%;
+      right: -90px;
+      background-image: url('./img/drift_mark2.png');
+    }
+
+    /* Auth Gate Loading Screen */
+    .auth-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: var(--asphalt-950);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .auth-gate.hidden {
+      display: none;
+    }
+
+    .spinner {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 4px solid rgba(255, 214, 0, 0.2);
+      border-top-color: var(--orange);
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(11, 13, 17, 0.90);
+      backdrop-filter: blur(16px);
+      border-bottom: 2px solid var(--border);
+    }
+
+    .header-inner {
+      max-width: 1420px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .brand-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--grad-brand);
+      display: grid;
+      place-items: center;
+      color: #0B0D11;
+      font-weight: 900;
+      font-size: 18px;
+      letter-spacing: -0.04em;
+      box-shadow: 0 0 24px rgba(255, 107, 0, 0.45);
+    }
+
+    .brand-title {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title strong {
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: 0.03em;
+      background: var(--grad-brand);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-title span {
+      font-size: 11px;
+      color: var(--text-sub);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .admin-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 214, 0, 0.12);
+      border: 1px solid rgba(255, 214, 0, 0.4);
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--yellow-bright);
+    }
+
+    .role-pill-admin {
+      background: var(--grad-brand);
+      color: #0B0D11;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 2px 8px;
+      border-radius: 999px;
+      letter-spacing: 0.04em;
+    }
+
+    .btn {
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 10px 16px;
+      font-size: 13.5px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      text-decoration: none;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-primary {
+      background: var(--grad-brand);
+      color: #0B0D11;
+      box-shadow: 0 6px 20px rgba(255, 107, 0, 0.35);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 8px 26px rgba(255, 214, 0, 0.45);
+      filter: brightness(1.06);
+    }
+
+    .btn-outline {
+      background: rgba(255, 214, 0, 0.08);
+      color: var(--yellow);
+      border: 1.5px solid rgba(255, 214, 0, 0.38);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 214, 0, 0.18);
+      border-color: var(--yellow);
+    }
+
+    .btn-ghost {
+      background: var(--asphalt-800);
+      color: var(--text-main);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--orange);
+      color: var(--yellow);
+    }
+
+    /* Main Container */
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 1420px;
+      margin: 0 auto;
+      padding: 26px 24px 80px;
+      display: none;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    main.ready {
+      display: flex;
+    }
+
+    /* KPI Summary Cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .kpi-card {
+      background: var(--grad-card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .kpi-card span {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-sub);
+      letter-spacing: 0.04em;
+    }
+
+    .kpi-card strong {
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--yellow);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .kpi-card strong.orange {
+      color: var(--orange);
+    }
+
+    /* Admin Panel Box */
+    .admin-panel {
+      background: var(--grad-card);
+      border: 2px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-glow);
+      overflow: hidden;
+    }
+
+    .panel-topbar {
+      padding: 18px 22px;
+      background: linear-gradient(90deg, rgba(255, 214, 0, 0.14), rgba(255, 107, 0, 0.14));
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .panel-title h1 {
+      font-size: 21px;
+      font-weight: 900;
+      color: var(--yellow);
+    }
+
+    .panel-title p {
+      font-size: 13px;
+      color: var(--text-sub);
+      margin-top: 2px;
+    }
+
+    /* Search & Grade Filter Toolbar */
+    .toolbar {
+      padding: 16px 22px;
+      background: var(--asphalt-900);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1;
+      min-width: 260px;
+      max-width: 420px;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--asphalt-950);
+      border: 1.5px solid rgba(255, 214, 0, 0.32);
+      border-radius: 999px;
+      padding: 10px 16px;
+      color: var(--text-main);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--yellow);
+      box-shadow: 0 0 0 3px rgba(255, 214, 0, 0.14);
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-chip {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: var(--asphalt-850);
+      color: var(--text-sub);
+      font-size: 12.5px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+
+    .filter-chip:hover {
+      border-color: var(--yellow);
+      color: var(--yellow);
+    }
+
+    .filter-chip.active {
+      background: var(--grad-brand);
+      color: #0B0D11;
+      border-color: transparent;
+      box-shadow: 0 4px 14px rgba(255, 107, 0, 0.35);
+    }
+
+    /* Table Wrapper & Member Table */
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 960px;
+    }
+
+    thead th {
+      background: #0E1118;
+      color: var(--yellow);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1.5px solid var(--border);
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      transition: background 0.15s ease;
+    }
+
+    tbody tr:hover {
+      background: rgba(255, 214, 0, 0.04);
+    }
+
+    tbody tr.row-dirty {
+      background: rgba(255, 107, 0, 0.10);
+    }
+
+    tbody td {
+      padding: 13px 16px;
+      font-size: 13.5px;
+      color: var(--text-main);
+      vertical-align: middle;
+    }
+
+    .member-name-cell {
+      font-weight: 900;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .me-tag {
+      font-size: 10.5px;
+      font-weight: 900;
+      background: rgba(255, 214, 0, 0.16);
+      color: var(--yellow);
+      border: 1px solid rgba(255, 214, 0, 0.45);
+      padding: 1px 6px;
+      border-radius: 6px;
+    }
+
+    .sub-text {
+      color: var(--text-sub);
+      font-size: 13px;
+    }
+
+    .table-select,
+    .table-input {
+      background: var(--asphalt-950);
+      border: 1.5px solid rgba(255, 255, 255, 0.16);
+      border-radius: 8px;
+      padding: 7px 10px;
+      color: var(--text-main);
+      font-size: 13px;
+      font-weight: 800;
+      outline: none;
+    }
+
+    .table-select:focus,
+    .table-input:focus {
+      border-color: var(--yellow);
+    }
+
+    .table-input {
+      width: 120px;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      color: var(--yellow-bright);
+    }
+
+    .role-select-admin {
+      border-color: rgba(255, 107, 0, 0.65);
+      color: var(--orange);
+    }
+
+    .save-row-btn {
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: none;
+      font-size: 12.5px;
+      font-weight: 900;
+      cursor: pointer;
+      background: var(--asphalt-800);
+      color: var(--text-sub);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      transition: all 0.18s;
+      white-space: nowrap;
+    }
+
+    .save-row-btn.dirty {
+      background: var(--grad-brand);
+      color: #0B0D11;
+      border-color: transparent;
+      box-shadow: 0 4px 14px rgba(255, 107, 0, 0.4);
+    }
+
+    .save-row-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 46px 20px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(90px);
+      background: #0B0D11;
+      border: 2px solid var(--yellow);
+      color: var(--text-main);
+      padding: 12px 22px;
+      border-radius: 999px;
+      font-size: 13.5px;
+      font-weight: 800;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65);
+      z-index: 500;
+      opacity: 0;
+      transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 900px) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Background -->
+  <div class="ambient-track-bg" aria-hidden="true">
+    <div class="ambient-drift d1"></div>
+    <div class="ambient-drift d2"></div>
+  </div>
+
+  <!-- ① 관리자 권한 확인 게이트 -->
+  <div class="auth-gate" id="authGate">
+    <div class="spinner"></div>
+    <strong style="color: var(--yellow); font-size: 16px;">관리자 권한(shop_profiles.role)을 확인하고 있습니다...</strong>
+    <span style="color: var(--text-sub); font-size: 13px;">admin 계정이 아니면 쇼핑몰 메인(index.html)으로 자동 이동합니다.</span>
+  </div>
+
+  <!-- Sticky Header -->
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="brand">
+        <div class="brand-badge">RC</div>
+        <div class="brand-title">
+          <strong>APEX RC CIRCUIT · ADMIN</strong>
+          <span>Member Grade · Points · Role Control Center</span>
+        </div>
+      </a>
+
+      <div class="header-actions">
+        <div class="admin-chip" id="adminIdentityChip">
+          <span class="role-pill-admin">ADMIN</span>
+          <span id="adminEmailLabel">확인 중...</span>
+        </div>
+        <button type="button" class="btn btn-outline" onclick="loadAllMembers()">새로고침</button>
+        <a href="index.html" class="btn btn-primary">쇼핑몰로 돌아가기</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Dashboard -->
+  <main id="adminMain">
+    <!-- KPI Summary -->
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <span>전체 가입 회원 (shop_profiles)</span>
+        <strong id="kpiTotalMembers">0명</strong>
+      </div>
+      <div class="kpi-card">
+        <span>관리자 계정 (role = admin)</span>
+        <strong class="orange" id="kpiAdminCount">0명</strong>
+      </div>
+      <div class="kpi-card">
+        <span>상위 등급 (GOLD · VIP)</span>
+        <strong id="kpiTopGradeCount">0명</strong>
+      </div>
+      <div class="kpi-card">
+        <span>전체 회원 보유 포인트 합계</span>
+        <strong class="orange" id="kpiTotalPoints">0 P</strong>
+      </div>
+    </section>
+
+    <!-- ② 회원 목록 표 + 이름 검색 + 등급 필터 + ③ shop_admin_update_member 저장 -->
+    <section class="admin-panel">
+      <div class="panel-topbar">
+        <div class="panel-title">
+          <h1>회원 등급 · 포인트 · 역할 관리 (shop_profiles)</h1>
+          <p>등급(grade), 포인트(points), 역할(role)을 변경한 뒤 [저장]을 누르면 <code>shop_admin_update_member</code> 함수로 DB에 반영됩니다.</p>
+        </div>
+        <div style="font-size:12.5px; color:var(--yellow); font-weight:800;" id="filteredCountText">
+          표시 중: 0명
+        </div>
+      </div>
+
+      <!-- 검색 및 등급 필터 -->
+      <div class="toolbar">
+        <div class="search-box">
+          <input
+            type="text"
+            id="nameSearchInput"
+            class="search-input"
+            placeholder="회원 이름(name)으로 검색..."
+            oninput="renderMemberTable()"
+          />
+        </div>
+
+        <div class="filter-group" id="gradeFilterGroup">
+          <button type="button" class="filter-chip active" data-grade="ALL" onclick="setGradeFilter('ALL', this)">전체 등급</button>
+          <button type="button" class="filter-chip" data-grade="WELCOME" onclick="setGradeFilter('WELCOME', this)">WELCOME</button>
+          <button type="button" class="filter-chip" data-grade="SILVER" onclick="setGradeFilter('SILVER', this)">SILVER</button>
+          <button type="button" class="filter-chip" data-grade="GOLD" onclick="setGradeFilter('GOLD', this)">GOLD</button>
+          <button type="button" class="filter-chip" data-grade="VIP" onclick="setGradeFilter('VIP', this)">VIP</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>이름 (name)</th>
+              <th>이메일 (email)</th>
+              <th>연락처 (phone)</th>
+              <th>등급 (grade)</th>
+              <th>포인트 (points)</th>
+              <th>역할 (role)</th>
+              <th>가입일 (created_at)</th>
+              <th>관리</th>
+            </tr>
+          </thead>
+          <tbody id="memberTableBody">
+            <tr>
+              <td colspan="8" class="empty-state">회원 목록을 불러오는 중입니다...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // =========================================================================
+    // 0. SUPABASE CLIENT INITIALIZATION (쇼핑몰 index.html 과 동일한 프로젝트)
+    // =========================================================================
+    const db = supabase.createClient(
+      'https://acsxysznxfmzwevcojhf.supabase.co',
+      'sb_publishable_NZxqwPHqK0rY9sGIS5nBqg_YOo34rWA'
+    );
+
+    let currentAdminUser = null;
+    let allMembers = [];
+    let selectedGradeFilter = 'ALL';
+
+    function showToast(msg) {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.classList.add('show');
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => el.classList.remove('show'), 2800);
+    }
+
+    function escapeHtml(str) {
+      return String(str ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    // =========================================================================
+    // ① 로그인한 사람의 shop_profiles.role 이 admin 인지 검증 (아니면 index.html)
+    // =========================================================================
+    async function verifyAdminAccess() {
+      const { data: { session }, error: sessionError } = await db.auth.getSession();
+
+      if (sessionError || !session || !session.user) {
+        alert('로그인이 필요합니다. 쇼핑몰 메인(index.html)으로 이동합니다.');
+        window.location.replace('index.html');
+        return false;
+      }
+
+      const { data: myProfile, error: profileError } = await db
+        .from('shop_profiles')
+        .select('id, email, name, role')
+        .eq('id', session.user.id)
+        .single();
+
+      if (profileError || !myProfile || myProfile.role !== 'admin') {
+        alert('관리자(admin) 권한이 없는 계정입니다. 쇼핑몰 메인(index.html)으로 이동합니다.');
+        window.location.replace('index.html');
+        return false;
+      }
+
+      currentAdminUser = myProfile;
+      document.getElementById('adminEmailLabel').textContent =
+        `${myProfile.name || '관리자'} (${myProfile.email || session.user.email})`;
+      document.getElementById('authGate').classList.add('hidden');
+      document.getElementById('adminMain').classList.add('ready');
+      return true;
+    }
+
+    // =========================================================================
+    // ② shop_profiles 전체 조회 + KPI 갱신 + 이름 검색 & 등급 필터 렌더링
+    // =========================================================================
+    async function loadAllMembers() {
+      const { data, error } = await db
+        .from('shop_profiles')
+        .select('id, email, name, phone, grade, points, role, created_at')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        showToast('회원 목록 조회 실패: ' + error.message);
+        document.getElementById('memberTableBody').innerHTML = `
+          <tr><td colspan="8" class="empty-state" style="color:#FF7A90;">데이터를 불러오지 못했습니다: ${escapeHtml(error.message)}</td></tr>
+        `;
+        return;
+      }
+
+      allMembers = data || [];
+      updateKpiSummary();
+      renderMemberTable();
+    }
+
+    function updateKpiSummary() {
+      const total = allMembers.length;
+      const admins = allMembers.filter(m => m.role === 'admin').length;
+      const topGrades = allMembers.filter(m => m.grade === 'GOLD' || m.grade === 'VIP').length;
+      const sumPoints = allMembers.reduce((acc, m) => acc + Number(m.points || 0), 0);
+
+      document.getElementById('kpiTotalMembers').textContent = `${total.toLocaleString()}명`;
+      document.getElementById('kpiAdminCount').textContent = `${admins.toLocaleString()}명`;
+      document.getElementById('kpiTopGradeCount').textContent = `${topGrades.toLocaleString()}명`;
+      document.getElementById('kpiTotalPoints').textContent = `${sumPoints.toLocaleString()} P`;
+    }
+
+    function setGradeFilter(grade, btn) {
+      selectedGradeFilter = grade;
+      document.querySelectorAll('#gradeFilterGroup .filter-chip').forEach(c => c.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderMemberTable();
+    }
+
+    function renderMemberTable() {
+      const keyword = document.getElementById('nameSearchInput').value.trim().toLowerCase();
+
+      const filtered = allMembers.filter(m => {
+        const matchGrade = selectedGradeFilter === 'ALL' || m.grade === selectedGradeFilter;
+        const memberName = (m.name || '').toLowerCase();
+        const matchName = keyword === '' || memberName.includes(keyword);
+        return matchGrade && matchName;
+      });
+
+      document.getElementById('filteredCountText').textContent =
+        `표시 중: ${filtered.length}명 / 전체 ${allMembers.length}명`;
+
+      const tbody = document.getElementById('memberTableBody');
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" class="empty-state">검색 조건에 일치하는 회원이 없습니다.</td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(m => {
+        const isMe = currentAdminUser && m.id === currentAdminUser.id;
+        const createdStr = m.created_at
+          ? new Date(m.created_at).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' })
+          : '-';
+
+        return `
+          <tr id="row-${m.id}" data-orig-grade="${escapeHtml(m.grade)}" data-orig-points="${Number(m.points)}" data-orig-role="${escapeHtml(m.role)}">
+            <td>
+              <div class="member-name-cell">
+                <span>${escapeHtml(m.name || '(이름 미입력)')}</span>
+                ${isMe ? '<span class="me-tag">내 계정</span>' : ''}
+              </div>
+            </td>
+            <td class="sub-text">${escapeHtml(m.email || '-')}</td>
+            <td class="sub-text">${escapeHtml(m.phone || '-')}</td>
+            <td>
+              <select class="table-select" id="grade-${m.id}" onchange="markRowDirty('${m.id}')">
+                <option value="WELCOME" ${m.grade === 'WELCOME' ? 'selected' : ''}>WELCOME</option>
+                <option value="SILVER" ${m.grade === 'SILVER' ? 'selected' : ''}>SILVER</option>
+                <option value="GOLD" ${m.grade === 'GOLD' ? 'selected' : ''}>GOLD</option>
+                <option value="VIP" ${m.grade === 'VIP' ? 'selected' : ''}>VIP</option>
+              </select>
+            </td>
+            <td>
+              <input
+                type="number"
+                class="table-input"
+                id="points-${m.id}"
+                min="0"
+                step="100"
+                value="${Number(m.points ?? 0)}"
+                oninput="markRowDirty('${m.id}')"
+              />
+            </td>
+            <td>
+              <select
+                class="table-select ${m.role === 'admin' ? 'role-select-admin' : ''}"
+                id="role-${m.id}"
+                onchange="markRowDirty('${m.id}')"
+              >
+                <option value="member" ${m.role === 'member' ? 'selected' : ''}>member</option>
+                <option value="admin" ${m.role === 'admin' ? 'selected' : ''}>admin</option>
+              </select>
+            </td>
+            <td class="sub-text">${createdStr}</td>
+            <td>
+              <button
+                type="button"
+                class="save-row-btn"
+                id="save-btn-${m.id}"
+                onclick="saveMemberChanges('${m.id}')"
+              >
+                저장
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function markRowDirty(userId) {
+      const row = document.getElementById(`row-${userId}`);
+      const gradeEl = document.getElementById(`grade-${userId}`);
+      const pointsEl = document.getElementById(`points-${userId}`);
+      const roleEl = document.getElementById(`role-${userId}`);
+      const btn = document.getElementById(`save-btn-${userId}`);
+      if (!row || !gradeEl || !pointsEl || !roleEl || !btn) return;
+
+      roleEl.classList.toggle('role-select-admin', roleEl.value === 'admin');
+
+      const changed =
+        gradeEl.value !== row.dataset.origGrade ||
+        Number(pointsEl.value) !== Number(row.dataset.origPoints) ||
+        roleEl.value !== row.dataset.origRole;
+
+      row.classList.toggle('row-dirty', changed);
+      btn.classList.toggle('dirty', changed);
+      btn.textContent = changed ? '변경 저장' : '저장';
+    }
+
+    // =========================================================================
+    // ③ 등급 · 포인트 · 역할 수정 시 shop_admin_update_member RPC 함수 호출
+    // =========================================================================
+    async function saveMemberChanges(userId) {
+      const gradeEl = document.getElementById(`grade-${userId}`);
+      const pointsEl = document.getElementById(`points-${userId}`);
+      const roleEl = document.getElementById(`role-${userId}`);
+      const btn = document.getElementById(`save-btn-${userId}`);
+
+      const newGrade = gradeEl.value;
+      const newPoints = parseInt(pointsEl.value, 10);
+      const newRole = roleEl.value;
+
+      if (Number.isNaN(newPoints) || newPoints < 0) {
+        showToast('포인트는 0 이상의 정수로 입력해 주세요.');
+        pointsEl.focus();
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = '저장 중...';
+
+      const { error } = await db.rpc('shop_admin_update_member', {
+        p_user_id: userId,
+        p_grade: newGrade,
+        p_points: newPoints,
+        p_role: newRole
+      });
+
+      btn.disabled = false;
+
+      if (error) {
+        btn.textContent = '변경 저장';
+        showToast('저장 실패: ' + error.message);
+        return;
+      }
+
+      const member = allMembers.find(m => m.id === userId);
+      const targetName = member ? (member.name || member.email) : '회원';
+      showToast(`[${targetName}] 등급(${newGrade}) · 포인트(${newPoints.toLocaleString()}P) · 역할(${newRole}) 저장 완료!`);
+
+      // 본인 계정을 member로 내린 경우 즉시 권한 재검증 후 index.html로 이동
+      if (currentAdminUser && userId === currentAdminUser.id && newRole !== 'admin') {
+        alert('관리자 권한이 해제되어 쇼핑몰 메인(index.html)으로 이동합니다.');
+        window.location.replace('index.html');
+        return;
+      }
+
+      await loadAllMembers();
+    }
+
+    // =========================================================================
+    // 4. INITIALIZE ADMIN PAGE
+    // =========================================================================
+    (async function initAdminPage() {
+      const ok = await verifyAdminAccess();
+      if (ok) {
+        await loadAllMembers();
+      }
+    })();
+  </script>
+</body>
+</html>
