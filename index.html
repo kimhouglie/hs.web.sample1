@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>APEX RC CIRCUIT — 하이엔드 RC카 라이브 시승 쇼핑몰</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
       --yellow: #FFD600;
@@ -314,6 +315,16 @@
       font-size: 12.5px;
       color: var(--yellow-bright);
       font-weight: 700;
+    }
+
+    .grade-badge {
+      background: var(--grad-brand);
+      color: #0B0D11;
+      font-size: 10.5px;
+      font-weight: 900;
+      padding: 2px 7px;
+      border-radius: 999px;
+      letter-spacing: 0.04em;
     }
 
     /* Main Layout */
@@ -946,6 +957,17 @@
       color: var(--orange);
       text-transform: uppercase;
       letter-spacing: 0.06em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .stock-pill {
+      font-size: 11px;
+      color: var(--text-sub);
+      background: rgba(255,255,255,0.06);
+      padding: 2px 8px;
+      border-radius: 999px;
     }
 
     .card-title {
@@ -1383,7 +1405,7 @@
           <img id="hudCarThumb" class="active-car-thumb" src="./img/rc_car1.png" alt="선택된 RC카" />
           <div class="active-car-meta">
             <h2 id="hudCarName">APEX GT-R Pro Drift 1/10</h2>
-            <p id="hudCarSpec">4WD 브러시리스 · 최고 82 km/h · 아래 쇼룸에서 차량을 클릭하면 즉시 교체됩니다</p>
+            <p id="hudCarSpec">4WD 벨트 드라이브 · 최고 82 km/h · 아래 쇼룸에서 차량을 클릭하면 즉시 교체됩니다</p>
           </div>
         </div>
 
@@ -1449,16 +1471,12 @@
                   <stop offset="100%" stop-color="#FF6B00" />
                 </linearGradient>
               </defs>
-              <!-- Outer tire-grip rim -->
               <circle cx="100" cy="100" r="82" fill="none" stroke="url(#rimGrad)" stroke-width="22" />
               <circle cx="100" cy="100" r="82" fill="none" stroke="rgba(255,214,0,0.35)" stroke-width="1.5" stroke-dasharray="6 4" />
-              <!-- Top Center Yellow Alignment Stripe -->
               <rect x="93" y="7" width="14" height="22" rx="4" fill="#FFD600" />
-              <!-- Spokes -->
               <path d="M 28 100 L 72 100 L 78 114 L 34 118 Z" fill="url(#spokeGrad)" />
               <path d="M 172 100 L 128 100 L 122 114 L 166 118 Z" fill="url(#spokeGrad)" />
               <path d="M 90 124 L 110 124 L 114 172 L 86 172 Z" fill="#272E3D" />
-              <!-- Center Hub -->
               <circle cx="100" cy="100" r="30" fill="#0F131A" stroke="#FF6B00" stroke-width="3.5" />
               <circle cx="100" cy="100" r="21" fill="#181E29" />
               <text x="100" y="104" text-anchor="middle" fill="#FFD600" font-size="12" font-weight="900" font-family="sans-serif">APEX</text>
@@ -1506,17 +1524,8 @@
           <p>원하는 RC카 사진을 클릭하면 위 탑다운 서킷에 즉시 투입되어 핸들 드래그로 직접 주행할 수 있습니다.</p>
         </div>
 
-        <div class="filter-toolbar">
-          <button class="filter-chip active" data-cat="all" onclick="setCategory('all', this)">전체 모델 (6)</button>
-          <button class="filter-chip" data-cat="drift" onclick="setCategory('drift', this)">온로드 드리프트</button>
-          <button class="filter-chip" data-cat="offroad" onclick="setCategory('offroad', this)">오프로드 버기·몬스터</button>
-          <button class="filter-chip" data-cat="formula" onclick="setCategory('formula', this)">포뮬러·WRC 랠리</button>
-          <select class="sort-select" id="sortSelect" onchange="renderProducts()">
-            <option value="featured">추천순</option>
-            <option value="speed">최고속도순</option>
-            <option value="priceAsc">낮은 가격순</option>
-            <option value="priceDesc">높은 가격순</option>
-          </select>
+        <div class="filter-toolbar" id="filterToolbar">
+          <!-- Populated dynamically from shop_products categories -->
         </div>
       </div>
 
@@ -1526,7 +1535,7 @@
     <!-- Promo Coupon Banner -->
     <section class="promo-strip" id="promoSection">
       <div>
-        <h3>신규 드라이버 가입 10,000P 즉시 지급 + 트랙 드리프트 할인 이벤트</h3>
+        <h3>신규 드라이버 가입 WELCOME 등급 + 3,000P 즉시 지급</h3>
         <p>장바구니 결제 시 쿠폰 코드를 입력하면 즉시 할인이 적용됩니다. 트랙에서 1,000 드리프트 포인트를 달성해 보세요!</p>
       </div>
       <div class="coupon-badges">
@@ -1545,30 +1554,36 @@
       </div>
 
       <div class="tab-row" id="authTabs">
-        <button class="tab-btn active" id="tabSignup" onclick="switchAuthTab('signup')">회원가입 (+10,000P)</button>
+        <button class="tab-btn active" id="tabSignup" onclick="switchAuthTab('signup')">회원가입 (+3,000P)</button>
         <button class="tab-btn" id="tabLogin" onclick="switchAuthTab('login')">로그인</button>
       </div>
 
+      <!-- ① 회원가입: 이름(name)과 연락처(phone)를 Supabase Auth metadata로 함께 전송 -->
       <form id="signupForm" onsubmit="handleSignup(event)">
         <div class="form-group">
-          <label>드라이버 닉네임</label>
-          <input type="text" class="form-control" id="regName" placeholder="예: 오산드리프터" required />
+          <label>이름 (드라이버 성함)</label>
+          <input type="text" class="form-control" id="regName" placeholder="예: 김홍열" required />
+        </div>
+        <div class="form-group">
+          <label>연락처</label>
+          <input type="tel" class="form-control" id="regPhone" placeholder="예: 010-1234-5678" required />
         </div>
         <div class="form-group">
           <label>이메일 아이디</label>
           <input type="email" class="form-control" id="regEmail" placeholder="driver@apexrc.kr" required />
         </div>
         <div class="form-group">
-          <label>비밀번호</label>
-          <input type="password" class="form-control" id="regPass" placeholder="4자 이상 입력" minlength="4" required />
+          <label>비밀번호 (6자 이상)</label>
+          <input type="password" class="form-control" id="regPass" placeholder="6자 이상 입력" minlength="6" required />
         </div>
         <div class="form-group">
           <label>기본 배송지 주소</label>
           <input type="text" class="form-control" id="regAddr" placeholder="경기도 오산시 한신대길 137" required />
         </div>
-        <button type="submit" class="btn btn-primary" style="width:100%; padding:13px;">가입 완료하고 10,000P 받기</button>
+        <button type="submit" id="signupSubmitBtn" class="btn btn-primary" style="width:100%; padding:13px;">가입 완료하고 WELCOME 등급 + 3,000P 받기</button>
       </form>
 
+      <!-- ① 로그인: Supabase Auth signInWithPassword -->
       <form id="loginForm" style="display:none;" onsubmit="handleLogin(event)">
         <div class="form-group">
           <label>이메일 아이디</label>
@@ -1578,18 +1593,21 @@
           <label>비밀번호</label>
           <input type="password" class="form-control" id="loginPass" placeholder="비밀번호 입력" required />
         </div>
-        <button type="submit" class="btn btn-primary" style="width:100%; padding:13px;">로그인</button>
-        <button type="button" class="btn btn-outline" style="width:100%; margin-top:8px;" onclick="quickDemoLogin()">체험용 프로 드라이버 계정으로 즉시 로그인</button>
+        <button type="submit" id="loginSubmitBtn" class="btn btn-primary" style="width:100%; padding:13px;">로그인</button>
       </form>
 
+      <!-- ④ 로그인한 회원의 등급(grade)·포인트(points) 및 주문내역(shop_orders) -->
       <div id="memberProfileView" style="display:none;">
         <div style="background:var(--asphalt-850); padding:16px; border-radius:12px; margin-bottom:14px;">
-          <p style="font-size:16px; font-weight:900; color:var(--yellow);" id="profName"></p>
-          <p style="font-size:13px; color:var(--text-sub);" id="profEmail"></p>
-          <p style="font-size:13px; color:var(--text-sub); margin-top:4px;" id="profAddr"></p>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
+            <p style="font-size:16px; font-weight:900; color:var(--yellow);" id="profName"></p>
+            <span class="grade-badge" id="profGrade">WELCOME</span>
+          </div>
+          <p style="font-size:13px; color:var(--text-sub); margin-top:4px;" id="profEmail"></p>
+          <p style="font-size:13px; color:var(--text-sub); margin-top:2px;" id="profPhone"></p>
           <p style="font-size:15px; font-weight:900; color:var(--orange); margin-top:10px;">보유 포인트: <span id="profPoints">0</span> P</p>
         </div>
-        <h4 style="font-size:14px; color:var(--yellow); margin-bottom:8px;">최근 결제 완료 주문 내역</h4>
+        <h4 style="font-size:14px; color:var(--yellow); margin-bottom:8px;">최근 결제 완료 주문 내역 (shop_orders)</h4>
         <div id="orderHistoryList" style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;"></div>
         <button class="btn btn-ghost" style="width:100%;" onclick="logoutMember()">로그아웃</button>
       </div>
@@ -1627,10 +1645,10 @@
       </div>
 
       <div class="form-group">
-        <label>보유 포인트 사용 (현재 <span id="drawerAvailPts">0</span>P 보유)</label>
+        <label>보유 포인트 확인 (현재 <span id="drawerAvailPts">0</span>P 보유 · <span id="drawerMemberGrade">비회원</span>)</label>
         <div style="display:flex; gap:8px;">
           <input type="number" class="form-control" id="usePointsInput" min="0" step="100" value="0" style="flex:1;" />
-          <button type="button" class="btn btn-ghost" onclick="useAllPoints()">전액 사용</button>
+          <button type="button" class="btn btn-ghost" onclick="useAllPoints()">전액 반영</button>
         </div>
       </div>
 
@@ -1649,7 +1667,7 @@
 
       <div class="summary-box" id="cartSummaryBox"></div>
 
-      <button type="button" class="btn btn-primary" style="width:100%; padding:14px; margin-top:14px; font-size:15px;" onclick="processCheckout()">
+      <button type="button" id="checkoutSubmitBtn" class="btn btn-primary" style="width:100%; padding:14px; margin-top:14px; font-size:15px;" onclick="processCheckout()">
         결제하기
       </button>
     </div>
@@ -1671,17 +1689,19 @@
 
   <script>
     // =========================================================================
-    // 1. PHOTOREALISTIC RC CAR CATALOG (Linked directly to ./img/rc_car1..6.png)
+    // 0. SUPABASE CLIENT INITIALIZATION
     // =========================================================================
-    const PRODUCTS = [
+    const db = supabase.createClient(
+      'https://acsxysznxfmzwevcojhf.supabase.co',
+      'sb_publishable_NZxqwPHqK0rY9sGIS5nBqg_YOo34rWA'
+    );
+
+    // =========================================================================
+    // 1. RC DRIVING PHYSICS PRESETS & IMAGE MAPPING (./img/rc_car1..6.png)
+    // =========================================================================
+    const RC_TRACK_PRESETS = [
       {
-        id: 'rc1',
-        name: 'APEX GT-R Pro Drift 1/10',
-        category: 'drift',
-        categoryLabel: '온로드 드리프트',
         scale: '1/10 SCALE',
-        price: 349000,
-        origPrice: 410000,
         topSpeed: 82,
         accel: 0.34,
         grip: 0.91,
@@ -1693,13 +1713,7 @@
         desc: '오렌지-옐로우 에어로 바디와 카본 리어 윙을 장착한 정통 온로드 드리프트 머신. 정교한 카운터 스티어링과 부드러운 슬라이드 밸런스를 제공합니다.'
       },
       {
-        id: 'rc2',
-        name: 'VIPER X-8 Desert Buggy 1/8',
-        category: 'offroad',
-        categoryLabel: '오프로드 버기·몬스터',
         scale: '1/8 SCALE',
-        price: 429000,
-        origPrice: 495000,
         topSpeed: 88,
         accel: 0.38,
         grip: 0.94,
@@ -1711,13 +1725,7 @@
         desc: '아노다이징 알루미늄 오일 쇼크와 롤케이지 튜블러 프레임을 갖춘 1/8 데저트 버기. 거친 코너에서도 흔들림 없는 접지력을 발휘합니다.'
       },
       {
-        id: 'rc3',
-        name: 'TITAN 4x4 Monster Crawler',
-        category: 'offroad',
-        categoryLabel: '오프로드 버기·몬스터',
         scale: '1/8 SCALE',
-        price: 468000,
-        origPrice: 540000,
         topSpeed: 74,
         accel: 0.42,
         grip: 0.97,
@@ -1729,13 +1737,7 @@
         desc: '대구경 트레드 오프로드 타이어와 롱트래블 서스펜션을 탑재한 몬스터 트럭. 폭발적인 초반 가속과 강력한 제동력을 자랑합니다.'
       },
       {
-        id: 'rc4',
-        name: 'BLITZ F1 Formula Spec 1/10',
-        category: 'formula',
-        categoryLabel: '포뮬러·WRC 랠리',
         scale: '1/10 FORMULA',
-        price: 389000,
-        origPrice: 450000,
         topSpeed: 96,
         accel: 0.36,
         grip: 0.95,
@@ -1747,13 +1749,7 @@
         desc: '카본 프론트·리어 멀티 윙과 슬릭 레이싱 타이어를 적용한 포뮬러 원 스펙 머신. 아스팔트 서킷에서 압도적인 최고속도와 코너링 응답성을 보여줍니다.'
       },
       {
-        id: 'rc5',
-        name: 'STRATOS WRC Rally Turbo',
-        category: 'formula',
-        categoryLabel: '포뮬러·WRC 랠리',
         scale: '1/10 RALLY',
-        price: 319000,
-        origPrice: 375000,
         topSpeed: 79,
         accel: 0.35,
         grip: 0.92,
@@ -1765,13 +1761,7 @@
         desc: '옐로우·오렌지·화이트 레이싱 리버리와 루프 스쿠프가 돋보이는 WRC 랠리카. 아스팔트와 흙먼지 노면 모두에서 경쾌한 드리프트를 구사합니다.'
       },
       {
-        id: 'rc6',
-        name: 'PHANTOM Hyper-GT Supercar',
-        category: 'drift',
-        categoryLabel: '온로드 드리프트',
         scale: '1/10 SUPER-GT',
-        price: 445000,
-        origPrice: 520000,
         topSpeed: 92,
         accel: 0.37,
         grip: 0.93,
@@ -1785,13 +1775,24 @@
     ];
 
     // =========================================================================
-    // 2. STATE & STORAGE
+    // 2. APPLICATION STATE (Synced with Supabase)
     // =========================================================================
-    let selectedCar = PRODUCTS[0];
+    let products = [];
+    let selectedCar = {
+      id: 1,
+      name: 'APEX GT-R Pro Drift 1/10',
+      category: '온로드 드리프트',
+      price: 349000,
+      origPrice: 410000,
+      stock: 30,
+      is_active: true,
+      ...RC_TRACK_PRESETS[0]
+    };
     let currentCategory = 'all';
     let cart = JSON.parse(localStorage.getItem('apex_rc_cart') || '[]');
-    let currentUser = JSON.parse(localStorage.getItem('apex_rc_user') || 'null');
-    let orders = JSON.parse(localStorage.getItem('apex_rc_orders') || '[]');
+    let currentUser = null;     // Supabase auth.users object
+    let currentProfile = null;  // shop_profiles row { id, email, name, phone, grade, points, role }
+    let orders = [];            // shop_orders rows
     let appliedCoupon = null;
     let selectedPayMethod = '신용/체크카드';
 
@@ -1814,15 +1815,106 @@
       el.textContent = msg;
       el.classList.add('show');
       clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(() => el.classList.remove('show'), 2600);
+      window.__toastTimer = setTimeout(() => el.classList.remove('show'), 2800);
     }
 
     function formatWon(n) {
-      return n.toLocaleString('ko-KR') + '원';
+      return Number(n || 0).toLocaleString('ko-KR') + '원';
     }
 
     // =========================================================================
-    // 3. CLICK-AND-HOLD DRAG STEERING WHEEL (ONLY MOVES WHEN PRESSED & DRAGGED)
+    // 3. LOAD PRODUCTS FROM SUPABASE (shop_products)
+    // =========================================================================
+    async function loadProductsFromSupabase() {
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = `
+        <div style="grid-column:1/-1; text-align:center; padding:48px 20px; color:var(--text-sub); background:var(--asphalt-900); border:1px dashed var(--border); border-radius:16px;">
+          Supabase (<code>shop_products</code>)에서 상품 목록을 불러오는 중입니다...
+        </div>
+      `;
+
+      const { data, error } = await db
+        .from('shop_products')
+        .select('id, name, category, price, stock, image_url, is_active, created_at')
+        .eq('is_active', true)
+        .order('id', { ascending: true });
+
+      if (error) {
+        console.error('shop_products 조회 오류:', error);
+        showToast('상품 목록을 불러오는 중 오류가 발생했습니다: ' + error.message);
+        grid.innerHTML = `
+          <div style="grid-column:1/-1; text-align:center; padding:40px; color:#FF7A90;">
+            상품을 불러오지 못했습니다. (${error.message})
+          </div>
+        `;
+        return;
+      }
+
+      products = (data || []).map((row, idx) => {
+        const preset = RC_TRACK_PRESETS[idx % RC_TRACK_PRESETS.length];
+        const resolvedImg = (row.image_url && row.image_url.trim() !== '') ? row.image_url.trim() : preset.img;
+        return {
+          ...preset,
+          id: Number(row.id),
+          name: row.name,
+          category: row.category,
+          price: Number(row.price),
+          origPrice: Math.round(Number(row.price) * 1.15),
+          stock: Number(row.stock),
+          image_url: row.image_url,
+          is_active: row.is_active,
+          img: resolvedImg
+        };
+      });
+
+      // Keep only cart items whose product id exists in shop_products
+      if (products.length > 0) {
+        const validIds = new Set(products.map(p => p.id));
+        cart = cart.filter(item => validIds.has(Number(item.id)));
+        saveCart();
+
+        const keepSelected = products.find(p => p.id === selectedCar.id) || products[0];
+        selectedCar = keepSelected;
+        document.getElementById('hudCarThumb').src = selectedCar.img;
+        document.getElementById('hudCarName').textContent = selectedCar.name;
+        document.getElementById('hudCarSpec').textContent =
+          `${selectedCar.drive} · 최고 ${selectedCar.topSpeed} km/h · 아래 쇼룸에서 차량을 클릭하면 즉시 교체됩니다`;
+      }
+
+      renderCategoryToolbar();
+      renderProducts();
+      renderCartDrawer();
+    }
+
+    function renderCategoryToolbar() {
+      const toolbar = document.getElementById('filterToolbar');
+      const categories = Array.from(new Set(products.map(p => p.category)));
+      if (!categories.includes(currentCategory)) {
+        currentCategory = 'all';
+      }
+
+      const chipsHtml = [
+        `<button class="filter-chip ${currentCategory === 'all' ? 'active' : ''}" data-cat="all" onclick="setCategory('all', this)">전체 모델 (${products.length})</button>`,
+        ...categories.map(cat => {
+          const count = products.filter(p => p.category === cat).length;
+          return `<button class="filter-chip ${currentCategory === cat ? 'active' : ''}" data-cat="${cat}" onclick="setCategory('${cat.replace(/'/g, "\\'")}', this)">${cat} (${count})</button>`;
+        })
+      ].join('');
+
+      const currentSort = document.getElementById('sortSelect') ? document.getElementById('sortSelect').value : 'featured';
+      toolbar.innerHTML = `
+        ${chipsHtml}
+        <select class="sort-select" id="sortSelect" onchange="renderProducts()">
+          <option value="featured" ${currentSort === 'featured' ? 'selected' : ''}>추천순</option>
+          <option value="speed" ${currentSort === 'speed' ? 'selected' : ''}>최고속도순</option>
+          <option value="priceAsc" ${currentSort === 'priceAsc' ? 'selected' : ''}>낮은 가격순</option>
+          <option value="priceDesc" ${currentSort === 'priceDesc' ? 'selected' : ''}>높은 가격순</option>
+        </select>
+      `;
+    }
+
+    // =========================================================================
+    // 4. CLICK-AND-HOLD DRAG STEERING WHEEL (ONLY MOVES WHEN PRESSED & DRAGGED)
     // =========================================================================
     const wheelStage = document.getElementById('wheelStage');
     const wheelSvg = document.getElementById('steeringWheelSvg');
@@ -1833,7 +1925,7 @@
     let isSteeringDragging = false;
     let dragStartX = 0;
     let dragStartAngle = 0;
-    let steerAngleDeg = 0; // -45 to +45 degrees
+    let steerAngleDeg = 0;
 
     function updateWheelVisuals() {
       wheelSvg.style.transform = `rotate(${steerAngleDeg.toFixed(1)}deg)`;
@@ -1848,7 +1940,6 @@
       }
     }
 
-    // Steering ONLY responds when user presses down on the wheel and drags!
     wheelStage.addEventListener('pointerdown', (e) => {
       e.preventDefault();
       isSteeringDragging = true;
@@ -1860,10 +1951,8 @@
     });
 
     window.addEventListener('pointermove', (e) => {
-      // Strictly ignore mouse movement unless the steering wheel is held down!
       if (!isSteeringDragging) return;
       const dx = e.clientX - dragStartX;
-      // 115px horizontal drag = full 45 degree lock
       const nextAngle = Math.max(-45, Math.min(45, dragStartAngle + (dx / 115) * 45));
       steerAngleDeg = nextAngle;
       updateWheelVisuals();
@@ -1881,7 +1970,7 @@
     window.addEventListener('pointercancel', releaseSteeringDrag);
 
     // =========================================================================
-    // 4. ARROW CONTROLS (UP = FORWARD GAS, DOWN = BRAKE / REVERSE, SPACE = DRIFT)
+    // 5. ARROW CONTROLS (UP = FORWARD GAS, DOWN = BRAKE / REVERSE, SPACE = DRIFT)
     // =========================================================================
     const keys = { ArrowUp: false, ArrowDown: false, Space: false };
     const btnGas = document.getElementById('btnGas');
@@ -1943,7 +2032,7 @@
     bindHoldButton(btnDrift, 'Space');
 
     // =========================================================================
-    // 5. TOP-DOWN TRACK PHYSICS, DRIFT MARKS & DUST PARTICLE ENGINE
+    // 6. TOP-DOWN TRACK PHYSICS, DRIFT MARKS & DUST PARTICLE ENGINE
     // =========================================================================
     const canvas = document.getElementById('trackCanvas');
     const ctx = canvas.getContext('2d');
@@ -1953,7 +2042,7 @@
       y: 390,
       vx: 0,
       vy: 0,
-      angle: 0, // radians (0 = pointing right)
+      angle: 0,
       speed: 0,
       driftPoints: 0,
       couponUnlocked: false
@@ -2006,7 +2095,7 @@
     }
 
     function selectProductForDrive(productId, scrollToArena = true) {
-      const found = PRODUCTS.find(p => p.id === productId);
+      const found = products.find(p => Number(p.id) === Number(productId));
       if (!found) return;
       selectedCar = found;
 
@@ -2017,7 +2106,6 @@
 
       renderProducts();
 
-      // Give a crisp rolling launch on the track so the user immediately sees it in motion
       const w = canvas.parentElement.clientWidth;
       const h = canvas.parentElement.clientHeight;
       carState.x = w * 0.28;
@@ -2033,11 +2121,9 @@
     }
 
     function drawTopDownCircuit(w, h) {
-      // Base asphalt
       ctx.fillStyle = '#131720';
       ctx.fillRect(0, 0, w, h);
 
-      // Subtle asphalt grain grid
       ctx.strokeStyle = 'rgba(255, 255, 255, 0.025)';
       ctx.lineWidth = 1;
       for (let gx = 0; gx < w; gx += 48) {
@@ -2064,7 +2150,6 @@
         ctx.roundRect(padX, padY, trackW, trackH, cornerR);
       }
 
-      // Outer yellow-orange rumble curb
       ctx.save();
       traceLoopPath();
       ctx.lineWidth = 132;
@@ -2078,20 +2163,17 @@
       ctx.stroke();
       ctx.restore();
 
-      // Main dark tarmac road surface
       ctx.save();
       traceLoopPath();
       ctx.lineWidth = 112;
       ctx.strokeStyle = '#1D222E';
       ctx.stroke();
 
-      // Inner racing groove
       traceLoopPath();
       ctx.lineWidth = 74;
       ctx.strokeStyle = '#181C26';
       ctx.stroke();
 
-      // Dashed center racing line
       traceLoopPath();
       ctx.lineWidth = 2;
       ctx.setLineDash([16, 18]);
@@ -2099,7 +2181,6 @@
       ctx.stroke();
       ctx.restore();
 
-      // Pre-laid natural corner drift marks using ./img/drift_mark1.png & drift_mark2.png
       const dm1 = imgCache['./img/drift_mark1.png'];
       const dm2 = imgCache['./img/drift_mark2.png'];
       if (dm1 && dm1.complete) {
@@ -2115,7 +2196,6 @@
         ctx.restore();
       }
 
-      // Start / Finish Checkered Line on Bottom Straight
       const startX = w * 0.36;
       const startY = padY + trackH;
       const sq = 8;
@@ -2126,7 +2206,6 @@
         }
       }
 
-      // Center Infield Branding
       ctx.save();
       ctx.fillStyle = 'rgba(255, 214, 0, 0.09)';
       ctx.font = '900 32px sans-serif';
@@ -2142,7 +2221,6 @@
       const w = canvas.parentElement.clientWidth;
       const h = canvas.parentElement.clientHeight;
 
-      // Auto-return steering wheel smoothly to center ONLY when user releases mouse button
       if (!isSteeringDragging && Math.abs(steerAngleDeg) > 0.05) {
         steerAngleDeg *= 0.84;
         if (Math.abs(steerAngleDeg) < 0.2) steerAngleDeg = 0;
@@ -2160,12 +2238,10 @@
       const maxForward = selectedCar.topSpeed / 10.5;
       const maxReverse = -3.4;
 
-      // ArrowUp = Forward Throttle
       if (keys.ArrowUp) {
         forwardSpeed = Math.min(maxForward, forwardSpeed + selectedCar.accel);
       }
 
-      // ArrowDown = Brake (when moving forward) -> Reverse (when stopped)
       let isHardBraking = false;
       if (keys.ArrowDown) {
         if (forwardSpeed > 0.35) {
@@ -2176,13 +2252,11 @@
         }
       }
 
-      // Natural rolling resistance
       if (!keys.ArrowUp && !keys.ArrowDown) {
         forwardSpeed *= 0.982;
         if (Math.abs(forwardSpeed) < 0.03) forwardSpeed = 0;
       }
 
-      // Steering based strictly on the dragged steering wheel angle (-45..+45 deg)
       const steerNorm = steerAngleDeg / 45;
       if (Math.abs(forwardSpeed) > 0.12) {
         const reverseSign = forwardSpeed >= 0 ? 1 : -1;
@@ -2190,7 +2264,6 @@
         carState.angle += turnRate;
       }
 
-      // Lateral tire grip vs drift slide
       const grip = keys.Space ? 0.82 : selectedCar.grip;
       lateralSpeed *= grip;
 
@@ -2205,7 +2278,6 @@
       carState.x += carState.vx;
       carState.y += carState.vy;
 
-      // Keep car smoothly within track arena bounds
       const margin = 42;
       if (carState.x < margin) { carState.x = margin; carState.vx *= -0.35; }
       if (carState.x > w - margin) { carState.x = w - margin; carState.vx *= -0.35; }
@@ -2216,7 +2288,6 @@
       const isDrifting =
         (Math.abs(lateralSpeed) > 0.85 || (keys.Space && speedKmh > 22) || (Math.abs(steerNorm) > 0.45 && speedKmh > 46));
 
-      // Spawn realistic tire skid marks & dust puffs from rear wheels
       if (isDrifting || isHardBraking) {
         const rearDist = 24;
         const trackHalf = 14;
@@ -2253,7 +2324,6 @@
         }
       }
 
-      // Update telemetry HUD
       document.getElementById('teleSpeed').textContent = speedKmh;
       document.getElementById('teleGear').textContent =
         forwardSpeed < -0.2 ? 'R' : speedKmh === 0 ? 'N' : speedKmh < 28 ? 'D1' : speedKmh < 55 ? 'D2' : speedKmh < 75 ? 'D3' : 'D4';
@@ -2264,10 +2334,8 @@
       document.getElementById('driftCouponStatus').textContent =
         carState.couponUnlocked ? '해금 완료! 코드: DRIFT15' : `${Math.min(1000, carState.driftPoints)} / 1,000 P`;
 
-      // Render Track
       drawTopDownCircuit(w, h);
 
-      // Render Dynamic Tire Skid Marks
       for (let i = 0; i < skidMarks.length; i++) {
         const m = skidMarks[i];
         m.alpha *= 0.9965;
@@ -2278,7 +2346,6 @@
         ctx.fill();
       }
 
-      // Render Ambient Drifting Dust Clouds
       ambientDust.forEach(d => {
         d.x += d.vx;
         d.y += d.vy;
@@ -2292,7 +2359,6 @@
         }
       });
 
-      // Render Dynamic Tire Smoke / Dust Puffs
       for (let i = dustParticles.length - 1; i >= 0; i--) {
         const p = dustParticles[i];
         p.x += p.vx;
@@ -2312,12 +2378,10 @@
         }
       }
 
-      // Render Photorealistic RC Car Sprite (top-down image oriented upward -> +90deg rotation)
       ctx.save();
       ctx.translate(carState.x, carState.y);
       ctx.rotate(carState.angle + Math.PI / 2);
 
-      // Front turned wheel indicators when steering wheel is dragged
       const wheelTurnRad = (steerAngleDeg * Math.PI) / 180 * 0.65;
       [[-17, -20], [17, -20]].forEach(([wx, wy]) => {
         ctx.save();
@@ -2328,7 +2392,6 @@
         ctx.restore();
       });
 
-      // Headlight beams
       const beamGrad = ctx.createLinearGradient(0, -34, 0, -95);
       beamGrad.addColorStop(0, 'rgba(255, 232, 77, 0.34)');
       beamGrad.addColorStop(1, 'rgba(255, 232, 77, 0)');
@@ -2341,13 +2404,11 @@
       ctx.closePath();
       ctx.fill();
 
-      // Photorealistic RC Car Image
       const carImg = imgCache[selectedCar.img];
       if (carImg && carImg.complete) {
         ctx.drawImage(carImg, -42, -42, 84, 84);
       }
 
-      // Bright Red Brake Tail Lights when ArrowDown is pressed
       if (keys.ArrowDown) {
         ctx.fillStyle = '#FF2A4B';
         ctx.shadowColor = '#FF2A4B';
@@ -2362,41 +2423,55 @@
     requestAnimationFrame(updatePhysicsAndRender);
 
     // =========================================================================
-    // 6. SHOWROOM PRODUCT RENDERING & DETAIL MODAL
+    // 7. SHOWROOM PRODUCT RENDERING & DETAIL MODAL
     // =========================================================================
     function setCategory(cat, btn) {
       currentCategory = cat;
       document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-      btn.classList.add('active');
+      if (btn) btn.classList.add('active');
       renderProducts();
     }
 
     function renderProducts() {
-      const sortBy = document.getElementById('sortSelect').value;
-      let list = PRODUCTS.filter(p => currentCategory === 'all' || p.category === currentCategory);
+      const sortEl = document.getElementById('sortSelect');
+      const sortBy = sortEl ? sortEl.value : 'featured';
+      let list = products.filter(p => currentCategory === 'all' || p.category === currentCategory);
 
       if (sortBy === 'speed') list.sort((a, b) => b.topSpeed - a.topSpeed);
       if (sortBy === 'priceAsc') list.sort((a, b) => a.price - b.price);
       if (sortBy === 'priceDesc') list.sort((a, b) => b.price - a.price);
 
       const grid = document.getElementById('productGrid');
+      if (list.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column:1/-1; text-align:center; padding:44px; color:var(--text-muted); border:1px dashed rgba(255,255,255,0.12); border-radius:16px;">
+            표시할 판매 중인 상품이 없습니다.
+          </div>
+        `;
+        return;
+      }
+
       grid.innerHTML = list.map(p => {
-        const isActive = p.id === selectedCar.id;
+        const isActive = Number(p.id) === Number(selectedCar.id);
+        const soldOut = p.stock <= 0;
         return `
           <article class="product-card ${isActive ? 'selected-drive' : ''}">
-            <div class="studio-photo-stage" onclick="selectProductForDrive('${p.id}', true)">
+            <div class="studio-photo-stage" onclick="selectProductForDrive(${p.id}, true)">
               <div class="studio-turntable-ring"></div>
               <div class="card-badges">
                 <span class="badge-scale">${p.scale}</span>
                 ${isActive ? '<span class="badge-drive-now">현재 트랙 주행 중</span>' : ''}
               </div>
-              <img class="studio-car-img" src="${p.img}" alt="${p.name}" />
+              <img class="studio-car-img" src="${p.img}" alt="${p.name}" onerror="this.src='./img/rc_car1.png'" />
               <span class="hover-drive-overlay">클릭하여 즉시 트랙 시승</span>
             </div>
 
             <div class="card-body">
               <div>
-                <div class="card-category">${p.categoryLabel}</div>
+                <div class="card-category">
+                  <span>${p.category}</span>
+                  <span class="stock-pill">${soldOut ? '품절' : `재고 ${p.stock}대`}</span>
+                </div>
                 <h3 class="card-title">${p.name}</h3>
               </div>
               <p class="card-desc">${p.desc}</p>
@@ -2422,9 +2497,11 @@
                   <span class="price-now">${formatWon(p.price)}</span>
                 </div>
                 <div class="card-btn-group">
-                  <button class="btn btn-ghost" onclick="openDetailModal('${p.id}')">상세</button>
-                  <button class="btn btn-outline" onclick="selectProductForDrive('${p.id}', true)">시승</button>
-                  <button class="btn btn-primary" onclick="addToCart('${p.id}')">담기</button>
+                  <button class="btn btn-ghost" onclick="openDetailModal(${p.id})">상세</button>
+                  <button class="btn btn-outline" onclick="selectProductForDrive(${p.id}, true)">시승</button>
+                  <button class="btn btn-primary" ${soldOut ? 'disabled style="opacity:0.45;cursor:not-allowed;"' : ''} onclick="addToCart(${p.id})">
+                    ${soldOut ? '품절' : '담기'}
+                  </button>
                 </div>
               </div>
             </div>
@@ -2434,25 +2511,25 @@
     }
 
     function openDetailModal(productId) {
-      const p = PRODUCTS.find(x => x.id === productId);
+      const p = products.find(x => Number(x.id) === Number(productId));
       if (!p) return;
       document.getElementById('detailTitle').textContent = p.name;
       document.getElementById('detailContent').innerHTML = `
-        <div class="studio-photo-stage" style="height:240px; border-radius:12px; margin-bottom:16px;" onclick="closeModal('detailModal'); selectProductForDrive('${p.id}', true);">
-          <img class="studio-car-img" src="${p.img}" alt="${p.name}" />
+        <div class="studio-photo-stage" style="height:240px; border-radius:12px; margin-bottom:16px;" onclick="closeModal('detailModal'); selectProductForDrive(${p.id}, true);">
+          <img class="studio-car-img" src="${p.img}" alt="${p.name}" onerror="this.src='./img/rc_car1.png'" />
           <span class="hover-drive-overlay">클릭 시 즉시 트랙 주행</span>
         </div>
         <p style="font-size:14px; color:var(--text-sub); margin-bottom:14px;">${p.desc}</p>
         <div class="spec-pills" style="margin-bottom:16px;">
           <div class="spec-item"><span>최고속도</span><strong>${p.topSpeed} km/h</strong></div>
           <div class="spec-item"><span>모터 스펙</span><strong>${p.motor}</strong></div>
-          <div class="spec-item"><span>배터리</span><strong>${p.battery}</strong></div>
+          <div class="spec-item"><span>남은 재고</span><strong>${p.stock}대</strong></div>
         </div>
         <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
           <strong style="font-size:22px; color:var(--yellow);">${formatWon(p.price)}</strong>
           <div style="display:flex; gap:8px;">
-            <button class="btn btn-outline" onclick="closeModal('detailModal'); selectProductForDrive('${p.id}', true);">트랙에서 바로 운전</button>
-            <button class="btn btn-primary" onclick="addToCart('${p.id}'); closeModal('detailModal');">장바구니 담기</button>
+            <button class="btn btn-outline" onclick="closeModal('detailModal'); selectProductForDrive(${p.id}, true);">트랙에서 바로 운전</button>
+            <button class="btn btn-primary" onclick="addToCart(${p.id}); closeModal('detailModal');">장바구니 담기</button>
           </div>
         </div>
       `;
@@ -2460,17 +2537,79 @@
     }
 
     // =========================================================================
-    // 7. MEMBER AUTHENTICATION (SIGNUP / LOGIN / POINTS / ORDERS)
+    // 8. SUPABASE AUTHENTICATION & PROFILE (shop_profiles: grade, points)
     // =========================================================================
+    async function loadMemberProfileAndOrders(user) {
+      if (!user) {
+        currentUser = null;
+        currentProfile = null;
+        orders = [];
+        renderHeaderAuth();
+        renderCartDrawer();
+        return;
+      }
+
+      currentUser = user;
+
+      // ④ 로그인한 회원의 등급(grade)·포인트(points)를 shop_profiles에서 조회
+      let { data: profile, error } = await db
+        .from('shop_profiles')
+        .select('id, email, name, phone, grade, points, role, created_at')
+        .eq('id', user.id)
+        .single();
+
+      // 방금 가입한 직후 트리거 반영 대기 시 1회 재시도
+      if (error || !profile) {
+        await new Promise(r => setTimeout(r, 350));
+        const retry = await db
+          .from('shop_profiles')
+          .select('id, email, name, phone, grade, points, role, created_at')
+          .eq('id', user.id)
+          .single();
+        profile = retry.data;
+      }
+
+      if (profile) {
+        currentProfile = profile;
+      } else {
+        const meta = user.user_metadata || {};
+        currentProfile = {
+          id: user.id,
+          email: user.email,
+          name: meta.name || user.email.split('@')[0],
+          phone: meta.phone || '',
+          grade: 'WELCOME',
+          points: 3000,
+          role: 'member'
+        };
+      }
+
+      // 회원의 주문 내역을 shop_orders + shop_order_items에서 조회
+      const { data: orderRows } = await db
+        .from('shop_orders')
+        .select('id, user_id, total, status, created_at, shop_order_items(order_id, product_id, qty, unit_price)')
+        .eq('user_id', user.id)
+        .order('id', { ascending: false });
+
+      orders = orderRows || [];
+      renderHeaderAuth();
+      renderCartDrawer();
+    }
+
     function renderHeaderAuth() {
       const area = document.getElementById('headerAuthArea');
       const totalItems = cart.reduce((s, item) => s + item.qty, 0);
 
-      if (currentUser) {
+      if (currentUser && currentProfile) {
+        const displayName = currentProfile.name || currentUser.email.split('@')[0];
+        const grade = currentProfile.grade || 'WELCOME';
+        const points = Number(currentProfile.points || 0);
+
         area.innerHTML = `
           <div class="member-chip" style="cursor:pointer;" onclick="openAuthModal('profile')">
-            <span>${currentUser.name} 드라이버</span>
-            <strong>${currentUser.points.toLocaleString()}P</strong>
+            <span class="grade-badge">${grade}</span>
+            <span>${displayName} 드라이버</span>
+            <strong>${points.toLocaleString()}P</strong>
           </div>
           <button class="btn btn-ghost" onclick="openAuthModal('profile')">마이페이지</button>
           <button class="cart-pill" onclick="openCartDrawer()">
@@ -2481,7 +2620,7 @@
       } else {
         area.innerHTML = `
           <button class="btn btn-ghost" onclick="openAuthModal('login')">로그인</button>
-          <button class="btn btn-outline" onclick="openAuthModal('signup')">회원가입 (+10,000P)</button>
+          <button class="btn btn-outline" onclick="openAuthModal('signup')">회원가입 (+3,000P)</button>
           <button class="cart-pill" onclick="openCartDrawer()">
             <span>장바구니</span>
             <span class="cart-count">${totalItems}</span>
@@ -2492,31 +2631,41 @@
 
     function openAuthModal(mode) {
       document.getElementById('authModal').classList.add('open');
-      if (currentUser && mode === 'profile') {
+      if (currentUser && currentProfile && mode === 'profile') {
         document.getElementById('authModalTitle').textContent = '드라이버 멤버십 & 주문내역';
         document.getElementById('authTabs').style.display = 'none';
         document.getElementById('signupForm').style.display = 'none';
         document.getElementById('loginForm').style.display = 'none';
         document.getElementById('memberProfileView').style.display = 'block';
 
-        document.getElementById('profName').textContent = `${currentUser.name} 님 (PRO MEMBER)`;
-        document.getElementById('profEmail').textContent = currentUser.email;
-        document.getElementById('profAddr').textContent = `기본 배송지: ${currentUser.address}`;
-        document.getElementById('profPoints').textContent = currentUser.points.toLocaleString();
+        document.getElementById('profName').textContent = `${currentProfile.name || '드라이버'} 님`;
+        document.getElementById('profGrade').textContent = currentProfile.grade || 'WELCOME';
+        document.getElementById('profEmail').textContent = `이메일: ${currentProfile.email || currentUser.email}`;
+        document.getElementById('profPhone').textContent = `연락처: ${currentProfile.phone || '미등록'}`;
+        document.getElementById('profPoints').textContent = Number(currentProfile.points || 0).toLocaleString();
 
         const listEl = document.getElementById('orderHistoryList');
         if (orders.length === 0) {
           listEl.innerHTML = '<p style="font-size:13px; color:var(--text-muted);">아직 결제 완료된 주문이 없습니다.</p>';
         } else {
-          listEl.innerHTML = orders.map(o => `
-            <div style="background:var(--asphalt-850); padding:10px 12px; border-radius:8px; border:1px solid rgba(255,214,0,0.2); font-size:12.5px;">
-              <div style="display:flex; justify-content:space-between; font-weight:800; color:var(--yellow);">
-                <span>주문번호 ${o.orderNo}</span>
-                <span>${formatWon(o.finalAmount)}</span>
+          listEl.innerHTML = orders.map(o => {
+            const items = o.shop_order_items || [];
+            const firstItem = items[0];
+            const firstProd = firstItem ? products.find(p => Number(p.id) === Number(firstItem.product_id)) : null;
+            const summary = firstProd
+              ? (items.length > 1 ? `${firstProd.name} 외 ${items.length - 1}건` : `${firstProd.name} (${firstItem.qty}대)`)
+              : `주문 상품 ${items.length}건`;
+            const dateStr = o.created_at ? new Date(o.created_at).toLocaleString('ko-KR') : '';
+            return `
+              <div style="background:var(--asphalt-850); padding:10px 12px; border-radius:8px; border:1px solid rgba(255,214,0,0.2); font-size:12.5px;">
+                <div style="display:flex; justify-content:space-between; font-weight:800; color:var(--yellow);">
+                  <span>주문 #${o.id} (${o.status})</span>
+                  <span>${formatWon(o.total)}</span>
+                </div>
+                <div style="color:var(--text-sub); margin-top:3px;">${summary} · ${dateStr}</div>
               </div>
-              <div style="color:var(--text-sub); margin-top:3px;">${o.summary} · ${o.payMethod}</div>
-            </div>
-          `).join('');
+            `;
+          }).join('');
         }
       } else {
         document.getElementById('authModalTitle').textContent = '드라이버 회원가입 / 로그인';
@@ -2533,57 +2682,88 @@
       document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
     }
 
-    function handleSignup(e) {
+    // ① Supabase Auth 회원가입 + 이름(name)·연락처(phone) 전송
+    async function handleSignup(e) {
       e.preventDefault();
-      currentUser = {
-        name: document.getElementById('regName').value.trim(),
-        email: document.getElementById('regEmail').value.trim(),
-        password: document.getElementById('regPass').value,
-        address: document.getElementById('regAddr').value.trim(),
-        points: 10000
-      };
-      localStorage.setItem('apex_rc_user', JSON.stringify(currentUser));
-      renderHeaderAuth();
-      closeModal('authModal');
-      showToast(`환영합니다, ${currentUser.name} 드라이버님! 가입 축하 10,000P가 지급되었습니다.`);
-    }
+      const btn = document.getElementById('signupSubmitBtn');
+      const name = document.getElementById('regName').value.trim();
+      const phone = document.getElementById('regPhone').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const password = document.getElementById('regPass').value;
+      const address = document.getElementById('regAddr').value.trim();
 
-    function handleLogin(e) {
-      e.preventDefault();
-      const email = document.getElementById('loginEmail').value.trim();
-      const saved = JSON.parse(localStorage.getItem('apex_rc_user') || 'null');
-      if (saved && saved.email === email) {
-        currentUser = saved;
-      } else {
-        currentUser = {
-          name: email.split('@')[0],
-          email,
-          address: '경기도 오산시 한신대길 137',
-          points: 10000
-        };
-        localStorage.setItem('apex_rc_user', JSON.stringify(currentUser));
+      btn.disabled = true;
+      btn.textContent = '가입 처리 중...';
+
+      const { data, error } = await db.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            name,
+            phone
+          }
+        }
+      });
+
+      btn.disabled = false;
+      btn.textContent = '가입 완료하고 WELCOME 등급 + 3,000P 받기';
+
+      if (error) {
+        showToast('회원가입 실패: ' + error.message);
+        return;
       }
-      renderHeaderAuth();
-      closeModal('authModal');
-      showToast(`${currentUser.name} 드라이버님 로그인 완료!`);
+
+      if (address) {
+        localStorage.setItem('apex_rc_last_addr', address);
+      }
+
+      if (data.session && data.user) {
+        await loadMemberProfileAndOrders(data.user);
+        closeModal('authModal');
+        showToast(`환영합니다, ${name}님! [${currentProfile.grade}] 등급과 ${Number(currentProfile.points).toLocaleString()}P가 지급되었습니다.`);
+      } else {
+        switchAuthTab('login');
+        document.getElementById('loginEmail').value = email;
+        showToast('회원가입이 완료되었습니다. 이메일 인증 설정에 따라 인증 후 로그인해 주세요.');
+      }
     }
 
-    function quickDemoLogin() {
-      currentUser = {
-        name: 'APEX프로드라이버',
-        email: 'pro@apexrc.kr',
-        address: '경기도 오산시 한신대길 137 서킷빌딩 1층',
-        points: 15000
-      };
-      localStorage.setItem('apex_rc_user', JSON.stringify(currentUser));
-      renderHeaderAuth();
+    // ① Supabase Auth 로그인
+    async function handleLogin(e) {
+      e.preventDefault();
+      const btn = document.getElementById('loginSubmitBtn');
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPass').value;
+
+      btn.disabled = true;
+      btn.textContent = '로그인 중...';
+
+      const { data, error } = await db.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      btn.disabled = false;
+      btn.textContent = '로그인';
+
+      if (error) {
+        showToast('로그인 실패: ' + error.message);
+        return;
+      }
+
+      await loadMemberProfileAndOrders(data.user);
       closeModal('authModal');
-      showToast('체험용 프로 드라이버 계정(15,000P)으로 로그인되었습니다.');
+      showToast(`${currentProfile.name || email} 드라이버님 (${currentProfile.grade} · ${Number(currentProfile.points).toLocaleString()}P) 로그인 완료!`);
     }
 
-    function logoutMember() {
+    async function logoutMember() {
+      await db.auth.signOut();
       currentUser = null;
+      currentProfile = null;
+      orders = [];
       renderHeaderAuth();
+      renderCartDrawer();
       closeModal('authModal');
       showToast('로그아웃되었습니다.');
     }
@@ -2593,7 +2773,7 @@
     }
 
     // =========================================================================
-    // 8. CART & CHECKOUT PAYMENT SYSTEM
+    // 9. CART & CHECKOUT PAYMENT SYSTEM (shop_orders & shop_order_items)
     // =========================================================================
     function saveCart() {
       localStorage.setItem('apex_rc_cart', JSON.stringify(cart));
@@ -2601,14 +2781,25 @@
     }
 
     function addToCart(productId) {
-      const existing = cart.find(c => c.id === productId);
+      const pid = Number(productId);
+      const prod = products.find(p => Number(p.id) === pid);
+      if (!prod) return;
+      if (prod.stock <= 0) {
+        showToast('품절된 상품입니다.');
+        return;
+      }
+
+      const existing = cart.find(c => Number(c.id) === pid);
       if (existing) {
+        if (existing.qty >= prod.stock) {
+          showToast(`최대 주문 가능 재고는 ${prod.stock}대입니다.`);
+          return;
+        }
         existing.qty += 1;
       } else {
-        cart.push({ id: productId, qty: 1 });
+        cart.push({ id: pid, qty: 1 });
       }
       saveCart();
-      const prod = PRODUCTS.find(p => p.id === productId);
       showToast(`[${prod.name}] 장바구니에 담았습니다.`);
     }
 
@@ -2619,8 +2810,9 @@
 
     function openCartDrawer() {
       document.getElementById('cartDrawerBackdrop').classList.add('open');
-      if (currentUser && !document.getElementById('checkoutAddress').value) {
-        document.getElementById('checkoutAddress').value = currentUser.address || '';
+      const addrInput = document.getElementById('checkoutAddress');
+      if (!addrInput.value) {
+        addrInput.value = localStorage.getItem('apex_rc_last_addr') || '';
       }
       renderCartDrawer();
     }
@@ -2630,9 +2822,16 @@
     }
 
     function updateCartQty(productId, delta) {
-      const idx = cart.findIndex(c => c.id === productId);
+      const pid = Number(productId);
+      const idx = cart.findIndex(c => Number(c.id) === pid);
       if (idx === -1) return;
-      cart[idx].qty += delta;
+      const prod = products.find(p => Number(p.id) === pid);
+      const nextQty = cart[idx].qty + delta;
+      if (prod && nextQty > prod.stock) {
+        showToast(`최대 재고(${prod.stock}대)를 초과할 수 없습니다.`);
+        return;
+      }
+      cart[idx].qty = nextQty;
       if (cart[idx].qty <= 0) cart.splice(idx, 1);
       saveCart();
       renderCartDrawer();
@@ -2665,11 +2864,11 @@
     }
 
     function useAllPoints() {
-      if (!currentUser) {
-        showToast('포인트를 사용하려면 먼저 로그인 또는 회원가입해 주세요.');
+      if (!currentUser || !currentProfile) {
+        showToast('포인트를 확인하려면 먼저 로그인 또는 회원가입해 주세요.');
         return;
       }
-      document.getElementById('usePointsInput').value = currentUser.points;
+      document.getElementById('usePointsInput').value = Number(currentProfile.points || 0);
       renderCartDrawer();
     }
 
@@ -2683,8 +2882,9 @@
 
     function renderCartDrawer() {
       const listEl = document.getElementById('cartItemsList');
-      const availPts = currentUser ? currentUser.points : 0;
+      const availPts = currentProfile ? Number(currentProfile.points || 0) : 0;
       document.getElementById('drawerAvailPts').textContent = availPts.toLocaleString();
+      document.getElementById('drawerMemberGrade').textContent = currentProfile ? `${currentProfile.grade} 등급` : '로그인 필요';
 
       if (cart.length === 0) {
         listEl.innerHTML = `
@@ -2694,18 +2894,19 @@
         `;
       } else {
         listEl.innerHTML = cart.map(item => {
-          const p = PRODUCTS.find(x => x.id === item.id);
+          const p = products.find(x => Number(x.id) === Number(item.id));
+          if (!p) return '';
           return `
             <div class="cart-item">
-              <img src="${p.img}" alt="${p.name}" />
+              <img src="${p.img}" alt="${p.name}" onerror="this.src='./img/rc_car1.png'" />
               <div class="cart-item-info">
                 <h4>${p.name}</h4>
                 <p>${formatWon(p.price * item.qty)}</p>
               </div>
               <div class="qty-controls">
-                <button class="qty-btn" onclick="updateCartQty('${p.id}', -1)">-</button>
+                <button class="qty-btn" onclick="updateCartQty(${p.id}, -1)">-</button>
                 <span style="min-width:20px; text-align:center; font-weight:800;">${item.qty}</span>
-                <button class="qty-btn" onclick="updateCartQty('${p.id}', 1)">+</button>
+                <button class="qty-btn" onclick="updateCartQty(${p.id}, 1)">+</button>
               </div>
             </div>
           `;
@@ -2713,8 +2914,8 @@
       }
 
       const subtotal = cart.reduce((sum, item) => {
-        const p = PRODUCTS.find(x => x.id === item.id);
-        return sum + p.price * item.qty;
+        const p = products.find(x => Number(x.id) === Number(item.id));
+        return p ? sum + p.price * item.qty : sum;
       }, 0);
 
       const couponDiscount = appliedCoupon ? Math.round(subtotal * appliedCoupon.rate) : 0;
@@ -2726,77 +2927,142 @@
       document.getElementById('cartSummaryBox').innerHTML = `
         <div class="summary-row"><span>상품 합계</span><span>${formatWon(subtotal)}</span></div>
         <div class="summary-row"><span>쿠폰 할인 ${appliedCoupon ? `(${appliedCoupon.code})` : ''}</span><span style="color:var(--orange);">-${formatWon(couponDiscount)}</span></div>
-        <div class="summary-row"><span>포인트 사용</span><span style="color:var(--orange);">-${formatWon(ptsUsed)}</span></div>
+        <div class="summary-row"><span>포인트 차감</span><span style="color:var(--orange);">-${formatWon(ptsUsed)}</span></div>
         <div class="summary-row"><span>배송비 (30만원 이상 무료)</span><span>${shipping === 0 ? '무료' : formatWon(shipping)}</span></div>
         <div class="summary-row total"><span>최종 결제금액</span><span>${formatWon(finalAmount)}</span></div>
       `;
     }
 
-    function processCheckout() {
+    // ③ 결제 버튼 클릭 시 shop_orders 와 shop_order_items 에 저장
+    async function processCheckout() {
       if (cart.length === 0) {
         showToast('결제할 상품을 먼저 장바구니에 담아주세요.');
         return;
       }
+
+      if (!currentUser) {
+        showToast('주문을 DB에 저장하려면 먼저 로그인 또는 회원가입해 주세요.');
+        closeCartDrawer();
+        openAuthModal('login');
+        return;
+      }
+
       const address = document.getElementById('checkoutAddress').value.trim();
       if (!address) {
         showToast('배송지 주소를 입력해 주세요.');
         return;
       }
+      localStorage.setItem('apex_rc_last_addr', address);
 
       const subtotal = cart.reduce((sum, item) => {
-        const p = PRODUCTS.find(x => x.id === item.id);
-        return sum + p.price * item.qty;
+        const p = products.find(x => Number(x.id) === Number(item.id));
+        return p ? sum + p.price * item.qty : sum;
       }, 0);
       const couponDiscount = appliedCoupon ? Math.round(subtotal * appliedCoupon.rate) : 0;
-      const availPts = currentUser ? currentUser.points : 0;
+      const availPts = currentProfile ? Number(currentProfile.points || 0) : 0;
       let ptsUsed = Math.max(0, Math.min(availPts, parseInt(document.getElementById('usePointsInput').value || '0', 10)));
       ptsUsed = Math.min(ptsUsed, Math.max(0, subtotal - couponDiscount));
-      const finalAmount = Math.max(0, subtotal - couponDiscount - ptsUsed);
+      const shipping = subtotal === 0 || subtotal >= 300000 ? 0 : 3500;
+      const finalAmount = Math.max(0, subtotal - couponDiscount - ptsUsed + shipping);
 
-      const orderNo = 'APEX-' + Math.floor(100000 + Math.random() * 900000);
-      const firstProd = PRODUCTS.find(x => x.id === cart[0].id);
-      const summary = cart.length > 1 ? `${firstProd.name} 외 ${cart.length - 1}건` : `${firstProd.name} (${cart[0].qty}대)`;
+      const btn = document.getElementById('checkoutSubmitBtn');
+      btn.disabled = true;
+      btn.textContent = '주문 저장 중...';
 
-      if (currentUser) {
-        const earned = Math.round(finalAmount * 0.03);
-        currentUser.points = currentUser.points - ptsUsed + earned;
-        localStorage.setItem('apex_rc_user', JSON.stringify(currentUser));
+      // 1) shop_orders 에 주문 헤더 저장 (user_id, total, status)
+      const { data: insertedOrder, error: orderError } = await db
+        .from('shop_orders')
+        .insert({
+          user_id: currentUser.id,
+          total: finalAmount,
+          status: '결제완료'
+        })
+        .select('id, user_id, total, status, created_at')
+        .single();
+
+      if (orderError || !insertedOrder) {
+        btn.disabled = false;
+        btn.textContent = '결제하기';
+        showToast('주문 저장 실패 (shop_orders): ' + (orderError ? orderError.message : '알 수 없는 오류'));
+        return;
       }
 
-      orders.unshift({
-        orderNo,
-        summary,
-        finalAmount,
-        payMethod: selectedPayMethod,
-        address,
-        date: new Date().toLocaleString('ko-KR')
+      // 2) shop_order_items 에 주문 상세 품목들 저장 (order_id, product_id, qty, unit_price)
+      const orderItemsRows = cart.map(item => {
+        const p = products.find(x => Number(x.id) === Number(item.id));
+        return {
+          order_id: Number(insertedOrder.id),
+          product_id: Number(p.id),
+          qty: Number(item.qty),
+          unit_price: Number(p.price)
+        };
       });
-      localStorage.setItem('apex_rc_orders', JSON.stringify(orders));
 
+      const { error: itemsError } = await db
+        .from('shop_order_items')
+        .insert(orderItemsRows);
+
+      btn.disabled = false;
+      btn.textContent = '결제하기';
+
+      if (itemsError) {
+        showToast('주문 상세 저장 실패 (shop_order_items): ' + itemsError.message);
+        return;
+      }
+
+      const firstProd = products.find(p => Number(p.id) === Number(cart[0].id));
+      const summary = cart.length > 1
+        ? `${firstProd.name} 외 ${cart.length - 1}건`
+        : `${firstProd.name} (${cart[0].qty}대)`;
+
+      // 장바구니 초기화 및 주문 내역 새로고침
       cart = [];
       appliedCoupon = null;
       document.getElementById('usePointsInput').value = 0;
       saveCart();
       closeCartDrawer();
+      await loadMemberProfileAndOrders(currentUser);
 
       document.getElementById('receiptBody').innerHTML = `
         <div style="background:var(--asphalt-850); padding:16px; border-radius:12px; border:1px solid var(--yellow); display:flex; flex-direction:column; gap:8px; font-size:13.5px;">
-          <div style="display:flex; justify-content:space-between;"><span style="color:var(--text-muted);">주문번호</span><strong style="color:var(--yellow);">${orderNo}</strong></div>
+          <div style="display:flex; justify-content:space-between;"><span style="color:var(--text-muted);">DB 주문번호 (shop_orders.id)</span><strong style="color:var(--yellow);">#${insertedOrder.id}</strong></div>
+          <div style="display:flex; justify-content:space-between;"><span style="color:var(--text-muted);">주문상태 (status)</span><strong style="color:var(--success);">${insertedOrder.status}</strong></div>
           <div style="display:flex; justify-content:space-between;"><span style="color:var(--text-muted);">주문상품</span><strong>${summary}</strong></div>
           <div style="display:flex; justify-content:space-between;"><span style="color:var(--text-muted);">결제수단</span><strong>${selectedPayMethod}</strong></div>
           <div style="display:flex; justify-content:space-between;"><span style="color:var(--text-muted);">배송지</span><strong>${address}</strong></div>
           <div style="display:flex; justify-content:space-between; border-top:1px solid rgba(255,255,255,0.1); padding-top:8px; font-size:16px;">
-            <span>최종 결제금액</span><strong style="color:var(--orange);">${formatWon(finalAmount)}</strong>
+            <span>최종 결제금액 (total)</span><strong style="color:var(--orange);">${formatWon(insertedOrder.total)}</strong>
           </div>
         </div>
       `;
       document.getElementById('receiptModal').classList.add('open');
     }
 
-    // Initialize Page
-    renderHeaderAuth();
-    renderProducts();
-    updateWheelVisuals();
+    // =========================================================================
+    // 10. INITIALIZE PAGE & AUTH SESSION LISTENER
+    // =========================================================================
+    db.auth.onAuthStateChange(async (_event, session) => {
+      if (session && session.user) {
+        await loadMemberProfileAndOrders(session.user);
+      } else {
+        currentUser = null;
+        currentProfile = null;
+        orders = [];
+        renderHeaderAuth();
+        renderCartDrawer();
+      }
+    });
+
+    (async function initApp() {
+      updateWheelVisuals();
+      renderHeaderAuth();
+      await loadProductsFromSupabase();
+
+      const { data: { session } } = await db.auth.getSession();
+      if (session && session.user) {
+        await loadMemberProfileAndOrders(session.user);
+      }
+    })();
   </script>
 </body>
 </html>
